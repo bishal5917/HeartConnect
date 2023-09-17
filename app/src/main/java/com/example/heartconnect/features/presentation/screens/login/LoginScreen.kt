@@ -1,4 +1,4 @@
-package com.example.heartconnect.screens.login
+package com.example.heartconnect.features.presentation.screens.login
 
 import android.util.Log
 import android.widget.Toast
@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -36,7 +37,7 @@ import com.google.common.util.concurrent.Striped.lock
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
 
     val loginState by loginViewModel.loginState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -46,7 +47,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = v
 //            CustomToast(message = loginState.message)
 //        }
         LoginState.Status.SUCCESS -> {
-            navController.navigate(AllScreen.HomeScreen.name)
+            navController.navigate(AllScreen.MainScreen.name)
             CustomToast(message = loginState.message)
         }
         LoginState.Status.FAILED -> {
@@ -111,7 +112,6 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = v
                             loginViewModel.onEvent(LoginEvent.LoginUser)
                         },
                         isEnabled = loginState.emailError && loginState.passwordError,
-//                    isEnabled = true,
                     )
 
                 }

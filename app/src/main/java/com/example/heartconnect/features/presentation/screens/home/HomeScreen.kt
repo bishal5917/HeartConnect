@@ -1,4 +1,4 @@
-package com.example.heartconnect.screens.home
+package com.example.heartconnect.features.presentation.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

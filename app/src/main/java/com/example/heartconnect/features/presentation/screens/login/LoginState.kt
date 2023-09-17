@@ -1,4 +1,4 @@
-package com.example.heartconnect.screens.login
+package com.example.heartconnect.features.presentation.screens.login
 
 data class LoginState(
     val status: Status, val message: String? = null, var email: String = "",

@@ -3,6 +3,7 @@ package com.example.heartconnect
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.heartconnect.features.presentation.screens.login.LoginViewModel
+import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.navigation.Navigation
 import com.example.heartconnect.ui.theme.HeartConnectTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +29,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HeartConnectTheme {
+                val splashViewModel: SplashViewModel by viewModels()
+                val loginViewModel: LoginViewModel by viewModels()
                 MyApp()
             }
         }

@@ -1,7 +1,7 @@
 package com.example.heartconnect.utils
 
 object Validator {
-    val regexPattern = Regex("^[A-Za-z0-9+_.-]+@(.+)\$")
+    private val regexPattern = Regex("^[A-Za-z0-9+_.-]+@(.+)\$")
 
     fun validateEmail(value: String): ValidationResult {
         return ValidationResult(

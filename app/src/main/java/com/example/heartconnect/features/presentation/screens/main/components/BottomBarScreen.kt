@@ -1,4 +1,4 @@
-package com.example.heartconnect.features.presentation.screens.main
+package com.example.heartconnect.features.presentation.screens.main.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home

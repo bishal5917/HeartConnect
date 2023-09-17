@@ -1,4 +1,4 @@
-package com.example.heartconnect.screens.chat
+package com.example.heartconnect.features.presentation.screens.chat
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

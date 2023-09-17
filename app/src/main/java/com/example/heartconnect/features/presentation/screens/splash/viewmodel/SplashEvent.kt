@@ -1,4 +1,6 @@
 package com.example.heartconnect.features.presentation.screens.splash.viewmodel
 
-class SplashEvent {
+sealed class SplashEvent {
+
+    object CheckStatus : SplashEvent()
 }
