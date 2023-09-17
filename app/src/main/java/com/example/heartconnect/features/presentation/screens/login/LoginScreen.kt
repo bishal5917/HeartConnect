@@ -43,9 +43,6 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
     val keyboardController = LocalSoftwareKeyboardController.current
 
     when (loginState.status) {
-//        LoginState.Status.LOADING -> {
-//            CustomToast(message = loginState.message)
-//        }
         LoginState.Status.SUCCESS -> {
             navController.navigate(AllScreen.MainScreen.name)
             CustomToast(message = loginState.message)
@@ -130,9 +127,4 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
             }
         }
     }
-
-
-//    SystemBackButtonHandler {
-//        PostOfficeAppRouter.navigateTo(Screen.SignUpScreen)
-//    }
 }
