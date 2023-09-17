@@ -1,4 +1,4 @@
-package com.example.heartconnect.screens
+package com.example.heartconnect.features.presentation.screens
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
