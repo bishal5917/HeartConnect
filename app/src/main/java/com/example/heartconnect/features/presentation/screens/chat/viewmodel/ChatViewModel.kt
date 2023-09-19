@@ -23,12 +23,12 @@ class ChatViewModel @Inject constructor(private val getConversationsUsecase: Get
     fun onEvent(event: ChatEvent) {
         when (event) {
             is ChatEvent.GetChats -> {
-                getChats("TrfvproFXmNUQIZcI3cZEBs7Yre2")
+                getChats(event.userId)
             }
         }
     }
 
-    private fun getChats(id: String) = viewModelScope.launch {
+    private fun getChats(id : String) = viewModelScope.launch {
         _chatState.value = _chatState.value.copy(
             status = ChatState.Status.LOADING, message = "Getting Chats , please wait ..."
         )

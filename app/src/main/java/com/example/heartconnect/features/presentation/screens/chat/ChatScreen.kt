@@ -19,16 +19,22 @@ import com.example.heartconnect.features.presentation.screens.chat.components.Co
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatState
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatViewModel
+import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.ui.theme.VSizedBox2
 
 @Composable
-fun ChatScreen(navController: NavController, chatViewModel: ChatViewModel = hiltViewModel()) {
+fun ChatScreen(
+    navController: NavController,
+    chatViewModel: ChatViewModel = hiltViewModel(),
+    splashViewModel: SplashViewModel = hiltViewModel()
+) {
 
     val chatState by chatViewModel.chatState.collectAsState()
+    val userId = splashViewModel.userId.collectAsState()
 
     if (chatState.status != ChatState.Status.SUCCESS) {
-        LaunchedEffect(key1 = true) {
-            chatViewModel.onEvent(ChatEvent.GetChats)
+        LaunchedEffect(key1 = "Chat") {
+            chatViewModel.onEvent(ChatEvent.GetChats(userId = userId.value))
         }
     }
 
@@ -36,22 +42,29 @@ fun ChatScreen(navController: NavController, chatViewModel: ChatViewModel = hilt
         modifier = Modifier
             .padding(10.dp)
             .fillMaxSize(),
-        contentAlignment = Alignment.Center
     ) {
         if (chatState.status == ChatState.Status.LOADING) {
-            CustomCircularProgressIndicator()
+            Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+            ) {
+                CustomCircularProgressIndicator()
+            }
         }
         if (chatState.status == ChatState.Status.SUCCESS && chatState.chats != null) {
             LazyColumn {
                 items(chatState.chats ?: listOf(ConversationModel())) { chatItem ->
-                    ConvoComponent()
+                    ConvoComponent(chatItem)
                     VSizedBox2()
                 }
             }
         }
         if (chatState.status == ChatState.Status.FAILED) {
-            CustomErrorComponent(message = chatState.message ?: "") {
-                chatViewModel.onEvent(ChatEvent.GetChats)
+            Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+            ) {
+                CustomErrorComponent(message = chatState.message ?: "") {
+                    chatViewModel.onEvent(ChatEvent.GetChats(userId = userId.value))
+                }
             }
         }
     }

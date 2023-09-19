@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.heartconnect.components.CustomCircularProgressIndicator
 import com.example.heartconnect.components.CustomErrorComponent
@@ -19,24 +20,29 @@ import com.example.heartconnect.features.presentation.screens.home.components.Ho
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeEvent
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
+import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.ui.theme.VSizedBox1
 
 @Composable
-fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavController,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    splashViewModel: SplashViewModel = hiltViewModel()
+) {
 
     val homeState by homeViewModel.homeState.collectAsState()
+    val userId by splashViewModel.userId.collectAsState()
 
     if (homeState.status != HomeState.Status.SUCCESS) {
-        LaunchedEffect(key1 = true) {
-            homeViewModel.onEvent(HomeEvent.GetFeed)
+        LaunchedEffect(key1 = "Home") {
+            homeViewModel.onEvent(HomeEvent.GetFeed(userId))
         }
     }
 
     Box(
         modifier = Modifier
             .padding(10.dp)
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+            .fillMaxSize(), contentAlignment = Alignment.Center
     ) {
         if (homeState.status == HomeState.Status.LOADING) {
             CustomCircularProgressIndicator()
@@ -51,7 +57,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hilt
         }
         if (homeState.status == HomeState.Status.FAILED) {
             CustomErrorComponent(message = homeState.message ?: "") {
-                homeViewModel.onEvent(HomeEvent.GetFeed)
+                homeViewModel.onEvent(HomeEvent.GetFeed(userId))
             }
         }
     }

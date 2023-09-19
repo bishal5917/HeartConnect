@@ -13,12 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.heartconnect.components.CustomNetworkImage
 import com.example.heartconnect.components.CustomText
+import com.example.heartconnect.features.data.models.conversation.ConversationModel
 import com.example.heartconnect.ui.theme.HSizedBox1
 import com.example.heartconnect.ui.theme.VSizedBox0
 
 @Composable
-@Preview
-fun ConvoComponent() {
+fun ConvoComponent(chatItem : ConversationModel) {
     Box(modifier = Modifier
         .clickable {
             //execute function
@@ -30,14 +30,13 @@ fun ConvoComponent() {
         ) {
             HSizedBox1()
             CustomNetworkImage(
-                imageUrl = "https://img.freepik" +
-                        ".com/free-photo/closeup-shot-siberian-tiger-jungle_181624-16309" +
-                        ".jpg?size=626&ext=jpg", modifier = Modifier.clip(CircleShape),
+                imageUrl = chatItem.friendImage ?: "", modifier = Modifier.clip(CircleShape),
                 parentmodifier = Modifier.size(60.dp)
             )
             HSizedBox1()
             Column(verticalArrangement = Arrangement.SpaceBetween) {
-                CustomText(data = "Damon Salvatore", fontWeight = FontWeight.W400, fontSize = 18)
+                CustomText(data = chatItem.friendName ?: "", fontWeight = FontWeight.W400, fontSize =
+                18)
                 VSizedBox0()
                 CustomText(
                     data = "Tap to chat ...", fontWeight = FontWeight.W400, fontSize = 12,

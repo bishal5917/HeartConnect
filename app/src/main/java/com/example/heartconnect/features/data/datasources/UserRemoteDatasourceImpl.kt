@@ -3,13 +3,16 @@ package com.example.heartconnect.features.data.datasources
 import com.example.heartconnect.features.data.models.conversation.ConversationModel
 import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.firebase.FirebaseConfig
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class UserRemoteDatasourceImpl : UserRemoteDatasource {
     override suspend fun getHomeUsers(id: String): List<FeedModel> {
         try {
-            val querySnapshot = FirebaseConfig().db.collection("Users").get().await()
+            val querySnapshot =
+                FirebaseConfig().db.collection("Users").whereNotEqualTo(FieldPath.documentId(), id)
+                    .get().await()
             val allUsers = querySnapshot.documents.map { documentSnapshot ->
                 val data = documentSnapshot.data ?: emptyMap()
                 val docId = documentSnapshot.id
@@ -18,7 +21,10 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 val hobbies = data["hobbies"] as? List<String> ?: listOf()
                 val profileImage = data["image"] as? String ?: ""
                 FeedModel(
-                    name = name, birthYear = birthYear, hobbies = hobbies, uid = docId,
+                    name = name,
+                    birthYear = birthYear,
+                    hobbies = hobbies,
+                    uid = docId,
                     profileImage = profileImage
                 )
             }

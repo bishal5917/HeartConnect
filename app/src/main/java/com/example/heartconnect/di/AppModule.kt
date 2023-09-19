@@ -57,10 +57,9 @@ object AppModule {
     fun provideHomeUsecase(repo: UserRepository): GetHomeUsersUsecase {
         return GetHomeUsersUsecase(repo)
     }
+
     @Provides
     fun provideChatUsecase(repo: UserRepository): GetConversationsUsecase {
         return GetConversationsUsecase(repo)
     }
-
-
 }

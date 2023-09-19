@@ -20,17 +20,17 @@ class HomeViewModel @Inject constructor(private val getHomeUsersUsecase: GetHome
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.GetFeed -> {
-                getFeed()
+                getFeed(event.id ?: "")
             }
         }
     }
 
-    private fun getFeed() = viewModelScope.launch {
+    private fun getFeed(id: String) = viewModelScope.launch {
         _homeState.value = _homeState.value.copy(
             status = HomeState.Status.LOADING, message = "Getting feed , please wait ..."
         )
         try {
-            val result = getHomeUsersUsecase.call("2")
+            val result = getHomeUsersUsecase.call(id)
             _homeState.value = _homeState.value.copy(
                 status = HomeState.Status.SUCCESS, message = "Feed fetched", users = result,
             )
