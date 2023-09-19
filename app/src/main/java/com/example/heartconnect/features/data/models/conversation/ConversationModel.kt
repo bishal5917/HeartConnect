@@ -1,4 +1,8 @@
 package com.example.heartconnect.features.data.models.conversation
 
-class ConversationModel {
-}
+data class ConversationModel(
+    val convoId: String? = "",
+    val members: List<String>? = listOf(),
+    val friendName: String? = "",
+    val friendImage: String? = "",
+)

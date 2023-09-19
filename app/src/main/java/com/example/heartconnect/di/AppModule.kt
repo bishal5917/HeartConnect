@@ -12,6 +12,7 @@ import com.example.heartconnect.features.data.datasources.UserRemoteDatasource
 import com.example.heartconnect.features.data.datasources.UserRemoteDatasourceImpl
 import com.example.heartconnect.features.data.repositories.UserRepositoryImpl
 import com.example.heartconnect.features.domain.repositories.UserRepository
+import com.example.heartconnect.features.domain.usecases.GetConversationsUsecase
 import com.example.heartconnect.features.domain.usecases.GetHomeUsersUsecase
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.login.LoginViewModel
@@ -51,9 +52,14 @@ object AppModule {
         return UserRepositoryImpl(dataSource)
     }
 
+    //registering usecases
     @Provides
-    fun provideUsecase(repo: UserRepository): GetHomeUsersUsecase {
+    fun provideHomeUsecase(repo: UserRepository): GetHomeUsersUsecase {
         return GetHomeUsersUsecase(repo)
+    }
+    @Provides
+    fun provideChatUsecase(repo: UserRepository): GetConversationsUsecase {
+        return GetConversationsUsecase(repo)
     }
 
 

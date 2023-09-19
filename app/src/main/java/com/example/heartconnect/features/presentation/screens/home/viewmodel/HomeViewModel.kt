@@ -38,9 +38,8 @@ class HomeViewModel @Inject constructor(private val getHomeUsersUsecase: GetHome
             _homeState.value = _homeState.value.copy(
                 status = HomeState.Status.FAILED, message = "${ex.message}"
             )
-            Log.d("logs", "Login Exception: ${ex.message}")
+            Log.d("logs", "Exception: ${ex.message}")
         }
     }
 
 }
-
