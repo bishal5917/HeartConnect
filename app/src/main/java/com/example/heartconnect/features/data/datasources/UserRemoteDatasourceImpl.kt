@@ -13,13 +13,14 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             val querySnapshot = db.collection("Users").get().await()
             val allUsers = querySnapshot.documents.map { documentSnapshot ->
                 val data = documentSnapshot.data ?: emptyMap()
+                val docId = documentSnapshot.id
                 val name = data["name"] as? String ?: ""
-                val birthYear = data["age"] as? String ?: ""
+                val birthYear = data["birthYear"] as? String ?: ""
                 val hobbies = data["hobbies"] as? List<String> ?: listOf()
                 val profileImage = data["image"] as? String ?: ""
                 HomeUser(
-                    name = name, birthYear = birthYear, hobbies = hobbies, uid = "guagus",
-                    imageResource = R.drawable.tiger,
+                    name = name, birthYear = birthYear, hobbies = hobbies, uid = docId,
+                    profileImage = profileImage
                 )
             }
             return allUsers
@@ -27,6 +28,4 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             throw ex
         }
     }
-
-
 }

@@ -8,6 +8,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.lifecycle.ViewModelProvider
+import com.example.heartconnect.features.data.datasources.UserRemoteDatasource
+import com.example.heartconnect.features.data.datasources.UserRemoteDatasourceImpl
+import com.example.heartconnect.features.data.repositories.UserRepositoryImpl
+import com.example.heartconnect.features.domain.repositories.UserRepository
+import com.example.heartconnect.features.domain.usecases.GetHomeUsersUsecase
+import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.login.LoginViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.local_datastore.LocalDatastore
@@ -26,15 +32,29 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return PreferenceDataStoreFactory.create(
-            corruptionHandler =
-            ReplaceFileCorruptionHandler(produceNewData = { emptyPreferences() }),
-            produceFile = { context.preferencesDataStoreFile("datastore") }
-        )
+        return PreferenceDataStoreFactory.create(corruptionHandler = ReplaceFileCorruptionHandler(
+            produceNewData = { emptyPreferences() }),
+            produceFile = { context.preferencesDataStoreFile("datastore") })
     }
 
     @Provides
     fun providesDataStore(datastore: DataStore<Preferences>): LocalDatastore =
         LocalDatastoreImpl(datastore)
+
+    @Provides
+    fun provideDataSource(): UserRemoteDatasource {
+        return UserRemoteDatasourceImpl()
+    }
+
+    @Provides
+    fun provideRepository(dataSource: UserRemoteDatasource): UserRepository {
+        return UserRepositoryImpl(dataSource)
+    }
+
+    @Provides
+    fun provideUsecase(repo: UserRepository): GetHomeUsersUsecase {
+        return GetHomeUsersUsecase(repo)
+    }
+
 
 }

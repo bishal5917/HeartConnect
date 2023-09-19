@@ -1,4 +1,5 @@
 package com.example.heartconnect.features.presentation.screens.home.viewmodel
 
-class HomeEvent {
+sealed class HomeEvent {
+    object GetFeed : HomeEvent()
 }

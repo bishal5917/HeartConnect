@@ -29,17 +29,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.heartconnect.components.CustomNetworkImage
 import com.example.heartconnect.components.CustomText
+import com.example.heartconnect.features.data.models.HomeUser
 import com.example.heartconnect.features.presentation.screens.main.components.BottomBarScreen
 import com.example.heartconnect.ui.theme.VSizedBox0
 import com.example.heartconnect.ui.theme.VSizedBox2
 
-data class CardItem(
-    val name: String, val age: String, val imageResource: Painter, val hobbies: List<String>
-)
-
 @Composable
-fun HomeCard(cardItem: CardItem) {
+fun HomeCard(cardItem: HomeUser) {
     Box(
         modifier = Modifier
             .padding(8.dp)
@@ -49,18 +47,15 @@ fun HomeCard(cardItem: CardItem) {
         Column(
             modifier = Modifier.padding(8.dp)
         ) {
-            Image(
-                painter = cardItem.imageResource,
-                contentDescription = null,
-                modifier = Modifier
+            CustomNetworkImage(
+                imageUrl = cardItem.profileImage ?: "", modifier = Modifier
+                    .fillMaxSize(), parentmodifier = Modifier
+                    .height(200.dp)
                     .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop,
-
-                )
+            )
             VSizedBox0()
             CustomText(
-                data = "${cardItem.name},${cardItem.age}",
+                data = "${cardItem.name} , ${cardItem.birthYear}",
                 fontWeight = FontWeight.W500,
                 fontSize = 14
             )
@@ -69,7 +64,7 @@ fun HomeCard(cardItem: CardItem) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                items(cardItem.hobbies) { hobby ->
+                items(cardItem.hobbies ?: listOf("")) { hobby ->
                     CustomText(
                         data = hobby,
                         fontWeight = FontWeight.W400,
@@ -79,16 +74,4 @@ fun HomeCard(cardItem: CardItem) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun CardDemoPreview() {
-    HomeCard(
-        cardItem = CardItem(
-            name = "Johnny Depp", age = "55", painterResource(
-                id = R.drawable.tiger
-            ), hobbies = listOf("Hiking", "Coding", "Travelling", "Music", "Guitaring")
-        )
-    )
 }
