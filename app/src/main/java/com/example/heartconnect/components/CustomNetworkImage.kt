@@ -29,9 +29,7 @@ fun CustomNetworkImage(
     Modifier
 ) {
     Box(
-        modifier = Modifier
-            .height(200.dp)
-            .fillMaxWidth(),
+        modifier = parentmodifier,
         contentAlignment = Alignment.Center,
     ) {
         val painter = rememberImagePainter(data = imageUrl, builder = {

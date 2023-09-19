@@ -50,7 +50,7 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel =
             .fillMaxSize()
             .padding(10.dp)
     ) {
-        Column {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             VSizedBox2()
             CustomNetworkImage(
                 imageUrl = "https://i.pinimg" + ".com/236x/45/2b/6e/452b6e38b8f1d183941b31d4ee5959c3.jpg",
@@ -60,13 +60,11 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel =
                 parentmodifier = Modifier.size(100.dp)
             )
             VSizedBox2()
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 CustomText(
                     data = "Tim Berg , 1990",
                     fontWeight = FontWeight.W400,
                     fontSize = 24
                 )
-            }
             VSizedBox2()
             CustomListTile(
                 title = "Change Picture", leadingIcon = Icons.Default.Person,

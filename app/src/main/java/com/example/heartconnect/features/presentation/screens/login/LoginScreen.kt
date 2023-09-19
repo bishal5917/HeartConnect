@@ -120,7 +120,6 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                 Spacer(modifier = Modifier.height(20.dp))
 
                 CustomText(data = "Register", fontWeight = FontWeight.W400, fontSize = 14,
-
                     modifier = Modifier.clickable {
                         Log.d("Register Clicked", "")
                     })

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 
 @Composable
 fun CustomText(
@@ -15,6 +16,8 @@ fun CustomText(
     color: Color = Color.Black,
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.W400,
+    maxLine: Int = 1,
+    textDecoration: TextDecoration = TextDecoration.None
 ) {
     Text(
         text = data,
@@ -23,5 +26,7 @@ fun CustomText(
         textAlign = TextAlign.Center,
         fontWeight = fontWeight,
         modifier = modifier,
+        maxLines = maxLine,
+        textDecoration = textDecoration,
     )
 }

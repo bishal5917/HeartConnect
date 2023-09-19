@@ -1,8 +1,6 @@
-package com.example.heartconnect.features.data.models
+package com.example.heartconnect.features.data.models.feed
 
-import androidx.compose.ui.graphics.painter.Painter
-
-data class HomeUser(
+data class FeedModel(
     val uid: String? = "", val name: String? = "", val profileImage: String? = "", val birthYear:
     String? = "", val imageResource:
     Int? = null,
