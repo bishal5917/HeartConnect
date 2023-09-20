@@ -72,6 +72,9 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2"
 
+    //constraint layouts
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
     //shared preferences datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 

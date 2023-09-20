@@ -3,7 +3,7 @@ package com.example.heartconnect.navigation
 import javax.annotation.meta.When
 
 enum class AllScreen {
-    SplashScreen, LoginScreen, RegisterScreen, MainScreen, HomeScreen, ChatScreen, ProfileScreen;
+    SplashScreen, LoginScreen, RegisterScreen, MainScreen, HomeScreen, ChatScreen, ProfileScreen, TestScreen;
 
     companion object {
         fun fromRoute(route: String?): AllScreen = when (route?.substringBefore("/")) {
@@ -12,6 +12,7 @@ enum class AllScreen {
             RegisterScreen.name -> RegisterScreen
             MainScreen.name -> MainScreen
             HomeScreen.name -> HomeScreen
+            TestScreen.name -> TestScreen
             ChatScreen.name -> ChatScreen
             ProfileScreen.name -> ProfileScreen
             null -> LoginScreen

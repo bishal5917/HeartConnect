@@ -45,7 +45,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
     when (loginState.status) {
         LoginState.Status.SUCCESS -> {
-            Navigator().navigateOffAll(navController, AllScreen.MainScreen.name)
+            Navigator().navigateOffAll(navController, AllScreen.TestScreen.name)
             CustomToast(message = loginState.message)
         }
         LoginState.Status.FAILED -> {
