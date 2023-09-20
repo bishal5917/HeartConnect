@@ -6,7 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.heartconnect.features.presentation.screens.chat.ChatScreen
 import com.example.heartconnect.features.presentation.screens.home.HomeScreen
+import com.example.heartconnect.features.presentation.screens.login.LoginScreen
 import com.example.heartconnect.features.presentation.screens.profile.ProfileScreen
+import com.example.heartconnect.navigation.AllScreen
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {

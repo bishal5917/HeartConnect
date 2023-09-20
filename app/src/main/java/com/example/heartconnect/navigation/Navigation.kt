@@ -11,6 +11,7 @@ import com.example.heartconnect.features.presentation.screens.home.HomeScreen
 import com.example.heartconnect.features.presentation.screens.login.LoginScreen
 import com.example.heartconnect.features.presentation.screens.main.MainScreen
 import com.example.heartconnect.features.presentation.screens.profile.ProfileScreen
+import com.example.heartconnect.features.presentation.screens.register.RegisterScreen
 
 @Composable
 fun Navigation() {
@@ -23,6 +24,10 @@ fun Navigation() {
 
         composable(AllScreen.LoginScreen.name) {
             LoginScreen(navController = navController)
+        }
+
+        composable(AllScreen.RegisterScreen.name) {
+            RegisterScreen(navController = navController)
         }
 
         composable(AllScreen.HomeScreen.name) {

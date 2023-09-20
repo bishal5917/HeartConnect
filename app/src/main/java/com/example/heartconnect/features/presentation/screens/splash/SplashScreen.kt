@@ -16,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import com.example.heartconnect.R
 import com.example.heartconnect.components.CustomCircularProgressIndicator
+import com.example.heartconnect.navigation.Navigation
+import com.example.heartconnect.navigation.Navigator
 import com.example.heartconnect.ui.theme.SplashBgColor
 import com.example.heartconnect.ui.theme.VSizedBox4
 
@@ -67,9 +70,9 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
 //        }
 //
         if (user.value.isEmpty()) {
-            navController.navigate(AllScreen.LoginScreen.name)
+            Navigator().navigateOffAll(navController, AllScreen.LoginScreen.name)
         } else {
-            navController.navigate(AllScreen.MainScreen.name)
+            Navigator().navigateOffAll(navController, AllScreen.MainScreen.name)
         }
     }
 

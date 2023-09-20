@@ -25,6 +25,7 @@ import com.example.heartconnect.features.presentation.screens.login.LoginEvent
 import com.example.heartconnect.features.presentation.screens.login.LoginState
 import com.example.heartconnect.features.presentation.screens.login.LoginViewModel
 import com.example.heartconnect.navigation.AllScreen
+import com.example.heartconnect.navigation.Navigator
 import com.example.heartconnect.ui.theme.VSizedBox2
 import com.example.heartconnect.ui.theme.VSizedBox4
 
@@ -38,6 +39,7 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel =
             CustomToast(message = loginState.message)
         }
         LoginState.Status.LOGOUTSUCCESS -> {
+            Navigator().navigateOffAll(navController, AllScreen.LoginScreen.name)
             CustomToast(message = loginState.message)
         }
         LoginState.Status.LOGOUTFAILED -> {

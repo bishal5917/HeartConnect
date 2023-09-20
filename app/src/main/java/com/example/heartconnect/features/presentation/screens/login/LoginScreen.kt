@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.example.heartconnect.R
 import com.example.heartconnect.components.*
 import com.example.heartconnect.navigation.AllScreen
+import com.example.heartconnect.navigation.Navigator
 import com.example.heartconnect.ui.theme.Secondary
 import com.example.heartconnect.ui.theme.VSizedBox2
 import com.example.heartconnect.utils.UnfocusKeyboard
@@ -44,7 +45,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
     when (loginState.status) {
         LoginState.Status.SUCCESS -> {
-            navController.navigate(AllScreen.MainScreen.name)
+            Navigator().navigateOffAll(navController, AllScreen.MainScreen.name)
             CustomToast(message = loginState.message)
         }
         LoginState.Status.FAILED -> {
@@ -119,9 +120,11 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                CustomText(data = "Register", fontWeight = FontWeight.W400, fontSize = 14,
+                CustomText(data = "Register",
+                    fontWeight = FontWeight.W400,
+                    fontSize = 14,
                     modifier = Modifier.clickable {
-                        Log.d("Register Clicked", "")
+                        Navigator().navigateTo(navController, AllScreen.RegisterScreen.name)
                     })
             }
         }
