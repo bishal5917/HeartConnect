@@ -1,5 +1,6 @@
 package com.example.heartconnect.features.presentation.screens.register
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button

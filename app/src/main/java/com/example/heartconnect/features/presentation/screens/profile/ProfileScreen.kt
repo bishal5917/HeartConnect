@@ -30,14 +30,13 @@ import com.example.heartconnect.ui.theme.VSizedBox2
 import com.example.heartconnect.ui.theme.VSizedBox4
 
 @Composable
-fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
-
+fun ProfileScreen(
+    navController: NavController
+) {
+    val loginViewModel = hiltViewModel<LoginViewModel>()
     val loginState by loginViewModel.loginState.collectAsState()
 
     when (loginState.status) {
-        LoginState.Status.LOGOUTLOADING -> {
-            CustomToast(message = loginState.message)
-        }
         LoginState.Status.LOGOUTSUCCESS -> {
             Navigator().navigateOffAll(navController, AllScreen.LoginScreen.name)
             CustomToast(message = loginState.message)
@@ -62,11 +61,9 @@ fun ProfileScreen(navController: NavController, loginViewModel: LoginViewModel =
                 parentmodifier = Modifier.size(100.dp)
             )
             VSizedBox2()
-                CustomText(
-                    data = "Tim Berg , 1990",
-                    fontWeight = FontWeight.W400,
-                    fontSize = 24
-                )
+            CustomText(
+                data = "Tim Berg , 1990", fontWeight = FontWeight.W400, fontSize = 24
+            )
             VSizedBox2()
             CustomListTile(
                 title = "Change Picture", leadingIcon = Icons.Default.Person,

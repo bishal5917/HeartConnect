@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -39,6 +40,7 @@ import com.example.heartconnect.features.presentation.screens.register.viewmodel
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepState
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
+import com.example.heartconnect.ui.theme.Primary
 import com.example.heartconnect.ui.theme.VSizedBox4
 
 @Composable
@@ -67,7 +69,6 @@ fun BottomBarTest(
                 end.linkTo(parent.end)
             }
             .fillMaxSize()
-
         ) {
 
             //EVERYTHING TO SHOW HERE
@@ -82,23 +83,41 @@ fun BottomBarTest(
             }
         }
 
-        BottomNavigation(modifier = Modifier
-            .background(color = Color.Red)
-            .constrainAs(bottomNavBar) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-        ) {
+        BottomNavigation(
+            modifier = Modifier
+                .background(color = Color.White)
+                .constrainAs(bottomNavBar) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }) {
             BottomNavigationItem(selected = stepState.step == 0, onClick = {
                 stepViewModel.onEvent(StepEvent.Change(0))
-            }, icon = { Icons.Default.Home }, label = { Text(text = "Home") })
+            }, icon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = null,
+                    tint = if (stepState.step == 0) Primary else Color.Gray
+                )
+            }, label = { Text(text = "Home") })
             BottomNavigationItem(selected = stepState.step == 1, onClick = {
                 stepViewModel.onEvent(StepEvent.Change(1))
-            }, icon = { Icons.Default.Message }, label = { Text(text = "Chats") })
+            }, icon = {
+                Icon(
+                    imageVector = Icons.Default.Message,
+                    contentDescription = null,
+                    tint = if (stepState.step == 1) Primary else Color.Gray
+                )
+            }, label = { Text(text = "Chats") })
             BottomNavigationItem(selected = stepState.step == 2, onClick = {
                 stepViewModel.onEvent(StepEvent.Change(2))
-            }, icon = { Icons.Default.Person }, label = { Text(text = "Profile") })
+            }, icon = {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null,
+                    tint = if (stepState.step == 2) Primary else Color.Gray
+                )
+            }, label = { Text(text = "Profile") })
         }
     }
 }

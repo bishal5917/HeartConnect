@@ -34,7 +34,6 @@ class MainActivity : ComponentActivity() {
                 val splashViewModel: SplashViewModel by viewModels()
                 val loginViewModel: LoginViewModel by viewModels()
                 val homeViewModel: HomeViewModel by viewModels()
-
                 MyApp()
             }
         }
@@ -48,7 +47,6 @@ fun MyApp() {
             .fillMaxSize(), color = MaterialTheme.colors.background
     ) {
         Navigation()
-
     }
 }
 

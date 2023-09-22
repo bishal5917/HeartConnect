@@ -42,6 +42,7 @@ class ApiHandler(private val context: Context) {
             if (isAuth) {
                 addHeader("Authorization", "Bearer $token")
             }
+            get()
         }.build()
         try {
             val response = client.newCall(request).execute()

@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,6 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.heartconnect.R
 import com.example.heartconnect.components.*
+import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
 import com.example.heartconnect.navigation.AllScreen
 import com.example.heartconnect.navigation.Navigator
 import com.example.heartconnect.ui.theme.Secondary
@@ -94,9 +96,14 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
                 Spacer(modifier = Modifier.height(40.dp))
 
-                ClickableTextComponent(value = "Forgot Password?", onTextSelected = {
-
-                })
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+                    CustomText(data = "Forgot Password?",
+                        fontWeight = FontWeight.W400,
+                        fontSize = 12,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable {
+                        })
+                }
 
                 Spacer(modifier = Modifier.height(40.dp))
 
@@ -120,12 +127,14 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                CustomText(data = "Register",
-                    fontWeight = FontWeight.W400,
-                    fontSize = 14,
-                    modifier = Modifier.clickable {
-                        Navigator().navigateTo(navController, AllScreen.RegisterScreen.name)
-                    })
+                NormalButton(
+                    buttonText = "Register",
+                    modifier = Modifier
+                        .heightIn(50.dp)
+                        .fillMaxWidth()
+                ) {
+                    Navigator().navigateTo(navController, AllScreen.RegisterScreen.name)
+                }
             }
         }
     }

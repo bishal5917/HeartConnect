@@ -58,7 +58,7 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
                 OvershootInterpolator(8f).getInterpolation(it)
             })
         )
-        delay(2000L)
+        delay(1000L)
 
 //        when (splashState.status) {
 //            SplashState.SplashStatus.LOGGEDIN -> {

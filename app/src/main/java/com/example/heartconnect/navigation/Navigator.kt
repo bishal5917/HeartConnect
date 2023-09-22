@@ -13,9 +13,7 @@ class Navigator {
 
     fun navigateOffAll(navController: NavController, destination: String) {
         navController.navigate(destination) {
-            popUpTo(destination) {
-                inclusive = true
-            }
+            popUpTo(destination)
         }
     }
 }
