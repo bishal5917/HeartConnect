@@ -11,9 +11,14 @@ class Navigator {
         navController.navigate(destination)
     }
 
-    fun navigateOffAll(navController: NavController, destination: String) {
+    fun navigateOffAll(
+        navController: NavController, destination: String, removeTillScreen:
+        String
+    ) {
         navController.navigate(destination) {
-            popUpTo(destination)
+            popUpTo(removeTillScreen) {
+                inclusive = true
+            }
         }
     }
 }

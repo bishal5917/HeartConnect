@@ -23,6 +23,7 @@ import com.example.heartconnect.components.CustomText
 import com.example.heartconnect.components.NormalButton
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepViewModel
+import com.example.heartconnect.navigation.AllScreen
 import com.example.heartconnect.ui.theme.VSizedBox1
 import com.example.heartconnect.ui.theme.VSizedBox2
 
@@ -51,7 +52,15 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
                     data = "Step ${stepState.step}", fontSize = 16, fontWeight = FontWeight.W400
                 )
                 NormalButton(buttonText = "Next") {
-                    stepViewModel.onEvent(StepEvent.Increment)
+                    if (stepState.step == 2) {
+                        navController.navigate(AllScreen.MainScreen.name) {
+                            popUpTo(AllScreen.RegisterScreen.name) {
+                                inclusive = true
+                            }
+                        }
+                    } else {
+                        stepViewModel.onEvent(StepEvent.Increment)
+                    }
                 }
             }
             VSizedBox2()

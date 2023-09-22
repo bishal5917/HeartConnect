@@ -12,7 +12,6 @@ enum class AllScreen {
             RegisterScreen.name -> RegisterScreen
             MainScreen.name -> MainScreen
             HomeScreen.name -> HomeScreen
-            TestScreen.name -> TestScreen
             ChatScreen.name -> ChatScreen
             ProfileScreen.name -> ProfileScreen
             null -> LoginScreen

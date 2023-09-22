@@ -47,8 +47,11 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
     when (loginState.status) {
         LoginState.Status.SUCCESS -> {
-            Navigator().navigateOffAll(navController, AllScreen.TestScreen.name)
+            Navigator().navigateOffAll(
+                navController, AllScreen.MainScreen.name, AllScreen.LoginScreen.name
+            )
             CustomToast(message = loginState.message)
+
         }
         LoginState.Status.FAILED -> {
             CustomToast(message = loginState.message)
@@ -101,8 +104,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                         fontWeight = FontWeight.W400,
                         fontSize = 12,
                         textDecoration = TextDecoration.Underline,
-                        modifier = Modifier.clickable {
-                        })
+                        modifier = Modifier.clickable {})
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))
@@ -128,8 +130,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                 Spacer(modifier = Modifier.height(20.dp))
 
                 NormalButton(
-                    buttonText = "Register",
-                    modifier = Modifier
+                    buttonText = "Register", modifier = Modifier
                         .heightIn(50.dp)
                         .fillMaxWidth()
                 ) {

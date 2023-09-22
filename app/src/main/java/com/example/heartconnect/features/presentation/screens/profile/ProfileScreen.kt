@@ -38,7 +38,10 @@ fun ProfileScreen(
 
     when (loginState.status) {
         LoginState.Status.LOGOUTSUCCESS -> {
-            Navigator().navigateOffAll(navController, AllScreen.LoginScreen.name)
+            Navigator().navigateOffAll(
+                navController, AllScreen.LoginScreen.name, AllScreen
+                    .MainScreen.name
+            )
             CustomToast(message = loginState.message)
         }
         LoginState.Status.LOGOUTFAILED -> {

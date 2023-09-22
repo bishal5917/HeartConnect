@@ -70,10 +70,14 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
 //        }
 //
         if (user.value.isEmpty()) {
-            Navigator().navigateOffAll(navController, AllScreen.LoginScreen.name)
+            Navigator().navigateOffAll(
+                navController, AllScreen.LoginScreen.name,
+                AllScreen.SplashScreen.name
+            )
         } else {
-//            Navigator().navigateOffAll(navController, AllScreen.MainScreen.name)
-            Navigator().navigateOffAll(navController, AllScreen.TestScreen.name)
+            Navigator().navigateOffAll(
+                navController, AllScreen.MainScreen.name, AllScreen.SplashScreen.name
+            )
         }
     }
 
