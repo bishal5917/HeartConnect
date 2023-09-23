@@ -5,6 +5,7 @@ import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.firebase.FirebaseConfig
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObjects
 import kotlinx.coroutines.tasks.await
 
 class UserRemoteDatasourceImpl : UserRemoteDatasource {

@@ -30,7 +30,7 @@ fun ChatScreen(
 ) {
 
     val chatState by chatViewModel.chatState.collectAsState()
-    val userId = splashViewModel.userId.collectAsState()
+    val userId = splashViewModel.userIdFlow.collectAsState()
 
     if (chatState.status != ChatState.Status.SUCCESS) {
         LaunchedEffect(key1 = "Chat") {

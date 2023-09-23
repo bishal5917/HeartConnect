@@ -31,13 +31,7 @@ fun HomeScreen(
 ) {
 
     val homeState by homeViewModel.homeState.collectAsState()
-    val userId by splashViewModel.userId.collectAsState()
-
-    if (homeState.status != HomeState.Status.SUCCESS) {
-        LaunchedEffect(key1 = "Home") {
-            homeViewModel.onEvent(HomeEvent.GetFeed(userId))
-        }
-    }
+    val userId by splashViewModel.userIdFlow.collectAsState()
 
     Box(
         modifier = Modifier

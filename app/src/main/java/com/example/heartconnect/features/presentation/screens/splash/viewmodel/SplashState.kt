@@ -8,6 +8,6 @@ data class SplashState(
     }
 
     enum class SplashStatus {
-        IDLE, LOGGEDIN, LOGGEDOUT , FAILED
+        IDLE, LOADING , LOGGEDIN, LOGGEDOUT , FAILED
     }
 }

@@ -12,10 +12,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import okhttp3.internal.wait
@@ -28,6 +26,17 @@ class SplashViewModel @Inject constructor(private val localDatastore: LocalDatas
     private val _splashState = MutableStateFlow(SplashState.IDLE)
     val splashState: StateFlow<SplashState> = _splashState
 
+     val userIdFlow = localDatastore.getUserId().stateIn(
+        scope = viewModelScope, started = SharingStarted.WhileSubscribed(),
+        initialValue = ""
+    );
+
+    init {
+        viewModelScope.launch {
+            userIdFlow.collect()
+        }
+    }
+
     fun onEvent(event: SplashEvent) {
         when (event) {
             is SplashEvent.CheckStatus -> {
@@ -36,35 +45,25 @@ class SplashViewModel @Inject constructor(private val localDatastore: LocalDatas
         }
     }
 
-    val userId = localDatastore.getUserId().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = ""
-    );
 
     private fun checkStatus() = viewModelScope.launch {
         try {
-            val userId = localDatastore.getUserId().stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(),
-                initialValue = ""
-            );
-            if (userId.value.isEmpty()) {
+            if (userIdFlow.value.isEmpty()) {
                 _splashState.value = _splashState.value.copy(
                     status = SplashState.SplashStatus.LOGGEDOUT, message = "User logged out"
                 )
-                Log.d("Splash", "User ID: ${userId.value}")
+                Log.d("Splash", "ID: ${userIdFlow.value}")
             } else {
                 _splashState.value = _splashState.value.copy(
                     status = SplashState.SplashStatus.LOGGEDIN, message = "User Logged In"
                 )
-                Log.d("Splash", "User ID: ${userId.value}")
+                Log.d("Splash", "ID: ${userIdFlow.value}")
             }
         } catch (ex: Exception) {
             _splashState.value = _splashState.value.copy(
                 status = SplashState.SplashStatus.FAILED, message = "${ex.message}"
             )
-            Log.d("logs", "Login Exception: ${ex.message}")
+            Log.d("logs", "Exception : ${ex.message}")
         }
     }
 }

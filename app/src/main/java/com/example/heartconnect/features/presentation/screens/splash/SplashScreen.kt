@@ -48,8 +48,6 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
         Animatable(0f)
     }
     val splashState by splashViewModel.splashState.collectAsState()
-    val user = splashViewModel.userId.collectAsState()
-
 
     LaunchedEffect(key1 = true) {
         splashViewModel.onEvent(SplashEvent.CheckStatus)
@@ -58,32 +56,23 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
                 OvershootInterpolator(8f).getInterpolation(it)
             })
         )
-        delay(1000L)
-
-//        when (splashState.status) {
-//            SplashState.SplashStatus.LOGGEDIN -> {
-//                navController.navigate(AllScreen.MainScreen.name)
-//            }
-//            SplashState.SplashStatus.LOGGEDOUT -> {
-//                navController.navigate(AllScreen.LoginScreen.name)
-//            }
-//        }
-//
-        if (user.value.isEmpty()) {
-            Navigator().navigateOffAll(
-                navController, AllScreen.LoginScreen.name,
-                AllScreen.SplashScreen.name
-            )
-        } else {
-            Navigator().navigateOffAll(
-                navController, AllScreen.MainScreen.name, AllScreen.SplashScreen.name
-            )
+        delay(1500L)
+        when (splashState.status) {
+            SplashState.SplashStatus.LOGGEDIN -> {
+                Navigator().navigateOffAll(
+                    navController, AllScreen.MainScreen.name, AllScreen.SplashScreen.name
+                )
+            }
+            SplashState.SplashStatus.LOGGEDOUT -> {
+                Navigator().navigateOffAll(
+                    navController, AllScreen.LoginScreen.name, AllScreen.SplashScreen.name
+                )
+            }
         }
     }
 
     Box(
-        modifier = Modifier.background(color = SplashBgColor),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.background(color = SplashBgColor), contentAlignment = Alignment.Center
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceAround,

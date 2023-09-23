@@ -42,7 +42,7 @@ fun MainScreen(
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     val stepState by stepViewModel.stepState.collectAsState()
-    val userId by splashViewModel.userId.collectAsState()
+    val userId by splashViewModel.userIdFlow.collectAsState()
 
     LaunchedEffect(key1 = "Main") {
         homeViewModel.onEvent(HomeEvent.GetFeed(userId))
