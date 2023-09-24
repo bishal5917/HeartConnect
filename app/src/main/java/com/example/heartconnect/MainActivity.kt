@@ -23,6 +23,7 @@ import com.example.heartconnect.features.presentation.screens.splash.viewmodel.S
 import com.example.heartconnect.navigation.Navigation
 import com.example.heartconnect.ui.theme.HeartConnectTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -30,9 +31,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HeartConnectTheme {
-                val splashViewModel: SplashViewModel by viewModels()
-                val loginViewModel: LoginViewModel by viewModels()
-                val homeViewModel: HomeViewModel by viewModels()
                 MyApp()
             }
         }

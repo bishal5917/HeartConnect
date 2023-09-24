@@ -10,6 +10,7 @@ import com.example.heartconnect.features.presentation.screens.chat.ChatScreen
 import com.example.heartconnect.features.presentation.screens.home.HomeScreen
 import com.example.heartconnect.features.presentation.screens.login.LoginScreen
 import com.example.heartconnect.features.presentation.screens.main.MainScreen
+import com.example.heartconnect.features.presentation.screens.message.MessageScreen
 import com.example.heartconnect.features.presentation.screens.profile.ProfileScreen
 import com.example.heartconnect.features.presentation.screens.register.RegisterScreen
 
@@ -44,6 +45,10 @@ fun Navigation() {
 
         composable(AllScreen.MainScreen.name) {
             MainScreen(navController = navController)
+        }
+
+        composable(AllScreen.MessageScreen.name) {
+            MessageScreen(navController = navController)
         }
     }
 }

@@ -11,35 +11,42 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.heartconnect.components.CustomNetworkImage
 import com.example.heartconnect.components.CustomText
 import com.example.heartconnect.features.data.models.conversation.ConversationModel
+import com.example.heartconnect.navigation.AllScreen
+import com.example.heartconnect.navigation.Navigation
+import com.example.heartconnect.navigation.Navigator
 import com.example.heartconnect.ui.theme.HSizedBox1
 import com.example.heartconnect.ui.theme.VSizedBox0
 
 @Composable
-fun ConvoComponent(chatItem : ConversationModel) {
-    Box(modifier = Modifier
-        .clickable {
-            //execute function
+fun ConvoComponent(chatItem: ConversationModel, navController: NavController) {
+    Box(modifier = Modifier.clickable {
+        //execute function
 //            onClick()
-        }) {
+        Navigator().navigateTo(navController, AllScreen.MessageScreen.name)
+    }) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
         ) {
             HSizedBox1()
             CustomNetworkImage(
-                imageUrl = chatItem.friendImage ?: "", modifier = Modifier.clip(CircleShape),
+                imageUrl = chatItem.friendImage ?: "",
+                modifier = Modifier.clip(CircleShape),
                 parentmodifier = Modifier.size(60.dp)
             )
             HSizedBox1()
             Column(verticalArrangement = Arrangement.SpaceBetween) {
-                CustomText(data = chatItem.friendName ?: "", fontWeight = FontWeight.W400, fontSize =
-                18)
+                CustomText(
+                    data = chatItem.friendName ?: "", fontWeight = FontWeight.W400, fontSize = 18
+                )
                 VSizedBox0()
                 CustomText(
-                    data = "Tap to chat ...", fontWeight = FontWeight.W400, fontSize = 12,
+                    data = "Tap to chat ...",
+                    fontWeight = FontWeight.W400,
+                    fontSize = 12,
                     color = Color.LightGray
                 )
             }

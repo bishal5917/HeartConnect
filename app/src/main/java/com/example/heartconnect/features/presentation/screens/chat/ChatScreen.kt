@@ -53,7 +53,7 @@ fun ChatScreen(
         if (chatState.status == ChatState.Status.SUCCESS && chatState.chats != null) {
             LazyColumn {
                 items(chatState.chats ?: listOf(ConversationModel())) { chatItem ->
-                    ConvoComponent(chatItem)
+                    ConvoComponent(chatItem,navController)
                     VSizedBox2()
                 }
             }
