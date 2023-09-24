@@ -99,6 +99,7 @@ class LoginViewModel @Inject constructor(private val localDatastore: LocalDatast
         _loginState.value = _loginState.value.copy(
             status = LoginState.Status.LOGOUTLOADING, message = "Logging you out, Please wait ..."
         )
+        delay(2000L)
         try {
             auth.signOut()
             localDatastore.removeUser()

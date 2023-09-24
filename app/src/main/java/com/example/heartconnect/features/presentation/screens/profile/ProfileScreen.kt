@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.heartconnect.R
@@ -37,10 +38,12 @@ fun ProfileScreen(
     val loginState by loginViewModel.loginState.collectAsState()
 
     when (loginState.status) {
+        LoginState.Status.LOGOUTLOADING -> {
+            CustomLoadingDialog(message = loginState.message)
+        }
         LoginState.Status.LOGOUTSUCCESS -> {
             Navigator().navigateOffAll(
-                navController, AllScreen.LoginScreen.name, AllScreen
-                    .MainScreen.name
+                navController, AllScreen.LoginScreen.name, AllScreen.MainScreen.name
             )
             CustomToast(message = loginState.message)
         }

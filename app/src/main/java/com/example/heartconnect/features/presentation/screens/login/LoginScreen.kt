@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -46,12 +47,14 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
     val keyboardController = LocalSoftwareKeyboardController.current
 
     when (loginState.status) {
+        LoginState.Status.LOADING -> {
+            CustomLoadingDialog(message = loginState.message)
+        }
         LoginState.Status.SUCCESS -> {
             Navigator().navigateOffAll(
                 navController, AllScreen.MainScreen.name, AllScreen.LoginScreen.name
             )
             CustomToast(message = loginState.message)
-
         }
         LoginState.Status.FAILED -> {
             CustomToast(message = loginState.message)
@@ -109,19 +112,14 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
                 Spacer(modifier = Modifier.height(40.dp))
 
-                if (loginState.status == LoginState.Status.LOADING) {
-                    CustomCircularProgressIndicator()
-                } else {
-                    ButtonComponent(
-                        value = stringResource(id = R.string.login),
-                        onButtonClicked = {
-                            keyboardController?.hide()
-                            loginViewModel.onEvent(LoginEvent.LoginUser)
-                        },
-                        isEnabled = loginState.emailError && loginState.passwordError,
-                    )
-
-                }
+                ButtonComponent(
+                    value = stringResource(id = R.string.login),
+                    onButtonClicked = {
+                        keyboardController?.hide()
+                        loginViewModel.onEvent(LoginEvent.LoginUser)
+                    },
+                    isEnabled = loginState.emailError && loginState.passwordError,
+                )
 
                 Spacer(modifier = Modifier.height(20.dp))
 

@@ -19,7 +19,10 @@ import com.example.heartconnect.ui.theme.Primary
 fun NormalButton(
     modifier: Modifier = Modifier,
     buttonText: String, isBorder: Boolean = true,
-    titleFontSize: Int = 14, titleFontWeight: FontWeight = FontWeight.W400, onClicked: () -> Unit
+    titleFontSize: Int = 14, titleFontWeight: FontWeight = FontWeight.W400, borderColor: Color =
+        Primary,
+    onClicked: ()
+    -> Unit
 ) {
     Button(
         modifier = modifier,
@@ -27,7 +30,7 @@ fun NormalButton(
             onClicked()
         },
         contentPadding = PaddingValues(),
-        border = if (isBorder) BorderStroke(width = 1.dp, color = Primary) else null,
+        border = if (isBorder) BorderStroke(width = 1.dp, color = borderColor) else null,
         colors = ButtonDefaults.buttonColors(Color.White),
         shape = RoundedCornerShape(50.dp),
         enabled = true,
