@@ -23,9 +23,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.heartconnect.features.presentation.screens.chat.ChatScreen
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatEvent
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatState
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatViewModel
 import com.example.heartconnect.features.presentation.screens.home.HomeScreen
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeEvent
+import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.profile.ProfileScreen
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
@@ -42,11 +44,22 @@ fun MainScreen(
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     val stepState by stepViewModel.stepState.collectAsState()
+    val homeState by homeViewModel.homeState.collectAsState()
+    val chatState by chatViewModel.chatState.collectAsState()
+
     val userId by splashViewModel.userIdFlow.collectAsState()
 
-    LaunchedEffect(key1 = "Main") {
-        homeViewModel.onEvent(HomeEvent.GetFeed(userId))
-        chatViewModel.onEvent(ChatEvent.GetChats(userId))
+    LaunchedEffect(key1 = true) {
+        if (chatState.status != ChatState.Status.SUCCESS) chatViewModel.onEvent(
+            ChatEvent.GetChats(
+                userId
+            )
+        )
+        if (homeState.status != HomeState.Status.SUCCESS) homeViewModel.onEvent(
+            HomeEvent.GetFeed(
+                userId
+            )
+        )
     }
 
     ConstraintLayout {
@@ -58,8 +71,7 @@ fun MainScreen(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
-            .fillMaxSize()
-        ) {
+            .fillMaxSize()) {
 
             //EVERYTHING TO SHOW HERE
             if (stepState.step == 0) {
@@ -73,14 +85,13 @@ fun MainScreen(
             }
         }
 
-        BottomNavigation(
-            modifier = Modifier
-                .background(color = Color.White)
-                .constrainAs(bottomNavBar) {
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }) {
+        BottomNavigation(modifier = Modifier
+            .background(color = Color.White)
+            .constrainAs(bottomNavBar) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }) {
             BottomNavigationItem(selected = stepState.step == 0, onClick = {
                 stepViewModel.onEvent(StepEvent.Change(0))
             }, icon = {
