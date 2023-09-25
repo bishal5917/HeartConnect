@@ -6,4 +6,6 @@ sealed class SendMessageEvent {
     data class MessageTyping(val typedMessage: String) : SendMessageEvent()
 
     data class SendMessage(val messageRequestModel: MessageRequestModel) : SendMessageEvent()
+
+    object Reset : SendMessageEvent()
 }

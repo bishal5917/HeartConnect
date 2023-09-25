@@ -81,6 +81,27 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 FirebaseConfig().db.collection("Users").document(friendId ?: "").get().await()
             val friendName = getFriendDetailSnapshot.get("name") as String
             val friendImage = getFriendDetailSnapshot.get("image") as String
+//            for listening in real time
+            val ref = FirebaseConfig().db.collection("Convos").document(messageRequestModel.convoId)
+                .collection("messages")
+//            val allMessages = ArrayList<MessageModel>()
+//            val listener = ref.addSnapshotListener { snapshot, exception ->
+//                snapshot?.documents?.map { documentSnapshot ->
+//                    val data = documentSnapshot.data ?: emptyMap()
+//                    val docId = documentSnapshot.id
+//                    val senderId = data["senderId"] as? String ?: ""
+//                    val message = data["message"] as? String ?: ""
+//                    allMessages.add(
+//                        MessageModel(
+//                            timeStamp = docId,
+//                            senderId = senderId,
+//                            message = message,
+//                            friendName = friendName,
+//                            friendImage = friendImage,
+//                        )
+//                    )
+//                }
+//            }
             val allMessages = querySnapshot.documents.map { documentSnapshot ->
                 val data = documentSnapshot.data ?: emptyMap()
                 val docId = documentSnapshot.id

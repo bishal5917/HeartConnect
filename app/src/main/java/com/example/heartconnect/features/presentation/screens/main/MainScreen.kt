@@ -3,6 +3,7 @@ package com.example.heartconnect.features.presentation.screens.main
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -17,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -71,7 +73,7 @@ fun MainScreen(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
-            .fillMaxSize()) {
+            .fillMaxSize().padding(bottom = 50.dp)) {
 
             //EVERYTHING TO SHOW HERE
             if (stepState.step == 0) {

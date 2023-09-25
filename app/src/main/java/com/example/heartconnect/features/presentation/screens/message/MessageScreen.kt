@@ -2,7 +2,9 @@ package com.example.heartconnect.features.presentation.screens.message
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -26,6 +28,7 @@ import com.example.heartconnect.R
 import com.example.heartconnect.components.*
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
+import com.example.heartconnect.features.presentation.screens.login.LoginState
 import com.example.heartconnect.features.presentation.screens.message.components.SingleMessage
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.get_message_viewmodel.MessageEvent
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.get_message_viewmodel.MessageState
@@ -34,6 +37,8 @@ import com.example.heartconnect.features.presentation.screens.message.viewmodel.
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.send_message_viewmodel.SendMessageState
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.send_message_viewmodel.SendMessageViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
+import com.example.heartconnect.navigation.AllScreen
+import com.example.heartconnect.navigation.Navigator
 import com.example.heartconnect.ui.theme.*
 
 @Composable
@@ -49,6 +54,17 @@ fun MessageScreen(
     val messageState by messageViewModel.messageState.collectAsState()
     val userId by splashViewModel.userIdFlow.collectAsState()
 
+    //state for lazy list scroll controlling
+    val lazyListState = rememberLazyListState()
+
+    when (messageState.status) {
+        MessageState.Status.SUCCESS -> {
+            LaunchedEffect(key1 = true) {
+                lazyListState.animateScrollToItem(Int.MAX_VALUE)
+            }
+        }
+    }
+
     LaunchedEffect(key1 = true) {
         messageViewModel.onEvent(
             MessageEvent.GetMessages(
@@ -63,11 +79,11 @@ fun MessageScreen(
     Scaffold(topBar = {
         CustomAppbar(navController, title = friendName ?: "", actionButtonClicked = {})
     }, bottomBar = {
-        SendMessageComponent(conversationId ?: "")
+        SendMessageComponent(conversationId ?: "", lazyListState)
     }) {
-        Surface(
+        Box(
             modifier = Modifier
-                .padding(10.dp)
+                .padding(bottom = 50.dp)
                 .fillMaxSize(),
         ) {
             if (messageState.status == MessageState.Status.LOADING) {
@@ -78,7 +94,7 @@ fun MessageScreen(
                 }
             }
             if (messageState.status == MessageState.Status.SUCCESS) {
-                LazyColumn {
+                LazyColumn(modifier = Modifier.padding(10.dp), state = lazyListState) {
                     items(messageState.messages ?: listOf(MessageModel())) { msgItem ->
                         SingleMessage(messageModel = msgItem)
                         VSizedBox1()
@@ -106,12 +122,22 @@ fun MessageScreen(
 }
 
 @Composable
-fun SendMessageComponent(conversationId: String) {
+fun SendMessageComponent(conversationId: String, lazyListState: LazyListState) {
     val sendMessageViewModel = hiltViewModel<SendMessageViewModel>()
     val splashViewModel = hiltViewModel<SplashViewModel>()
 
     val userId by splashViewModel.userIdFlow.collectAsState()
     val sendMessageState by sendMessageViewModel.sendMessageState.collectAsState()
+
+    when (sendMessageState.status) {
+        SendMessageState.Status.SUCCESS -> {
+            //reset the fields
+            sendMessageViewModel.onEvent(SendMessageEvent.Reset)
+            LaunchedEffect(key1 = true) {
+                lazyListState.animateScrollToItem(Int.MAX_VALUE)
+            }
+        }
+    }
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -121,7 +147,7 @@ fun SendMessageComponent(conversationId: String) {
             .fillMaxWidth(),
     ) {
         CustomTextField(
-            modifier = Modifier.clip(RoundedCornerShape(8.dp)),
+            modifier = Modifier.clip(RoundedCornerShape(6.dp)),
             labelValue = "Type a Message ...",
             painterResource(id = R.drawable.message),
             onTextChanged = {

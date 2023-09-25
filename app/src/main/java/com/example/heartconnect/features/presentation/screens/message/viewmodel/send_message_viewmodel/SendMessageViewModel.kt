@@ -27,6 +27,11 @@ class SendMessageViewModel @Inject constructor(private val sendMessageUsecase: S
             is SendMessageEvent.SendMessage -> {
                 if (_sendMessageState.value.typedMessage.isNotEmpty()) sendMessage(event.messageRequestModel)
             }
+            is SendMessageEvent.Reset -> {
+                _sendMessageState.value = _sendMessageState.value.copy(
+                    typedMessage = ""
+                )
+            }
         }
     }
 
