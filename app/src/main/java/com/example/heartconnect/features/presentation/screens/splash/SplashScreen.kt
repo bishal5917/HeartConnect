@@ -47,7 +47,7 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
     val scale = remember {
         Animatable(0f)
     }
-    val splashState by splashViewModel.splashState.collectAsState()
+    val userIdFlow by splashViewModel.userIdFlow.collectAsState()
 
     LaunchedEffect(key1 = true) {
         splashViewModel.onEvent(SplashEvent.CheckStatus)
@@ -57,17 +57,14 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
             })
         )
         delay(1500L)
-        when (splashState.status) {
-            SplashState.SplashStatus.LOGGEDIN -> {
-                Navigator().navigateOffAll(
-                    navController, AllScreen.MainScreen.name, AllScreen.SplashScreen.name
-                )
-            }
-            SplashState.SplashStatus.LOGGEDOUT -> {
-                Navigator().navigateOffAll(
-                    navController, AllScreen.LoginScreen.name, AllScreen.SplashScreen.name
-                )
-            }
+        if (userIdFlow.isEmpty()) {
+            Navigator().navigateOffAll(
+                navController, AllScreen.LoginScreen.name, AllScreen.SplashScreen.name
+            )
+        }else{
+            Navigator().navigateOffAll(
+                navController, AllScreen.MainScreen.name, AllScreen.SplashScreen.name
+            )
         }
     }
 

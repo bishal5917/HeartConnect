@@ -21,22 +21,20 @@ import com.example.heartconnect.ui.theme.Primary
 
 @Composable
 fun CustomTextField(
+    modifier: Modifier,
     labelValue: String,
     painterResource: Painter,
     onTextChanged: (String) -> Unit,
     errorStatus: Boolean = false,
     isEnabled: Boolean,
 ) {
-
     val textValue = remember {
         mutableStateOf("")
     }
     val localFocusManager = LocalFocusManager.current
 
     OutlinedTextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(5.dp)),
+        modifier = modifier,
         label = { Text(text = labelValue) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Primary,
