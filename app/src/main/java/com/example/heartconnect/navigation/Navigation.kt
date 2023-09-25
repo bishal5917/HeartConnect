@@ -2,8 +2,10 @@ package com.example.heartconnect.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.heartconnect.features.presentation.screens.splash.SplashScreen
 import com.example.heartconnect.features.presentation.screens.chat.ChatScreen
@@ -47,8 +49,15 @@ fun Navigation() {
             MainScreen(navController = navController)
         }
 
-        composable(AllScreen.MessageScreen.name) {
-            MessageScreen(navController = navController)
+        composable(
+            route = "${AllScreen.MessageScreen.name}/{id}/{name}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.StringType
+            }, navArgument("name") {
+                type = NavType.StringType
+            })
+        ) {
+            MessageScreen(navController = navController, it)
         }
     }
 }

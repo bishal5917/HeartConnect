@@ -26,7 +26,11 @@ fun ConvoComponent(chatItem: ConversationModel, navController: NavController) {
     Box(modifier = Modifier.clickable {
         //execute function
 //            onClick()
-        Navigator().navigateTo(navController, AllScreen.MessageScreen.name)
+        if (chatItem.friendName != null)
+            Navigator().navigateTo(
+                navController,
+                "${AllScreen.MessageScreen.name}/${chatItem.convoId}/${chatItem.friendName}"
+            )
     }) {
         Row(
             modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically

@@ -54,7 +54,6 @@ fun SingleMessage(messageModel: MessageModel) {
                 color = if (userId.value == messageModel.senderId) Color.White else Color.Black
             )
         }
-
     }
 }
 

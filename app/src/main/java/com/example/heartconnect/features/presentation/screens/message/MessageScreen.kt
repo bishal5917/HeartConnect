@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.heartconnect.R
 import com.example.heartconnect.components.*
@@ -48,7 +49,11 @@ import com.example.heartconnect.ui.theme.*
 @Composable
 fun MessageScreen(
     navController: NavController,
+    navBackStackEntry: NavBackStackEntry,
 ) {
+    val conversationId = navBackStackEntry.arguments?.getString("id")
+    val friendName = navBackStackEntry.arguments?.getString("name")
+
     val messageViewModel = hiltViewModel<MessageViewModel>()
     val splashViewModel = hiltViewModel<SplashViewModel>()
     val messageState by messageViewModel.messageState.collectAsState()
@@ -59,14 +64,14 @@ fun MessageScreen(
             MessageEvent.GetMessages(
                 MessageRequestModel(
                     userId = userId,
-                    convoId = "2g5VBg2n93IdHoFNBFPv",
+                    convoId = conversationId ?: "",
                 )
             )
         )
     }
 
     Scaffold(topBar = {
-        CustomAppbar(navController, title = "Free Guy", actionButtonClicked = {})
+        CustomAppbar(navController, title = friendName ?: "", actionButtonClicked = {})
     }, bottomBar = {
         SendMessageComponent()
     }) {
@@ -99,7 +104,7 @@ fun MessageScreen(
                             MessageEvent.GetMessages(
                                 MessageRequestModel(
                                     userId = userId,
-                                    convoId = "2g5VBg2n93IdHoFNBFPv",
+                                    convoId = conversationId?:"",
                                 )
                             )
                         )
@@ -116,7 +121,9 @@ fun SendMessageComponent() {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(10.dp).fillMaxWidth(),
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth(),
     ) {
         CustomTextField(
             modifier = Modifier.clip(RoundedCornerShape(8.dp)),
