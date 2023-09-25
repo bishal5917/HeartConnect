@@ -2,12 +2,18 @@ package com.example.heartconnect.network
 
 import android.content.Context
 import android.util.Log
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.heartconnect.errors.ApiExceptions
 import com.example.heartconnect.errors.ApiNotRespondingException
 import com.example.heartconnect.errors.BadRequestException
 import com.example.heartconnect.errors.FetchDataException
+import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
+import com.example.heartconnect.local_datastore.LocalDatastore
 import com.google.android.gms.common.api.ApiException
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -18,6 +24,8 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 class ApiHandler(private val context: Context) {
+    //getting the user token
+    private val token = "s"
     private val baseUrl = "/api.github.com"
     private val timeOutDuration = 60L
     private val client: OkHttpClient =
@@ -34,7 +42,6 @@ class ApiHandler(private val context: Context) {
     // GET request
     fun get(api: String, header: Map<String, String>? = null, isAuth: Boolean = false): Any? {
 //        val token = if (isAuth) SharedPreference.getToken(context) else null
-        val token = "wwawas1a"
         val request = Request.Builder().url(baseUrl + api).apply {
             header?.forEach { (key, value) ->
                 addHeader(key, value)

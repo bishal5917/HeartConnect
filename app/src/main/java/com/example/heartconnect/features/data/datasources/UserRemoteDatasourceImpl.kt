@@ -5,10 +5,13 @@ import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
 import com.example.heartconnect.firebase.FirebaseConfig
+import com.example.heartconnect.model.CommonResponseModel
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObjects
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class UserRemoteDatasourceImpl : UserRemoteDatasource {
     override suspend fun getHomeUsers(id: String): List<FeedModel> {
@@ -92,6 +95,26 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 )
             }
             return allMessages
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun sendMessage(messageRequestModel: MessageRequestModel): CommonResponseModel {
+        val timestamp = System.currentTimeMillis()
+        val currentDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val createdAt = currentDateTime.format(formatter)
+        val messageData = hashMapOf(
+            "senderId" to messageRequestModel.userId,
+            "message" to messageRequestModel.message,
+            "createdAt" to createdAt
+        )
+        try {
+            val result =
+                FirebaseConfig().db.collection("Convos").document(messageRequestModel.convoId)
+                    .collection("messages").document("$timestamp").set(messageData).await()
+            return CommonResponseModel(success = true, message = result.toString())
         } catch (ex: Exception) {
             throw ex
         }

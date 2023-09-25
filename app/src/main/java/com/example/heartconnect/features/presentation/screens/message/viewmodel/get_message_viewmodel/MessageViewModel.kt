@@ -1,4 +1,4 @@
-package com.example.heartconnect.features.presentation.screens.message.viewmodel
+package com.example.heartconnect.features.presentation.screens.message.viewmodel.get_message_viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

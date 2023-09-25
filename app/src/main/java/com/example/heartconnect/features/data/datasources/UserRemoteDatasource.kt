@@ -4,6 +4,7 @@ import com.example.heartconnect.features.data.models.conversation.ConversationMo
 import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
+import com.example.heartconnect.model.CommonResponseModel
 
 interface UserRemoteDatasource {
     suspend fun getHomeUsers(id: String): List<FeedModel>
@@ -11,5 +12,7 @@ interface UserRemoteDatasource {
     suspend fun getConversations(id: String): List<ConversationModel>
 
     suspend fun getMessages(messageRequestModel: MessageRequestModel): List<MessageModel>
+
+    suspend fun sendMessage(messageRequestModel: MessageRequestModel): CommonResponseModel
 
 }

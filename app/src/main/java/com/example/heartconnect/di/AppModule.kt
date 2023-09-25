@@ -15,6 +15,7 @@ import com.example.heartconnect.features.domain.repositories.UserRepository
 import com.example.heartconnect.features.domain.usecases.GetConversationsUsecase
 import com.example.heartconnect.features.domain.usecases.GetHomeUsersUsecase
 import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
+import com.example.heartconnect.features.domain.usecases.SendMessageUsecase
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.login.LoginViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
@@ -67,5 +68,10 @@ object AppModule {
     @Provides
     fun provideMessagesUsecase(repo: UserRepository): GetMessagesUsecase {
         return GetMessagesUsecase(repo)
+    }
+
+    @Provides
+    fun provideSendMessageUsecase(repo: UserRepository): SendMessageUsecase {
+        return SendMessageUsecase(repo)
     }
 }

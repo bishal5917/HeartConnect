@@ -6,6 +6,7 @@ import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
 import com.example.heartconnect.features.domain.repositories.UserRepository
+import com.example.heartconnect.model.CommonResponseModel
 
 class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : UserRepository {
     override suspend fun getHomeUsers(id: String): List<FeedModel> {
@@ -27,6 +28,14 @@ class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : Use
     override suspend fun getMessages(messageRequestModel: MessageRequestModel): List<MessageModel> {
         try {
             return userDataSource.getMessages(messageRequestModel)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun sendMessage(messageRequestModel: MessageRequestModel): CommonResponseModel {
+        try {
+            return userDataSource.sendMessage(messageRequestModel)
         } catch (ex: Exception) {
             throw ex
         }

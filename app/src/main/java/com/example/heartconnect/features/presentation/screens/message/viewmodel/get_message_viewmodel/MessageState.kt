@@ -1,4 +1,4 @@
-package com.example.heartconnect.features.presentation.screens.message.viewmodel
+package com.example.heartconnect.features.presentation.screens.message.viewmodel.get_message_viewmodel
 
 import com.example.heartconnect.features.data.models.message.MessageModel
 
