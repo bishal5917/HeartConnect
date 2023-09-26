@@ -2,7 +2,6 @@ package com.example.heartconnect.features.presentation.screens.profile
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.LockClock
@@ -14,21 +13,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.heartconnect.R
-import com.example.heartconnect.components.*
+import com.example.heartconnect.composables.*
 import com.example.heartconnect.features.presentation.screens.login.LoginEvent
 import com.example.heartconnect.features.presentation.screens.login.LoginState
 import com.example.heartconnect.features.presentation.screens.login.LoginViewModel
-import com.example.heartconnect.navigation.AllScreen
-import com.example.heartconnect.navigation.Navigator
+import com.example.heartconnect.core.navigation.AllScreen
+import com.example.heartconnect.core.navigation.Navigator
 import com.example.heartconnect.ui.theme.VSizedBox2
-import com.example.heartconnect.ui.theme.VSizedBox4
 
 @Composable
 fun ProfileScreen(

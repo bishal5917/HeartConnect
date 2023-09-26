@@ -14,8 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.heartconnect.components.CustomNetworkImage
-import com.example.heartconnect.components.CustomText
+import com.example.heartconnect.composables.CustomNetworkImage
+import com.example.heartconnect.composables.CustomText
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.ui.theme.HSizedBox1

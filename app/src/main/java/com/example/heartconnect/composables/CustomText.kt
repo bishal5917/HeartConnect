@@ -1,4 +1,4 @@
-package com.example.heartconnect.components
+package com.example.heartconnect.composables
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

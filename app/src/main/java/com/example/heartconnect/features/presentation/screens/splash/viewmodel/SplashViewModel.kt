@@ -1,22 +1,13 @@
 package com.example.heartconnect.features.presentation.screens.splash.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.heartconnect.local_datastore.LocalDatastore
-import com.example.heartconnect.utils.Validator
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.example.heartconnect.services.local.LocalDatastore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import okhttp3.internal.wait
+
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +17,7 @@ class SplashViewModel @Inject constructor(private val localDatastore: LocalDatas
     private val _splashState = MutableStateFlow(SplashState.IDLE)
     val splashState: StateFlow<SplashState> = _splashState
 
-     val userIdFlow = localDatastore.getUserId().stateIn(
+    val userIdFlow = localDatastore.getUserId().stateIn(
         scope = viewModelScope, started = SharingStarted.WhileSubscribed(),
         initialValue = ""
     );

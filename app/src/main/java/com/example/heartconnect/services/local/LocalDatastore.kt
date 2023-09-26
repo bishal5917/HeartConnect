@@ -1,4 +1,4 @@
-package com.example.heartconnect.local_datastore
+package com.example.heartconnect.services.local
 
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow

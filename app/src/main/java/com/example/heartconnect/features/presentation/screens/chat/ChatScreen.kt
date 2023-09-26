@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.heartconnect.components.CustomCircularProgressIndicator
-import com.example.heartconnect.components.CustomErrorComponent
+import com.example.heartconnect.composables.CustomCircularProgressIndicator
+import com.example.heartconnect.composables.CustomErrorComponent
 import com.example.heartconnect.features.data.models.conversation.ConversationModel
 import com.example.heartconnect.features.presentation.screens.chat.components.ConvoComponent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatEvent

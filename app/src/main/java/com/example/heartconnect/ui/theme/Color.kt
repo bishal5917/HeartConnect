@@ -2,7 +2,7 @@ package com.example.heartconnect.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Primary = Color(0xFFC33E66)
+val Primary = Color(0xffED2F5B)
 val Secondary = Color(0xffA4EFE0)
 val TextColor = Color(0xFF1D1617)
 val AccentColor = Color(0xFFC58BF2)

@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
@@ -18,17 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.heartconnect.R
-import com.example.heartconnect.components.*
+import com.example.heartconnect.composables.*
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
-import com.example.heartconnect.features.presentation.screens.login.LoginState
 import com.example.heartconnect.features.presentation.screens.message.components.SingleMessage
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.get_message_viewmodel.MessageEvent
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.get_message_viewmodel.MessageState
@@ -37,8 +33,6 @@ import com.example.heartconnect.features.presentation.screens.message.viewmodel.
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.send_message_viewmodel.SendMessageState
 import com.example.heartconnect.features.presentation.screens.message.viewmodel.send_message_viewmodel.SendMessageViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
-import com.example.heartconnect.navigation.AllScreen
-import com.example.heartconnect.navigation.Navigator
 import com.example.heartconnect.ui.theme.*
 
 @Composable

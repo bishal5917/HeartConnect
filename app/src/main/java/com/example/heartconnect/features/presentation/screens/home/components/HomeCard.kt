@@ -7,23 +7,30 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.heartconnect.components.CustomIconButton
-import com.example.heartconnect.components.CustomNetworkImage
-import com.example.heartconnect.components.CustomText
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.heartconnect.composables.*
+import com.example.heartconnect.features.data.models.chat.ChatRequestModel
 import com.example.heartconnect.features.data.models.feed.FeedModel
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatEvent
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatViewModel
+import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.ui.theme.Primary
 import com.example.heartconnect.ui.theme.VSizedBox0
 
 @Composable
 fun HomeCard(cardItem: FeedModel) {
+    val createChatViewModel = hiltViewModel<CreateChatViewModel>()
+    val splashViewModel = hiltViewModel<SplashViewModel>()
+    val userId by splashViewModel.userIdFlow.collectAsState()
+
     Box(
         modifier = Modifier
             .padding(8.dp)
@@ -52,10 +59,16 @@ fun HomeCard(cardItem: FeedModel) {
                     fontSize = 14
                 )
                 CustomIconButton(
-                    contentDesc = "Create", childIcon = Icons.Default.FavoriteBorder, color =
-                    Primary
+                    contentDesc = "Create",
+                    childIcon = Icons.Default.FavoriteBorder,
+                    color = Primary
                 ) {
                     //create chat api
+                    createChatViewModel.onEvent(
+                        CreateChatEvent.CreateChat(
+                            ChatRequestModel(userId = userId, friendId = cardItem.uid ?: "")
+                        )
+                    )
                 }
             }
 

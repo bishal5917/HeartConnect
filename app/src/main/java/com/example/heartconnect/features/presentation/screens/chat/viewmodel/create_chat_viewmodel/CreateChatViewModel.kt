@@ -22,12 +22,17 @@ class CreateChatViewModel @Inject constructor(private val createChatUsecase: Cre
             is CreateChatEvent.CreateChat -> {
                 createChat(event.chatRequestModel)
             }
+            is CreateChatEvent.Reset -> {
+                _createChatState.value = _createChatState.value.copy(
+                    status = CreateChatState.Status.IDLE, message = "Idle"
+                )
+            }
         }
     }
 
     private fun createChat(chatRequestModel: ChatRequestModel) = viewModelScope.launch {
         _createChatState.value = _createChatState.value.copy(
-            status = CreateChatState.Status.LOADING, message = "Getting messages , please wait ..."
+            status = CreateChatState.Status.LOADING, message = "Adding to chat ..."
         )
         try {
             val result = createChatUsecase.call(chatRequestModel)

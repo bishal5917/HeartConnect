@@ -1,4 +1,4 @@
-package com.example.heartconnect.navigation
+package com.example.heartconnect.core.navigation
 
 import javax.annotation.meta.When
 

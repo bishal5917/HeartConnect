@@ -1,10 +1,9 @@
 package com.example.heartconnect.features.presentation.screens.login
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.heartconnect.local_datastore.LocalDatastore
+import com.example.heartconnect.services.local.LocalDatastore
 import com.example.heartconnect.utils.Validator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

@@ -1,4 +1,4 @@
-package com.example.heartconnect.components
+package com.example.heartconnect.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.AlertDialog

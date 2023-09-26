@@ -1,4 +1,4 @@
-package com.example.heartconnect.errors
+package com.example.heartconnect.core.errors
 
 open class ApiExceptions(
     val msg: String? = null, val prefix: String? = null, val url: String? = null,

@@ -1,4 +1,4 @@
-package com.example.heartconnect.firebase
+package com.example.heartconnect.core.configs
 
 import com.google.firebase.firestore.FirebaseFirestore
 

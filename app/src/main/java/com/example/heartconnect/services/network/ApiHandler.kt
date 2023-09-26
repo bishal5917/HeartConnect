@@ -1,19 +1,12 @@
-package com.example.heartconnect.network
+package com.example.heartconnect.services.network
 
 import android.content.Context
 import android.util.Log
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.heartconnect.errors.ApiExceptions
-import com.example.heartconnect.errors.ApiNotRespondingException
-import com.example.heartconnect.errors.BadRequestException
-import com.example.heartconnect.errors.FetchDataException
-import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
-import com.example.heartconnect.local_datastore.LocalDatastore
-import com.google.android.gms.common.api.ApiException
+import com.example.heartconnect.core.errors.ApiExceptions
+import com.example.heartconnect.core.errors.ApiNotRespondingException
+import com.example.heartconnect.core.errors.BadRequestException
+import com.example.heartconnect.core.errors.FetchDataException
 import com.google.gson.Gson
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit

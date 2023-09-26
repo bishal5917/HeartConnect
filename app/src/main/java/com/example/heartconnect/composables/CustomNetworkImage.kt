@@ -1,24 +1,14 @@
-package com.example.heartconnect.components
+package com.example.heartconnect.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
-import coil.compose.ImagePainter.State.Empty.painter
 import coil.compose.rememberImagePainter
-import coil.transform.BlurTransformation
-import coil.transform.CircleCropTransformation
-import coil.transform.GrayscaleTransformation
 import coil.transform.RoundedCornersTransformation
 import com.example.heartconnect.R
 

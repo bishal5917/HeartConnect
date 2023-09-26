@@ -1,4 +1,4 @@
-package com.example.heartconnect.navigation
+package com.example.heartconnect.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController

@@ -4,4 +4,6 @@ import com.example.heartconnect.features.data.models.chat.ChatRequestModel
 
 sealed class CreateChatEvent {
     data class CreateChat(val chatRequestModel: ChatRequestModel) : CreateChatEvent()
+
+    object Reset : CreateChatEvent()
 }

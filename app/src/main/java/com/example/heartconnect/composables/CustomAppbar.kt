@@ -1,6 +1,5 @@
-package com.example.heartconnect.components
+package com.example.heartconnect.composables
 
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -9,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
-import com.example.heartconnect.navigation.Navigator
+import com.example.heartconnect.core.navigation.Navigator
 import com.example.heartconnect.ui.theme.Primary
 
 @Composable

@@ -1,30 +1,20 @@
 package com.example.heartconnect.features.presentation.screens.register
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.heartconnect.components.ButtonComponent
-import com.example.heartconnect.components.CustomText
-import com.example.heartconnect.components.NormalButton
+import com.example.heartconnect.composables.CustomText
+import com.example.heartconnect.composables.NormalButton
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepViewModel
-import com.example.heartconnect.navigation.AllScreen
-import com.example.heartconnect.ui.theme.VSizedBox1
+import com.example.heartconnect.core.navigation.AllScreen
 import com.example.heartconnect.ui.theme.VSizedBox2
 
 @Composable

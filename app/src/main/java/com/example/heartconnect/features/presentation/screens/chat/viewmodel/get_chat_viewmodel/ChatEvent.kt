@@ -2,5 +2,4 @@ package com.example.heartconnect.features.presentation.screens.chat.viewmodel.ge
 
 sealed class ChatEvent {
     data class GetChats(val userId: String) : ChatEvent()
-
 }

@@ -5,11 +5,9 @@ import com.example.heartconnect.features.data.models.conversation.ConversationMo
 import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
-import com.example.heartconnect.firebase.FirebaseConfig
+import com.example.heartconnect.core.configs.FirebaseConfig
 import com.example.heartconnect.model.CommonResponseModel
 import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObjects
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -158,16 +156,16 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                     }
                 }
             }
-            return if (total == 0) {
+            if (total == 0) {
                 val chatCreateData = hashMapOf(
                     "members" to listOf(chatRequestModel.userId, chatRequestModel.friendId),
                 )
-                FirebaseConfig().db.collection("Convos").document().set({
+                FirebaseConfig().db.collection("Convos").document().set(
                     chatCreateData
-                }).await()
-                CommonResponseModel(success = true, message = "Chat Created")
+                ).await()
+                return CommonResponseModel(success = true, message = "Chat Created")
             } else {
-                CommonResponseModel(success = false, message = "Already your chat")
+                return CommonResponseModel(success = true, message = "Already your chat")
             }
         } catch (ex: Exception) {
             throw ex
