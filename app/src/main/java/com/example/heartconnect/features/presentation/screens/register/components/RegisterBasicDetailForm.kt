@@ -38,6 +38,7 @@ fun RegisterBasicDetailForm() {
             onTextChanged = {
                 registerViewModel.onEvent(RegisterEvent.NameChanged(it))
             },
+            textValue = registerState.name,
             isEnabled = true,
             errorStatus = registerState.nameError,
         )
@@ -51,6 +52,7 @@ fun RegisterBasicDetailForm() {
             onTextChanged = {
                 registerViewModel.onEvent(RegisterEvent.EmailChanged(it))
             },
+            textValue = registerState.email,
             isEnabled = true,
             errorStatus = registerState.emailError,
         )
@@ -64,6 +66,7 @@ fun RegisterBasicDetailForm() {
             onTextChanged = {
                 registerViewModel.onEvent(RegisterEvent.PhoneChanged(it))
             },
+            textValue = registerState.phone,
             isEnabled = true,
             errorStatus = registerState.phoneError,
         )
@@ -77,6 +80,7 @@ fun RegisterBasicDetailForm() {
             onTextChanged = {
                 registerViewModel.onEvent(RegisterEvent.GenderChanged(it))
             },
+            textValue = registerState.gender,
             isEnabled = true,
             errorStatus = registerState.genderError,
         )
@@ -90,6 +94,7 @@ fun RegisterBasicDetailForm() {
             onTextChanged = {
                 registerViewModel.onEvent(RegisterEvent.BirthYearChanged(it))
             },
+            textValue = registerState.birthYear,
             isEnabled = true,
             errorStatus = registerState.birthYearError,
         )

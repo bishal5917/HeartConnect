@@ -148,6 +148,7 @@ fun SendMessageComponent(conversationId: String, lazyListState: LazyListState) {
             onTextChanged = {
                 sendMessageViewModel.onEvent(SendMessageEvent.MessageTyping(it))
             },
+            textValue = sendMessageState.typedMessage,
             isEnabled = true,
             errorStatus = true,
         )

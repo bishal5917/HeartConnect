@@ -9,6 +9,7 @@ data class RegisterState(
     var gender: String = "",
     var birthYear: String = "",
     var password: String = "",
+    var hobbies: ArrayList<String>? = ArrayList(),
     var nameError: Boolean = false,
     var emailError: Boolean = false,
     var phoneError: Boolean = false,

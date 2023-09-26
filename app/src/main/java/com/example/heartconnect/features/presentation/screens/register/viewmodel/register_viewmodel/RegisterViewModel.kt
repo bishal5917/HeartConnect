@@ -1,5 +1,6 @@
 package com.example.heartconnect.features.presentation.screens.register.viewmodel.register_viewmodel
 
+import android.util.Log
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
@@ -10,7 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetMessagesUsecase) : ViewModel() {
+class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetMessagesUsecase) :
+    ViewModel() {
     private val _registerState = MutableStateFlow(RegisterState.IDLE)
     val registerState: StateFlow<RegisterState> = _registerState
 
@@ -52,6 +54,9 @@ class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetM
                 )
                 validateInputData()
             }
+            is RegisterEvent.AddOrRemoveHobby -> {
+                addOrRemoveHobby(event.hobby)
+            }
         }
     }
 
@@ -88,5 +93,22 @@ class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetM
             phoneError = phoneResult.status,
             birthYearError = birthYearResult.status
         )
+    }
+
+    private fun addOrRemoveHobby(hobby: String) {
+        val hobbies = _registerState.value.hobbies
+        if (hobbies != null) {
+            if (!hobbies.contains(hobby) && hobbies.size != 5) {
+                hobbies.add(hobby)
+                _registerState.value = _registerState.value.copy(
+                    hobbies = hobbies
+                )
+            } else if (hobbies.contains(hobby)) {
+                hobbies.remove(hobby)
+                _registerState.value = _registerState.value.copy(
+                    hobbies = hobbies
+                )
+            }
+        }
     }
 }

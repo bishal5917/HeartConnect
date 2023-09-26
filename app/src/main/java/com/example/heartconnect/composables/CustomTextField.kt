@@ -24,10 +24,8 @@ fun CustomTextField(
     onTextChanged: (String) -> Unit,
     errorStatus: Boolean = false,
     isEnabled: Boolean,
+    textValue: String,
 ) {
-    val textValue = remember {
-        mutableStateOf("")
-    }
     val localFocusManager = LocalFocusManager.current
 
     OutlinedTextField(
@@ -42,9 +40,8 @@ fun CustomTextField(
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         singleLine = true,
         maxLines = 1,
-        value = textValue.value,
+        value = textValue,
         onValueChange = {
-            textValue.value = it
             onTextChanged(it)
         },
         leadingIcon = {

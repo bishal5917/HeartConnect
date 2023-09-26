@@ -77,6 +77,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                     onTextChanged = {
                         loginViewModel.onEvent(LoginEvent.EmailChanged(it))
                     },
+                    textValue = loginState.email,
                     isEnabled = loginState.status != LoginState.Status.LOADING,
                     errorStatus = loginState.emailError
                 )

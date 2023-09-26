@@ -7,6 +7,7 @@ sealed class RegisterEvent {
     data class GenderChanged(val gender: String) : RegisterEvent()
     data class BirthYearChanged(val birthYear: String) : RegisterEvent()
     data class PhoneChanged(val phone: String) : RegisterEvent()
+    data class AddOrRemoveHobby(val hobby: String) : RegisterEvent()
 
     object Register : RegisterEvent()
 }
