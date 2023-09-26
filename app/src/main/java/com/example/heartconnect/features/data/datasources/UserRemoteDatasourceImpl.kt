@@ -1,5 +1,6 @@
 package com.example.heartconnect.features.data.datasources
 
+import com.example.heartconnect.features.data.models.chat.ChatRequestModel
 import com.example.heartconnect.features.data.models.conversation.ConversationModel
 import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
@@ -136,6 +137,38 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 FirebaseConfig().db.collection("Convos").document(messageRequestModel.convoId)
                     .collection("messages").document("$timestamp").set(messageData).await()
             return CommonResponseModel(success = true, message = result.toString())
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun createChat(chatRequestModel: ChatRequestModel): CommonResponseModel {
+        var total = 0;
+        try {
+            val querySnapshot = FirebaseConfig().db.collection("Convos").get().await()
+            querySnapshot.documents.map { documentSnapshot ->
+                val data = documentSnapshot.data ?: emptyMap()
+                val members = data["members"] as? List<String>
+                if (members != null) {
+                    if (members.contains(chatRequestModel.userId) && members.contains(
+                            chatRequestModel.friendId
+                        )
+                    ) {
+                        total += 1
+                    }
+                }
+            }
+            return if (total == 0) {
+                val chatCreateData = hashMapOf(
+                    "members" to listOf(chatRequestModel.userId, chatRequestModel.friendId),
+                )
+                FirebaseConfig().db.collection("Convos").document().set({
+                    chatCreateData
+                }).await()
+                CommonResponseModel(success = true, message = "Chat Created")
+            } else {
+                CommonResponseModel(success = false, message = "Already your chat")
+            }
         } catch (ex: Exception) {
             throw ex
         }

@@ -1,12 +1,9 @@
-package com.example.heartconnect.features.presentation.screens.chat.viewmodel
+package com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.heartconnect.features.domain.usecases.GetConversationsUsecase
-import com.example.heartconnect.features.domain.usecases.GetHomeUsersUsecase
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatEvent
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

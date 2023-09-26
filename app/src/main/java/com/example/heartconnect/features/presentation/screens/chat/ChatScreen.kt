@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -16,9 +15,9 @@ import com.example.heartconnect.components.CustomCircularProgressIndicator
 import com.example.heartconnect.components.CustomErrorComponent
 import com.example.heartconnect.features.data.models.conversation.ConversationModel
 import com.example.heartconnect.features.presentation.screens.chat.components.ConvoComponent
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatEvent
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatState
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatViewModel
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatEvent
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatState
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.ui.theme.VSizedBox2
 

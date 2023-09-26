@@ -12,10 +12,7 @@ import com.example.heartconnect.features.data.datasources.UserRemoteDatasource
 import com.example.heartconnect.features.data.datasources.UserRemoteDatasourceImpl
 import com.example.heartconnect.features.data.repositories.UserRepositoryImpl
 import com.example.heartconnect.features.domain.repositories.UserRepository
-import com.example.heartconnect.features.domain.usecases.GetConversationsUsecase
-import com.example.heartconnect.features.domain.usecases.GetHomeUsersUsecase
-import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
-import com.example.heartconnect.features.domain.usecases.SendMessageUsecase
+import com.example.heartconnect.features.domain.usecases.*
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.login.LoginViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
@@ -73,5 +70,10 @@ object AppModule {
     @Provides
     fun provideSendMessageUsecase(repo: UserRepository): SendMessageUsecase {
         return SendMessageUsecase(repo)
+    }
+
+    @Provides
+    fun provideCreateChatUsecase(repo: UserRepository): CreateChatUsecase {
+        return CreateChatUsecase(repo)
     }
 }

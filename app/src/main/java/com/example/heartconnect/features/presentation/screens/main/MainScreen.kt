@@ -24,9 +24,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.heartconnect.features.presentation.screens.chat.ChatScreen
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatEvent
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatState
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.ChatViewModel
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatEvent
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatState
+import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatViewModel
 import com.example.heartconnect.features.presentation.screens.home.HomeScreen
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeEvent
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
