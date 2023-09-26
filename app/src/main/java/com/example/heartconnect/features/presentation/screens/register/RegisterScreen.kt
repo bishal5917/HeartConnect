@@ -15,6 +15,9 @@ import com.example.heartconnect.composables.NormalButton
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepViewModel
 import com.example.heartconnect.core.navigation.AllScreen
+import com.example.heartconnect.features.presentation.screens.register.components.RegisterBasicDetailForm
+import com.example.heartconnect.features.presentation.screens.register.components.RegisterHobbyForm
+import com.example.heartconnect.features.presentation.screens.register.components.RegisterSecurityForm
 import com.example.heartconnect.ui.theme.VSizedBox2
 
 @Composable
@@ -39,15 +42,11 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
                     stepViewModel.onEvent(StepEvent.Decrement)
                 }
                 CustomText(
-                    data = "Step ${stepState.step}", fontSize = 16, fontWeight = FontWeight.W400
+                    data = "Step ${stepState.step + 1}", fontSize = 16, fontWeight = FontWeight.W400
                 )
                 NormalButton(buttonText = "Next") {
                     if (stepState.step == 2) {
-                        navController.navigate(AllScreen.MainScreen.name) {
-                            popUpTo(AllScreen.RegisterScreen.name) {
-                                inclusive = true
-                            }
-                        }
+                        //Call Register API if all validated
                     } else {
                         stepViewModel.onEvent(StepEvent.Increment)
                     }
@@ -55,13 +54,13 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
             }
             VSizedBox2()
             if (stepState.step == 0) {
-
+                RegisterBasicDetailForm()
             }
             if (stepState.step == 1) {
-
+                RegisterHobbyForm()
             }
             if (stepState.step == 2) {
-
+                RegisterSecurityForm()
             }
         }
     }

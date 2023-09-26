@@ -15,15 +15,27 @@ object Validator {
         )
     }
 
-    fun validateFirstName(value: String): ValidationResult {
+    fun validateName(value: String): ValidationResult {
         return ValidationResult(
-            (value.isNotEmpty() && value.length >= 3)
+            (value.isNotEmpty() && value.length >= 6)
         )
     }
 
-    fun validateLastName(value: String): ValidationResult {
+    fun validateGender(value: String): ValidationResult {
         return ValidationResult(
-            (value.isNotEmpty() && value.length >= 3)
+            (value.isNotEmpty() && (value == "male" || value == "female"))
+        )
+    }
+
+    fun validateBirthYear(value: String): ValidationResult {
+        return ValidationResult(
+            (value.isNotEmpty() && (value.toInt() in 1990..2005))
+        )
+    }
+
+    fun validatePhone(value: String): ValidationResult {
+        return ValidationResult(
+            (value.isNotEmpty() && value.length == 10)
         )
     }
 }

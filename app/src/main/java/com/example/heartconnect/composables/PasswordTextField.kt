@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
@@ -27,7 +28,7 @@ import com.example.heartconnect.ui.theme.Primary
 
 @Composable
 fun PasswordTextField(
-    labelValue: String, painterResource: Painter,
+    labelValue: String,
     onTextSelected: (String) -> Unit,
     errorStatus: Boolean = false,
     isEnabled: Boolean,
@@ -54,8 +55,7 @@ fun PasswordTextField(
             backgroundColor = BgColor
         ),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
+            keyboardType = KeyboardType.Password, imeAction = ImeAction.Done
         ),
 
         singleLine = true,
@@ -69,7 +69,7 @@ fun PasswordTextField(
             onTextSelected(it)
         },
         leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "")
+            Icon(imageVector = Icons.Default.Lock, contentDescription = "Password")
         },
         trailingIcon = {
 

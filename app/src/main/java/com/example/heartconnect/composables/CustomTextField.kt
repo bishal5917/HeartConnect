@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import com.example.heartconnect.ui.theme.BgColor
@@ -19,7 +20,7 @@ import com.example.heartconnect.ui.theme.Primary
 fun CustomTextField(
     modifier: Modifier,
     labelValue: String,
-    painterResource: Painter,
+    leadingIcon: ImageVector,
     onTextChanged: (String) -> Unit,
     errorStatus: Boolean = false,
     isEnabled: Boolean,
@@ -47,7 +48,7 @@ fun CustomTextField(
             onTextChanged(it)
         },
         leadingIcon = {
-            Icon(painter = painterResource, contentDescription = "")
+            Icon(imageVector = leadingIcon, contentDescription = "")
         },
         isError = !errorStatus,
         enabled = isEnabled,

@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -143,7 +144,7 @@ fun SendMessageComponent(conversationId: String, lazyListState: LazyListState) {
         CustomTextField(
             modifier = Modifier.clip(RoundedCornerShape(6.dp)),
             labelValue = "Type a Message ...",
-            painterResource(id = R.drawable.message),
+            leadingIcon = Icons.Default.ChatBubble,
             onTextChanged = {
                 sendMessageViewModel.onEvent(SendMessageEvent.MessageTyping(it))
             },

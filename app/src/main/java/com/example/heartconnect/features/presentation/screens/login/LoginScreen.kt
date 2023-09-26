@@ -5,6 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Mail
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -70,7 +73,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(5.dp)),
                     labelValue = "Email",
-                    painterResource(id = R.drawable.message),
+                    leadingIcon = Icons.Default.Mail,
                     onTextChanged = {
                         loginViewModel.onEvent(LoginEvent.EmailChanged(it))
                     },
@@ -80,7 +83,6 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 
                 PasswordTextField(
                     labelValue = stringResource(id = R.string.password),
-                    painterResource(id = R.drawable.message),
                     onTextSelected = {
                         loginViewModel.onEvent(LoginEvent.PasswordChanged(it))
                     },

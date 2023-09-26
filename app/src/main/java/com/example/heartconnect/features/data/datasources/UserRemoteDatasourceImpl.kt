@@ -56,6 +56,7 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 ConversationModel(
                     convoId = docId,
                     members = members,
+                    friendId = friendId,
                     friendName = friendName,
                     friendImage = friendImage,
                 )
