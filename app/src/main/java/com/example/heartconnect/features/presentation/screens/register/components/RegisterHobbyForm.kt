@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -66,38 +64,39 @@ fun RegisterHobbyForm() {
         "Scuba Diving",
     )
 
+    val registerViewModel = hiltViewModel<RegisterViewModel>()
+    val registerState by registerViewModel.registerState.collectAsState()
+
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(), cells = GridCells.Fixed(3)
+        modifier = Modifier.fillMaxSize(),cells = GridCells.Fixed(3)
     ) {
         items(allHobbies) { hobby ->
-            HobbyItem(hobby)
+            Box(modifier = Modifier.clickable {
+                registerViewModel.onEvent(RegisterEvent.AddOrRemoveHobby(hobby))
+            }) {
+                HobbyItem(hobby, RegisterUtil().isAdded(registerState.hobbies!!, hobby))
+            }
         }
     }
 }
 
 @Composable
 fun HobbyItem(
-    hobby: String, registerViewModel: RegisterViewModel = hiltViewModel()
+    hobby: String, isSelected: Boolean
 ) {
-    val registerState by registerViewModel.registerState.collectAsState()
-    val isAdded = RegisterUtil().isAdded(registerState.hobbies ?: ArrayList(), hobby)
     Box(
         modifier = Modifier
             .padding(4.dp)
             .background(
-                if (RegisterUtil().isAdded(
-                        registerState.hobbies ?: ArrayList(), hobby
-                    )
-                ) Primary else WhiteColor, shape = RoundedCornerShape(12.dp)
-            )
-            .clickable {
-                registerViewModel.onEvent(RegisterEvent.AddOrRemoveHobby(hobby))
-            },
+                if (isSelected) Primary else WhiteColor, shape = RoundedCornerShape(
+                    12.dp
+                )
+            ),
         contentAlignment = Alignment.Center,
     ) {
         CustomText(
             data = hobby, modifier = Modifier.padding(8.dp),
-            color = if (isAdded) WhiteColor else kNeutral800Color,
+            color = if (isSelected) WhiteColor else kNeutral800Color,
             fontWeight = FontWeight.W500, fontSize = 16,
         )
     }

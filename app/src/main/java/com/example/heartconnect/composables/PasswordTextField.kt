@@ -32,13 +32,9 @@ fun PasswordTextField(
     onTextSelected: (String) -> Unit,
     errorStatus: Boolean = false,
     isEnabled: Boolean,
+    passwordValue: String,
 ) {
-
     val localFocusManager = LocalFocusManager.current
-    val password = remember {
-        mutableStateOf("")
-    }
-
     val passwordVisible = remember {
         mutableStateOf(false)
     }
@@ -63,9 +59,8 @@ fun PasswordTextField(
             localFocusManager.clearFocus()
         },
         maxLines = 1,
-        value = password.value,
+        value = passwordValue,
         onValueChange = {
-            password.value = it
             onTextSelected(it)
         },
         leadingIcon = {

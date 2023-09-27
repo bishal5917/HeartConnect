@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
 import com.example.heartconnect.utils.Validator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -97,30 +99,19 @@ class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetM
     }
 
     private fun addOrRemoveHobby(hobby: String) {
-//        val hobbies = _registerState.value.hobbies
-//        if (hobbies != null) {
-//            if (!hobbies.contains(hobby) && hobbies.size != 5) {
-//                hobbies.add(hobby)
-//                _registerState.value = _registerState.value.copy(
-//                    hobbies = hobbies
-//                )
-//            } else if (hobbies.contains(hobby)) {
-//                hobbies.remove(hobby)
-//                _registerState.value = _registerState.value.copy(
-//                    hobbies = hobbies
-//                )
-//            }
-//        }
-        val currentHobbies = _registerState.value.hobbies ?: ArrayList()
-
-        if (!currentHobbies.contains(hobby) && currentHobbies.size < 5) {
-            currentHobbies.add(hobby)
-        } else if (currentHobbies.contains(hobby)) {
-            currentHobbies.remove(hobby)
+        val hobbies = _registerState.value.hobbies
+        if (hobbies != null) {
+            if (!hobbies.contains(hobby) && hobbies.size != 5) {
+                hobbies.add(hobby)
+                _registerState.value = _registerState.value.copy(
+                    hobbies = hobbies
+                )
+            } else if (hobbies.contains(hobby)) {
+                hobbies.remove(hobby)
+                _registerState.value = _registerState.value.copy(
+                    hobbies = hobbies
+                )
+            }
         }
-
-        _registerState.value = _registerState.value.copy(
-            hobbies = currentHobbies
-        )
     }
 }

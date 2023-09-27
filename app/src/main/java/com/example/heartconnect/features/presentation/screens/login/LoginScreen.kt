@@ -87,6 +87,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                     onTextSelected = {
                         loginViewModel.onEvent(LoginEvent.PasswordChanged(it))
                     },
+                    passwordValue = loginState.password,
                     isEnabled = loginState.status != LoginState.Status.LOADING,
                     errorStatus = loginState.passwordError
                 )
