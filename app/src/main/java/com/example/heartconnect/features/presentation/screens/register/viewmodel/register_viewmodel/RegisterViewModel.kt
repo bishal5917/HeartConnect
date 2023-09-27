@@ -1,7 +1,5 @@
 package com.example.heartconnect.features.presentation.screens.register.viewmodel.register_viewmodel
 
-import android.util.Log
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
 import com.example.heartconnect.utils.Validator
@@ -85,30 +83,44 @@ class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetM
             value = _registerState.value.birthYear
         )
 
+        val firstStepError =
+            _registerState.value.nameError && _registerState.value.emailError && _registerState.value.phoneError && _registerState.value.passwordError && _registerState.value.birthYearError && _registerState.value.genderError
         _registerState.value = _registerState.value.copy(
             emailError = emailResult.status,
             passwordError = passwordResult.status,
             nameError = nameResult.status,
             genderError = genderResult.status,
             phoneError = phoneResult.status,
-            birthYearError = birthYearResult.status
+            birthYearError = birthYearResult.status,
+            firstStepError = firstStepError,
         )
     }
 
     private fun addOrRemoveHobby(hobby: String) {
-        val hobbies = _registerState.value.hobbies
-        if (hobbies != null) {
-            if (!hobbies.contains(hobby) && hobbies.size != 5) {
-                hobbies.add(hobby)
-                _registerState.value = _registerState.value.copy(
-                    hobbies = hobbies
-                )
-            } else if (hobbies.contains(hobby)) {
-                hobbies.remove(hobby)
-                _registerState.value = _registerState.value.copy(
-                    hobbies = hobbies
-                )
-            }
+//        val hobbies = _registerState.value.hobbies
+//        if (hobbies != null) {
+//            if (!hobbies.contains(hobby) && hobbies.size != 5) {
+//                hobbies.add(hobby)
+//                _registerState.value = _registerState.value.copy(
+//                    hobbies = hobbies
+//                )
+//            } else if (hobbies.contains(hobby)) {
+//                hobbies.remove(hobby)
+//                _registerState.value = _registerState.value.copy(
+//                    hobbies = hobbies
+//                )
+//            }
+//        }
+        val currentHobbies = _registerState.value.hobbies ?: ArrayList()
+
+        if (!currentHobbies.contains(hobby) && currentHobbies.size < 5) {
+            currentHobbies.add(hobby)
+        } else if (currentHobbies.contains(hobby)) {
+            currentHobbies.remove(hobby)
         }
+
+        _registerState.value = _registerState.value.copy(
+            hobbies = currentHobbies
+        )
     }
 }

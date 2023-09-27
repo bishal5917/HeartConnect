@@ -85,7 +85,10 @@ fun HobbyItem(
         modifier = Modifier
             .padding(4.dp)
             .background(
-                if (isAdded) Primary else WhiteColor, shape = RoundedCornerShape(12.dp)
+                if (RegisterUtil().isAdded(
+                        registerState.hobbies ?: ArrayList(), hobby
+                    )
+                ) Primary else WhiteColor, shape = RoundedCornerShape(12.dp)
             )
             .clickable {
                 registerViewModel.onEvent(RegisterEvent.AddOrRemoveHobby(hobby))

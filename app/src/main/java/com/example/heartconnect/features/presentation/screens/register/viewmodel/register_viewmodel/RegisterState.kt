@@ -15,7 +15,8 @@ data class RegisterState(
     var phoneError: Boolean = false,
     var genderError: Boolean = false,
     var birthYearError: Boolean = false,
-    var passwordError: Boolean = false
+    var passwordError: Boolean = false,
+    var firstStepError: Boolean = true
 ) {
     companion object {
         val IDLE = RegisterState(Status.IDLE, message = "Idle")
