@@ -20,29 +20,46 @@ class ImageViewModel : ViewModel() {
             is ImageEvent.SelectRegisterImage -> {
                 selectImage(event.imageUri, event.context)
             }
+            is ImageEvent.HandleError -> {
+                handleImageSelectError()
+            }
         }
     }
 
-    private fun selectImage(imageUri: Uri, context: Context) {
+    private fun selectImage(imageUri: Uri? = null, context: Context) {
         _imageState.value = _imageState.value.copy(
-            status = ImageState.Status.RegisterImageLoading, message = "Loading register image ..."
+            status = ImageState.Status.RegisterImageLoading, message = "Loading image ..."
         )
         try {
-            val bitmap = if (Build.VERSION.SDK_INT < 28) {
-                MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
+            if (imageUri != null) {
+                val bitmap = if (Build.VERSION.SDK_INT < 28) {
+                    MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
+                } else {
+                    val source = ImageDecoder.createSource(context.contentResolver, imageUri)
+                    ImageDecoder.decodeBitmap(source)
+                }
+                _imageState.value = _imageState.value.copy(
+                    status = ImageState.Status.RegisterImageSuccess,
+                    message = "Image Selected",
+                    registerImage = bitmap.asImageBitmap()
+                )
             } else {
-                val source = ImageDecoder.createSource(context.contentResolver, imageUri)
-                ImageDecoder.decodeBitmap(source)
+                _imageState.value = _imageState.value.copy(
+                    status = ImageState.Status.RegisterImageFailed,
+                    message = "Process cancelled",
+                )
             }
-            _imageState.value = _imageState.value.copy(
-                status = ImageState.Status.RegisterImageSuccess,
-                message = "Image Select Success ...",
-                registerImage = bitmap.asImageBitmap()
-            )
         } catch (ex: Exception) {
             _imageState.value = _imageState.value.copy(
                 status = ImageState.Status.RegisterImageFailed, message = "${ex.message}"
             )
         }
+    }
+
+    private fun handleImageSelectError() {
+        _imageState.value = _imageState.value.copy(
+            status = ImageState.Status.RegisterImageFailed,
+            message = "Process cancelled",
+        )
     }
 }

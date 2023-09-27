@@ -4,5 +4,7 @@ import android.content.Context
 import android.net.Uri
 
 sealed class ImageEvent {
-    data class SelectRegisterImage(val imageUri: Uri, val context: Context) : ImageEvent()
+    data class SelectRegisterImage(val imageUri: Uri?, val context: Context) : ImageEvent()
+
+    object HandleError : ImageEvent()
 }
