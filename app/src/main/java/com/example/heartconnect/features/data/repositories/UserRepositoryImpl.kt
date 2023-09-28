@@ -6,6 +6,7 @@ import com.example.heartconnect.features.data.models.conversation.ConversationMo
 import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
+import com.example.heartconnect.features.data.models.register.UserRegisterModel
 import com.example.heartconnect.features.domain.repositories.UserRepository
 import com.example.heartconnect.model.CommonResponseModel
 
@@ -45,6 +46,14 @@ class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : Use
     override suspend fun createChat(chatRequestModel: ChatRequestModel): CommonResponseModel {
         try {
             return userDataSource.createChat(chatRequestModel)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun registerUser(userRegisterModel: UserRegisterModel): CommonResponseModel {
+        try {
+            return userDataSource.registerUser(userRegisterModel)
         } catch (ex: Exception) {
             throw ex
         }

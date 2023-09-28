@@ -15,7 +15,7 @@ data class RegisterState(
     var phoneError: Boolean = false,
     var genderError: Boolean = false,
     var birthYearError: Boolean = false,
-    var passwordError: Boolean = false,
+    var passwordError: Boolean = true,
     var firstStepError: Boolean = true
 ) {
     companion object {

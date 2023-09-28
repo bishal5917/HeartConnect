@@ -72,4 +72,9 @@ object AppModule {
     fun provideCreateChatUsecase(repo: UserRepository): CreateChatUsecase {
         return CreateChatUsecase(repo)
     }
+
+    @Provides
+    fun provideRegisterUserUsecase(repo: UserRepository): RegisterUserUsecase {
+        return RegisterUserUsecase(repo)
+    }
 }

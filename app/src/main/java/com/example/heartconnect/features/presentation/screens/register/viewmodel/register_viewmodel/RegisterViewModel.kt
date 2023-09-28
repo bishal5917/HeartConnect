@@ -1,17 +1,26 @@
 package com.example.heartconnect.features.presentation.screens.register.viewmodel.register_viewmodel
 
+import android.util.Log
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.heartconnect.features.data.models.register.UserRegisterModel
 import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
+import com.example.heartconnect.features.domain.usecases.RegisterUserUsecase
+import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
 import com.example.heartconnect.utils.Validator
+import com.example.heartconnect.utils.viewmodel.ImageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetMessagesUsecase) :
+class RegisterViewModel @Inject constructor(private val registerUserUsecase: RegisterUserUsecase) :
     ViewModel() {
     private val _registerState = MutableStateFlow(RegisterState.IDLE)
     val registerState: StateFlow<RegisterState> = _registerState
@@ -56,6 +65,9 @@ class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetM
             }
             is RegisterEvent.AddOrRemoveHobby -> {
                 addOrRemoveHobby(event.hobby)
+            }
+            is RegisterEvent.Register -> {
+                registerUser(event.image)
             }
         }
     }
@@ -112,6 +124,34 @@ class RegisterViewModel @Inject constructor(private val getMessagesUsecase: GetM
                     hobbies = hobbies
                 )
             }
+        }
+    }
+
+    private fun registerUser(image: ImageBitmap) = viewModelScope.launch {
+        _registerState.value = _registerState.value.copy(
+            status = RegisterState.Status.LOADING, message = "Registering ..."
+        )
+        try {
+            val result = registerUserUsecase.call(
+                UserRegisterModel(
+                    name = _registerState.value.name,
+                    email = _registerState.value.email,
+                    phone = _registerState.value.phone,
+                    gender = _registerState.value.gender,
+                    birthYear = _registerState.value.birthYear,
+                    password = _registerState.value.password,
+                    hobbies = _registerState.value.hobbies ?: ArrayList(),
+                    image = image,
+                )
+            )
+            _registerState.value = _registerState.value.copy(
+                status = RegisterState.Status.SUCCESS, message = result.message,
+            )
+        } catch (ex: Exception) {
+            _registerState.value = _registerState.value.copy(
+                status = RegisterState.Status.FAILED, message = "${ex.message}"
+            )
+            Log.d("logs", "Exception: ${ex.message}")
         }
     }
 }

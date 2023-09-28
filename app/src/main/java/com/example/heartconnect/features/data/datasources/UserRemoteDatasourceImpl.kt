@@ -1,14 +1,18 @@
 package com.example.heartconnect.features.data.datasources
 
+import android.graphics.Bitmap
 import com.example.heartconnect.features.data.models.chat.ChatRequestModel
 import com.example.heartconnect.features.data.models.conversation.ConversationModel
 import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
 import com.example.heartconnect.core.configs.FirebaseConfig
+import com.example.heartconnect.features.data.models.register.UserRegisterModel
 import com.example.heartconnect.model.CommonResponseModel
 import com.google.firebase.firestore.FieldPath
+import com.google.type.DateTime
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -167,6 +171,48 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 return CommonResponseModel(success = true, message = "Chat Created")
             } else {
                 return CommonResponseModel(success = true, message = "Already your chat")
+            }
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun registerUser(userRegisterModel: UserRegisterModel): CommonResponseModel {
+        // Converting the Bitmap to a byte array
+        val baos = ByteArrayOutputStream()
+//        userRegisterModel.image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        val userMap = hashMapOf(
+            "name" to userRegisterModel.name,
+            "email" to userRegisterModel.name,
+            "phone" to userRegisterModel.name,
+            "gender" to userRegisterModel.name,
+            "birthYear" to userRegisterModel.name,
+            "password" to userRegisterModel.name,
+            "hobbies" to userRegisterModel.hobbies,
+            "image" to "",
+        )
+        return try {
+            val credential = FirebaseConfig().auth.createUserWithEmailAndPassword(
+                userRegisterModel.email, userRegisterModel.password
+            ).await()
+            if (credential.user != null) {
+                val newUser =
+                    FirebaseConfig().db.collection("Users").document(credential.user!!.uid)
+                        .set(userMap).await()
+                val imageRef =
+                    FirebaseConfig().storageRef.child("profiles/${System.currentTimeMillis()}")
+                val uploadTask = imageRef.putBytes(data).await()
+                val downloadUrl = imageRef.downloadUrl.await()
+                val imageSetMap = hashMapOf(
+                    "image" to downloadUrl.toString()
+                )
+                val setImage = FirebaseConfig().db.collection("Users").document(
+                    credential.user!!.uid
+                ).update(imageSetMap as Map<String, Any>).await()
+                CommonResponseModel(success = true, message = "Registered")
+            } else {
+                CommonResponseModel(success = false, message = "Error")
             }
         } catch (ex: Exception) {
             throw ex
