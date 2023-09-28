@@ -1,6 +1,6 @@
 package com.example.heartconnect.features.data.models.register
 
-import androidx.compose.ui.graphics.ImageBitmap
+import android.net.Uri
 
 data class UserRegisterModel(
     val name: String,
@@ -9,6 +9,6 @@ data class UserRegisterModel(
     val password: String,
     val gender: String,
     val birthYear: String,
-    val image: ImageBitmap,
+    val image: Uri,
     val hobbies: ArrayList<String>,
 )

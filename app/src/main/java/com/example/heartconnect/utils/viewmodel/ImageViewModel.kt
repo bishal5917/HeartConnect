@@ -41,7 +41,8 @@ class ImageViewModel : ViewModel() {
                 _imageState.value = _imageState.value.copy(
                     status = ImageState.Status.RegisterImageSuccess,
                     message = "Image Selected",
-                    registerImage = bitmap.asImageBitmap()
+                    registerImage = bitmap.asImageBitmap(),
+                    registerImageUri = imageUri,
                 )
             } else {
                 _imageState.value = _imageState.value.copy(

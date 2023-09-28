@@ -10,6 +10,7 @@ import com.example.heartconnect.core.configs.FirebaseConfig
 import com.example.heartconnect.features.data.models.register.UserRegisterModel
 import com.example.heartconnect.model.CommonResponseModel
 import com.google.firebase.firestore.FieldPath
+import com.google.firebase.storage.StorageMetadata
 import com.google.type.DateTime
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
@@ -178,17 +179,15 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
     }
 
     override suspend fun registerUser(userRegisterModel: UserRegisterModel): CommonResponseModel {
-        // Converting the Bitmap to a byte array
-        val baos = ByteArrayOutputStream()
-//        userRegisterModel.image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
+// Create metadata with the content type set to "image/jpeg"
+        val metadata = StorageMetadata.Builder().setContentType("image/jpeg").build()
         val userMap = hashMapOf(
             "name" to userRegisterModel.name,
-            "email" to userRegisterModel.name,
-            "phone" to userRegisterModel.name,
-            "gender" to userRegisterModel.name,
-            "birthYear" to userRegisterModel.name,
-            "password" to userRegisterModel.name,
+            "email" to userRegisterModel.email,
+            "phone" to userRegisterModel.phone,
+            "gender" to userRegisterModel.gender,
+            "birthYear" to userRegisterModel.birthYear,
+            "password" to userRegisterModel.password,
             "hobbies" to userRegisterModel.hobbies,
             "image" to "",
         )
@@ -202,7 +201,7 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                         .set(userMap).await()
                 val imageRef =
                     FirebaseConfig().storageRef.child("profiles/${System.currentTimeMillis()}")
-                val uploadTask = imageRef.putBytes(data).await()
+                val uploadTask = imageRef.putFile(userRegisterModel.image, metadata).await()
                 val downloadUrl = imageRef.downloadUrl.await()
                 val imageSetMap = hashMapOf(
                     "image" to downloadUrl.toString()
@@ -210,7 +209,9 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 val setImage = FirebaseConfig().db.collection("Users").document(
                     credential.user!!.uid
                 ).update(imageSetMap as Map<String, Any>).await()
-                CommonResponseModel(success = true, message = "Registered")
+                CommonResponseModel(
+                    success = true, message = "Registered", userId = credential.user!!.uid
+                )
             } else {
                 CommonResponseModel(success = false, message = "Error")
             }

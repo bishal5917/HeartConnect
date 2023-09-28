@@ -18,6 +18,7 @@ import com.example.heartconnect.composables.NormalButton
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepViewModel
 import com.example.heartconnect.core.navigation.AllScreen
+import com.example.heartconnect.core.navigation.Navigation
 import com.example.heartconnect.core.navigation.Navigator
 import com.example.heartconnect.features.presentation.screens.login.LoginState
 import com.example.heartconnect.features.presentation.screens.register.components.RegisterBasicDetailForm
@@ -44,7 +45,7 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
         }
         RegisterState.Status.SUCCESS -> {
             Navigator().navigateOffAll(
-                navController, AllScreen.LoginScreen.name, AllScreen.RegisterScreen.name
+                navController, AllScreen.MainScreen.name, AllScreen.RegisterScreen.name
             )
             CustomToast(message = registerState.message)
         }
@@ -74,9 +75,7 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
                 )
                 NormalButton(
 
-                    buttonText =
-                    if (stepState.step == 2 && !registerState.passwordError && imageState
-                            .registerImage != null) "Submit" else "Next"
+                    buttonText = if (stepState.step == 2 && !registerState.passwordError && imageState.registerImage != null) "Submit" else "Next"
                 ) {
                     if (stepState.step == 0) {
                         if (!registerState.firstStepError) stepViewModel.onEvent(StepEvent.Increment)
@@ -87,12 +86,13 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
                         )
                     }
                     if (stepState.step == 2) {
-                        if (!registerState.passwordError && imageState.registerImage != null) {
-                            registerViewModel.onEvent(
-                                RegisterEvent.Register(
-                                    imageState.registerImage!!
-                                )
+                        registerViewModel.onEvent(
+                            RegisterEvent.Register(
+                                imageState.registerImageUri!!
                             )
+                        )
+                        if (!registerState.passwordError && imageState.registerImage != null) {
+
                         }
                     }
                 }

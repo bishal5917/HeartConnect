@@ -1,6 +1,6 @@
 package com.example.heartconnect.features.presentation.screens.register.viewmodel.register_viewmodel
 
-import androidx.compose.ui.graphics.ImageBitmap
+import android.net.Uri
 
 sealed class RegisterEvent {
     data class NameChanged(val name: String) : RegisterEvent()
@@ -11,5 +11,5 @@ sealed class RegisterEvent {
     data class PhoneChanged(val phone: String) : RegisterEvent()
     data class AddOrRemoveHobby(val hobby: String) : RegisterEvent()
 
-    data class Register(val image: ImageBitmap) : RegisterEvent()
+    data class Register(val imageUri: Uri) : RegisterEvent()
 }

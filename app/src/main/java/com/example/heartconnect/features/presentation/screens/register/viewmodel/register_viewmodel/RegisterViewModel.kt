@@ -1,5 +1,6 @@
 package com.example.heartconnect.features.presentation.screens.register.viewmodel.register_viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.example.heartconnect.features.data.models.register.UserRegisterModel
 import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
 import com.example.heartconnect.features.domain.usecases.RegisterUserUsecase
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
+import com.example.heartconnect.services.local.LocalDatastore
 import com.example.heartconnect.utils.Validator
 import com.example.heartconnect.utils.viewmodel.ImageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +22,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val registerUserUsecase: RegisterUserUsecase) :
-    ViewModel() {
+class RegisterViewModel @Inject constructor(
+    private val registerUserUsecase: RegisterUserUsecase, private val localDatastore: LocalDatastore
+) : ViewModel() {
     private val _registerState = MutableStateFlow(RegisterState.IDLE)
     val registerState: StateFlow<RegisterState> = _registerState
 
@@ -67,7 +70,7 @@ class RegisterViewModel @Inject constructor(private val registerUserUsecase: Reg
                 addOrRemoveHobby(event.hobby)
             }
             is RegisterEvent.Register -> {
-                registerUser(event.image)
+                registerUser(event.imageUri)
             }
         }
     }
@@ -98,7 +101,7 @@ class RegisterViewModel @Inject constructor(private val registerUserUsecase: Reg
         )
 
         val firstStepError =
-            _registerState.value.nameError && _registerState.value.emailError && _registerState.value.phoneError && _registerState.value.passwordError && _registerState.value.birthYearError && _registerState.value.genderError
+            _registerState.value.nameError && _registerState.value.emailError && _registerState.value.phoneError && _registerState.value.birthYearError && _registerState.value.genderError
         _registerState.value = _registerState.value.copy(
             emailError = emailResult.status,
             passwordError = passwordResult.status,
@@ -127,7 +130,7 @@ class RegisterViewModel @Inject constructor(private val registerUserUsecase: Reg
         }
     }
 
-    private fun registerUser(image: ImageBitmap) = viewModelScope.launch {
+    private fun registerUser(image: Uri) = viewModelScope.launch {
         _registerState.value = _registerState.value.copy(
             status = RegisterState.Status.LOADING, message = "Registering ..."
         )
@@ -144,9 +147,17 @@ class RegisterViewModel @Inject constructor(private val registerUserUsecase: Reg
                     image = image,
                 )
             )
-            _registerState.value = _registerState.value.copy(
-                status = RegisterState.Status.SUCCESS, message = result.message,
-            )
+            if (result.userId != null) {
+                localDatastore.saveUserId(result.userId)
+                _registerState.value = _registerState.value.copy(
+                    status = RegisterState.Status.SUCCESS, message = result.message,
+                )
+            } else {
+                _registerState.value = _registerState.value.copy(
+                    status = RegisterState.Status.FAILED,
+                    message = "Registered,Please Re-login." + "..",
+                )
+            }
         } catch (ex: Exception) {
             _registerState.value = _registerState.value.copy(
                 status = RegisterState.Status.FAILED, message = "${ex.message}"
