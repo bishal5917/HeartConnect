@@ -1,5 +1,6 @@
 package com.example.heartconnect.features.presentation.screens.login
 
+import android.media.metrics.Event
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -46,6 +47,15 @@ fun LoginScreen(navController: NavController) {
             CustomToast(message = loginState.message)
         }
         LoginState.Status.FAILED -> {
+            CustomToast(message = loginState.message)
+        }
+        LoginState.Status.ResetPasswordLoading -> {
+            CustomLoadingDialog(message = loginState.message)
+        }
+        LoginState.Status.ResetPasswordSuccess -> {
+            CustomToast(message = loginState.message)
+        }
+        LoginState.Status.ResetPasswordFailure -> {
             CustomToast(message = loginState.message)
         }
     }
@@ -100,7 +110,9 @@ fun LoginScreen(navController: NavController) {
                         fontWeight = FontWeight.W400,
                         fontSize = 12,
                         textDecoration = TextDecoration.Underline,
-                        modifier = Modifier.clickable {})
+                        modifier = Modifier.clickable {
+                            loginViewModel.onEvent(LoginEvent.SendResetMail)
+                        })
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))

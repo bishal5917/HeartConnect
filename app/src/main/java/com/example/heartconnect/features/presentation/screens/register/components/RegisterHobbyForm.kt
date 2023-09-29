@@ -64,26 +64,24 @@ fun RegisterHobbyForm() {
         "Scuba Diving",
     )
 
-    val registerViewModel = hiltViewModel<RegisterViewModel>()
-    val registerState by registerViewModel.registerState.collectAsState()
+
 
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),cells = GridCells.Fixed(3)
+        modifier = Modifier.fillMaxSize(), cells = GridCells.Fixed(3)
     ) {
         items(allHobbies) { hobby ->
-            Box(modifier = Modifier.clickable {
-                registerViewModel.onEvent(RegisterEvent.AddOrRemoveHobby(hobby))
-            }) {
-                HobbyItem(hobby, RegisterUtil().isAdded(registerState.hobbies!!, hobby))
-            }
+            HobbyItem(hobby = hobby)
         }
     }
 }
 
 @Composable
 fun HobbyItem(
-    hobby: String, isSelected: Boolean
+    hobby: String
 ) {
+    val registerViewModel = hiltViewModel<RegisterViewModel>()
+    val registerState by registerViewModel.registerState.collectAsState()
+    val isSelected = RegisterUtil().isAdded(registerState.hobbies!!, hobby)
     Box(
         modifier = Modifier
             .padding(4.dp)
@@ -91,7 +89,10 @@ fun HobbyItem(
                 if (isSelected) Primary else WhiteColor, shape = RoundedCornerShape(
                     12.dp
                 )
-            ),
+            )
+            .clickable {
+                registerViewModel.onEvent(RegisterEvent.AddOrRemoveHobby(hobby))
+            },
         contentAlignment = Alignment.Center,
     ) {
         CustomText(

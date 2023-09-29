@@ -6,6 +6,7 @@ import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
 import com.example.heartconnect.features.data.models.register.UserRegisterModel
+import com.example.heartconnect.features.data.models.user.UserModel
 import com.example.heartconnect.model.CommonResponseModel
 
 interface UserRepository {
@@ -20,5 +21,7 @@ interface UserRepository {
     suspend fun createChat(chatRequestModel: ChatRequestModel): CommonResponseModel
 
     suspend fun registerUser(userRegisterModel: UserRegisterModel): CommonResponseModel
+
+    suspend fun sendResetMail(userModel: UserModel): CommonResponseModel
 
 }
