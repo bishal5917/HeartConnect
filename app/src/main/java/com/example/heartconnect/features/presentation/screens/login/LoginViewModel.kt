@@ -36,11 +36,9 @@ class LoginViewModel @Inject constructor(
                 _loginState.value = _loginState.value.copy(
                     email = event.email
                 )
-//                _loginState.value.copyWith(
-//                    email = event.email
-//                )
                 validateInputData()
             }
+
             is LoginEvent.PasswordChanged -> {
                 _loginState.value = _loginState.value.copy(
                     password = event.password
@@ -143,7 +141,6 @@ class LoginViewModel @Inject constructor(
             _loginState.value = _loginState.value.copy(
                 status = LoginState.Status.ResetPasswordFailure,
                 message = "Please enter your email."
-
             )
         }
     }
