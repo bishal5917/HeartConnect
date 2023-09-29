@@ -29,8 +29,9 @@ import com.example.heartconnect.core.navigation.Navigator
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(navController: NavController) {
 
+    val loginViewModel = hiltViewModel<LoginViewModel>()
     val loginState by loginViewModel.loginState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 

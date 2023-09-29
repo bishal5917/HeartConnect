@@ -1,5 +1,6 @@
 package com.example.heartconnect.features.presentation.screens.register
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -44,9 +45,7 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
             CustomLoadingDialog(message = registerState.message)
         }
         RegisterState.Status.SUCCESS -> {
-            Navigator().navigateOffAll(
-                navController, AllScreen.MainScreen.name, AllScreen.RegisterScreen.name
-            )
+            Navigator().back(navController)
             CustomToast(message = registerState.message)
         }
         RegisterState.Status.FAILED -> {
@@ -68,14 +67,17 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 NormalButton(buttonText = "Back") {
-                    stepViewModel.onEvent(StepEvent.Decrement)
+                    if (stepState.step == 0) {
+                        Navigator().back(navController)
+                    } else {
+                        stepViewModel.onEvent(StepEvent.Decrement)
+                    }
                 }
                 CustomText(
                     data = "Step ${stepState.step + 1}", fontSize = 16, fontWeight = FontWeight.W400
                 )
                 NormalButton(
-
-                    buttonText = if (stepState.step == 2 && !registerState.passwordError && imageState.registerImage != null) "Submit" else "Next"
+                    buttonText = if (stepState.step == 2 && registerState.passwordError && imageState.registerImageUri != null) "Submit" else "Next"
                 ) {
                     if (stepState.step == 0) {
                         if (!registerState.firstStepError) stepViewModel.onEvent(StepEvent.Increment)
@@ -86,13 +88,12 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
                         )
                     }
                     if (stepState.step == 2) {
-                        registerViewModel.onEvent(
-                            RegisterEvent.Register(
-                                imageState.registerImageUri!!
+                        if (registerState.passwordError && imageState.registerImageUri != null) {
+                            registerViewModel.onEvent(
+                                RegisterEvent.Register(
+                                    imageState.registerImageUri!!
+                                )
                             )
-                        )
-                        if (!registerState.passwordError && imageState.registerImage != null) {
-
                         }
                     }
                 }

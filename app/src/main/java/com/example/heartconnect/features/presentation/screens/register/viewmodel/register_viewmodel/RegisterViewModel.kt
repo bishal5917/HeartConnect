@@ -119,12 +119,14 @@ class RegisterViewModel @Inject constructor(
             if (!hobbies.contains(hobby) && hobbies.size != 5) {
                 hobbies.add(hobby)
                 _registerState.value = _registerState.value.copy(
-                    hobbies = hobbies
+                    hobbies = hobbies,
+                    hobbiesSize = hobbies.size
                 )
             } else if (hobbies.contains(hobby)) {
                 hobbies.remove(hobby)
                 _registerState.value = _registerState.value.copy(
-                    hobbies = hobbies
+                    hobbies = hobbies,
+                    hobbiesSize = hobbies.size
                 )
             }
         }
