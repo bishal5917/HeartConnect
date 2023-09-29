@@ -8,6 +8,7 @@ import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
 import com.example.heartconnect.core.configs.FirebaseConfig
 import com.example.heartconnect.features.data.models.register.UserRegisterModel
+import com.example.heartconnect.features.data.models.user.UserModel
 import com.example.heartconnect.model.CommonResponseModel
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.storage.StorageMetadata
@@ -215,6 +216,15 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             } else {
                 CommonResponseModel(success = false, message = "Error")
             }
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun sendResetMail(userModel: UserModel): CommonResponseModel {
+        try {
+            val result = FirebaseConfig().auth.sendPasswordResetEmail(userModel.email ?: "").await()
+            return CommonResponseModel(success = true, message = result.toString())
         } catch (ex: Exception) {
             throw ex
         }

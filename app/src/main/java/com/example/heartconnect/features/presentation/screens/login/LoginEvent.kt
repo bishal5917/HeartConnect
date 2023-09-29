@@ -6,5 +6,6 @@ sealed class LoginEvent {
 
     object LoginUser : LoginEvent()
     object LogoutUser : LoginEvent()
+    object SendResetMail : LoginEvent()
 
 }

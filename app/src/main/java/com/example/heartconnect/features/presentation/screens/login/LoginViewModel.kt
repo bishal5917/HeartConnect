@@ -3,6 +3,8 @@ package com.example.heartconnect.features.presentation.screens.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.heartconnect.features.data.models.user.UserModel
+import com.example.heartconnect.features.domain.usecases.SendResetMailUsecase
 import com.example.heartconnect.services.local.LocalDatastore
 import com.example.heartconnect.utils.Validator
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +20,10 @@ import okhttp3.internal.wait
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val localDatastore: LocalDatastore) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val localDatastore: LocalDatastore,
+    private val sendResetMailUsecase: SendResetMailUsecase
+) : ViewModel() {
 
     private val _loginState = MutableStateFlow(LoginState.IDLE)
     val loginState: StateFlow<LoginState> = _loginState
@@ -46,6 +51,9 @@ class LoginViewModel @Inject constructor(private val localDatastore: LocalDatast
             is LoginEvent.LogoutUser -> {
                 logoutUser()
             }
+            is LoginEvent.SendResetMail -> {
+                sendResetMail()
+            }
         }
     }
 
@@ -64,7 +72,6 @@ class LoginViewModel @Inject constructor(private val localDatastore: LocalDatast
     }
 
     private fun login() = viewModelScope.launch {
-
         _loginState.value = _loginState.value.copy(
             status = LoginState.Status.LOADING, message = "Logging in, Please wait ..."
         )
@@ -110,6 +117,31 @@ class LoginViewModel @Inject constructor(private val localDatastore: LocalDatast
                 status = LoginState.Status.LOGOUTFAILED, message = ex.message ?: "An error occurred"
             )
             Log.d("logs", "Logout Exception: ${ex.message}")
+        }
+    }
+
+    private fun sendResetMail() = viewModelScope.launch {
+        if (_loginState.value.email.isNotEmpty()) {
+            _loginState.value = _loginState.value.copy(
+                status = LoginState.Status.ResetPasswordLoading,
+                message = "Sending Link to your mail..."
+            )
+            try {
+                 sendResetMailUsecase.call(UserModel(email = _loginState.value.email))
+                _loginState.value = _loginState.value.copy(
+                    status = LoginState.Status.ResetPasswordSuccess,
+                    message = "Please check your email",
+                )
+            } catch (ex: Exception) {
+                _loginState.value = _loginState.value.copy(
+                    status = LoginState.Status.ResetPasswordFailure, message = ex.message ?: ""
+                )
+            }
+        } else {
+            _loginState.value = _loginState.value.copy(
+                status = LoginState.Status.ResetPasswordFailure,
+                message = "Please enter your email."
+            )
         }
     }
 }

@@ -77,4 +77,9 @@ object AppModule {
     fun provideRegisterUserUsecase(repo: UserRepository): RegisterUserUsecase {
         return RegisterUserUsecase(repo)
     }
+
+    @Provides
+    fun provideSendResetMailUsecase(repo: UserRepository): SendResetMailUsecase {
+        return SendResetMailUsecase(repo)
+    }
 }
