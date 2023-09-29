@@ -24,4 +24,5 @@ interface UserRepository {
 
     suspend fun sendResetMail(userModel: UserModel): CommonResponseModel
 
+    suspend fun getUserProfile(id: String): UserModel
 }

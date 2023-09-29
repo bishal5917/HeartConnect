@@ -67,4 +67,12 @@ class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : Use
             throw ex
         }
     }
+
+    override suspend fun getUserProfile(id: String): UserModel {
+        try {
+            return userDataSource.getUserProfile(id)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
 }

@@ -32,6 +32,9 @@ import com.example.heartconnect.features.presentation.screens.home.viewmodel.Hom
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
 import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.profile.ProfileScreen
+import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileEvent
+import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileState
+import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileViewModel
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
@@ -43,11 +46,13 @@ fun MainScreen(
     stepViewModel: StepViewModel = viewModel(),
     homeViewModel: HomeViewModel = hiltViewModel(),
     chatViewModel: ChatViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel(),
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     val stepState by stepViewModel.stepState.collectAsState()
     val homeState by homeViewModel.homeState.collectAsState()
     val chatState by chatViewModel.chatState.collectAsState()
+    val profileState by profileViewModel.profileState.collectAsState()
 
     val userId by splashViewModel.userIdFlow.collectAsState()
 
@@ -62,6 +67,11 @@ fun MainScreen(
                 userId
             )
         )
+        if (profileState.status != ProfileState.Status.SUCCESS) profileViewModel.onEvent(
+            ProfileEvent.GetProfile(
+                userId
+            )
+        )
     }
 
     ConstraintLayout {
@@ -73,7 +83,8 @@ fun MainScreen(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
-            .fillMaxSize().padding(bottom = 50.dp)) {
+            .fillMaxSize()
+            .padding(bottom = 50.dp)) {
 
             //EVERYTHING TO SHOW HERE
             if (stepState.step == 0) {

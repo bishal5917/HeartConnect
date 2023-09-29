@@ -82,4 +82,9 @@ object AppModule {
     fun provideSendResetMailUsecase(repo: UserRepository): SendResetMailUsecase {
         return SendResetMailUsecase(repo)
     }
+
+    @Provides
+    fun provideGetUserProfileUsecase(repo: UserRepository): GetUserProfileUsecase {
+        return GetUserProfileUsecase(repo)
+    }
 }

@@ -41,5 +41,4 @@ class HomeViewModel @Inject constructor(private val getHomeUsersUsecase: GetHome
             Log.d("logs", "Exception: ${ex.message}")
         }
     }
-
 }

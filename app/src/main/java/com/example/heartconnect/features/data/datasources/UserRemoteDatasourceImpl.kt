@@ -229,4 +229,17 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             throw ex
         }
     }
+
+    override suspend fun getUserProfile(id: String): UserModel {
+        try {
+            val userSnapshot = FirebaseConfig().db.collection("Users").document(id).get().await()
+            val userData = userSnapshot.data
+            val name = userData?.get("name") as? String ?: ""
+            val image = userData?.get("image") as? String ?: ""
+            val birthYear = userData?.get("birthYear") as? String ?: ""
+            return UserModel(name = name, image = image, birthYear = birthYear)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
 }

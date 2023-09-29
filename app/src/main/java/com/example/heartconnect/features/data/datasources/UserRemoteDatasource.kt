@@ -23,4 +23,6 @@ interface UserRemoteDatasource {
     suspend fun registerUser(userRegisterModel: UserRegisterModel): CommonResponseModel
 
     suspend fun sendResetMail(userModel: UserModel): CommonResponseModel
+
+    suspend fun getUserProfile(id: String): UserModel
 }
