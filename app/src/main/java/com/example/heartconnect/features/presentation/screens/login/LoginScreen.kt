@@ -30,9 +30,7 @@ import com.example.heartconnect.core.navigation.Navigator
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(navController: NavController) {
-
-    val loginViewModel = hiltViewModel<LoginViewModel>()
+fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
     val loginState by loginViewModel.loginState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -40,24 +38,31 @@ fun LoginScreen(navController: NavController) {
         LoginState.Status.LOADING -> {
             CustomLoadingDialog(message = loginState.message)
         }
+
         LoginState.Status.SUCCESS -> {
             Navigator().navigateOffAll(
                 navController, AllScreen.MainScreen.name, AllScreen.LoginScreen.name
             )
             CustomToast(message = loginState.message)
         }
+
         LoginState.Status.FAILED -> {
             CustomToast(message = loginState.message)
         }
+
         LoginState.Status.ResetPasswordLoading -> {
             CustomLoadingDialog(message = loginState.message)
         }
+
         LoginState.Status.ResetPasswordSuccess -> {
             CustomToast(message = loginState.message)
         }
+
         LoginState.Status.ResetPasswordFailure -> {
             CustomToast(message = loginState.message)
         }
+
+        else -> {}
     }
 
     Box(

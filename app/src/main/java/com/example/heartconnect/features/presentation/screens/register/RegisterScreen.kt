@@ -44,10 +44,16 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
         RegisterState.Status.LOADING -> {
             CustomLoadingDialog(message = registerState.message)
         }
+
         RegisterState.Status.SUCCESS -> {
-            Navigator().back(navController)
+            Navigator().navigateOffAll(
+                navController,
+                destination = AllScreen.MainScreen.name,
+                removeTillScreen = AllScreen.RegisterScreen.name
+            )
             CustomToast(message = registerState.message)
         }
+
         RegisterState.Status.FAILED -> {
             CustomToast(message = registerState.message)
         }
