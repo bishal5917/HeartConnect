@@ -46,12 +46,14 @@ fun ProfileScreen(
         LoginState.Status.LOGOUTLOADING -> {
             CustomLoadingDialog(message = loginState.message)
         }
+
         LoginState.Status.LOGOUTSUCCESS -> {
             Navigator().navigateOffAll(
                 navController, AllScreen.LoginScreen.name, AllScreen.MainScreen.name
             )
             CustomToast(message = loginState.message)
         }
+
         LoginState.Status.LOGOUTFAILED -> {
             CustomToast(message = loginState.message)
         }
@@ -93,14 +95,16 @@ fun ProfileScreen(
                     title = "Change Picture", leadingIcon = Icons.Default.Person,
                     onClick = {
                         //onclicked function
+                        Navigator().navigateTo(navController, AllScreen.ChangePictureScreen.name)
                     },
                 )
-                CustomListTile(
-                    title = "Change Password", leadingIcon = Icons.Default.LockClock,
-                    onClick = {
-                        //onclicked function
-                    },
-                )
+//                CustomListTile(
+//                    title = "Change Password", leadingIcon = Icons.Default.LockClock,
+//                    onClick = {
+//                        //onclicked function
+//                        Navigator().navigateTo(navController, AllScreen.ChangePasswordScreen.name)
+//                    },
+//                )
                 CustomListTile(
                     title = "Add Post", leadingIcon = Icons.Default.AddAPhoto,
                     onClick = {

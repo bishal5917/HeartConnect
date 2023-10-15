@@ -16,6 +16,7 @@ fun CustomAppbar(
     navController: NavController,
     title: String,
     actionButtonClicked: () -> Unit,
+    showAction: Boolean = false,
 ) {
 
     TopAppBar(backgroundColor = Color.White, title = {
@@ -25,10 +26,11 @@ fun CustomAppbar(
             Navigator().back(navController)
         }
     }, actions = {
-        CustomIconButton(
-            childIcon = Icons.Default.Info, contentDesc = "Info Icon", color = Primary
-        ) {
-            actionButtonClicked()
-        }
+        if (showAction)
+            CustomIconButton(
+                childIcon = Icons.Default.Info, contentDesc = "Info Icon", color = Primary
+            ) {
+                actionButtonClicked()
+            }
     })
 }

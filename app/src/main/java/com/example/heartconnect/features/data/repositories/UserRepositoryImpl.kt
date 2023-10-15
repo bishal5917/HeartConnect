@@ -9,6 +9,7 @@ import com.example.heartconnect.features.data.models.message.MessageRequestModel
 import com.example.heartconnect.features.data.models.register.UserRegisterModel
 import com.example.heartconnect.features.data.models.user.UserModel
 import com.example.heartconnect.features.domain.repositories.UserRepository
+import com.example.heartconnect.model.CommonRequestModel
 import com.example.heartconnect.model.CommonResponseModel
 
 class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : UserRepository {
@@ -71,6 +72,14 @@ class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : Use
     override suspend fun getUserProfile(id: String): UserModel {
         try {
             return userDataSource.getUserProfile(id)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun changePicture(commonRequestModel: CommonRequestModel): CommonResponseModel {
+        try {
+            return userDataSource.changePicture(commonRequestModel)
         } catch (ex: Exception) {
             throw ex
         }

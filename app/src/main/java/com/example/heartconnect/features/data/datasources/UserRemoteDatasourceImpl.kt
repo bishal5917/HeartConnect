@@ -9,6 +9,7 @@ import com.example.heartconnect.features.data.models.message.MessageRequestModel
 import com.example.heartconnect.core.configs.FirebaseConfig
 import com.example.heartconnect.features.data.models.register.UserRegisterModel
 import com.example.heartconnect.features.data.models.user.UserModel
+import com.example.heartconnect.model.CommonRequestModel
 import com.example.heartconnect.model.CommonResponseModel
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.storage.StorageMetadata
@@ -90,24 +91,6 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
 //            for listening in real time
             val ref = FirebaseConfig().db.collection("Convos").document(messageRequestModel.convoId)
                 .collection("messages")
-//            val allMessages = ArrayList<MessageModel>()
-//            val listener = ref.addSnapshotListener { snapshot, exception ->
-//                snapshot?.documents?.map { documentSnapshot ->
-//                    val data = documentSnapshot.data ?: emptyMap()
-//                    val docId = documentSnapshot.id
-//                    val senderId = data["senderId"] as? String ?: ""
-//                    val message = data["message"] as? String ?: ""
-//                    allMessages.add(
-//                        MessageModel(
-//                            timeStamp = docId,
-//                            senderId = senderId,
-//                            message = message,
-//                            friendName = friendName,
-//                            friendImage = friendImage,
-//                        )
-//                    )
-//                }
-//            }
             val allMessages = querySnapshot.documents.map { documentSnapshot ->
                 val data = documentSnapshot.data ?: emptyMap()
                 val docId = documentSnapshot.id
@@ -238,6 +221,24 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             val image = userData?.get("image") as? String ?: ""
             val birthYear = userData?.get("birthYear") as? String ?: ""
             return UserModel(name = name, image = image, birthYear = birthYear)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun changePicture(commonRequestModel: CommonRequestModel): CommonResponseModel {
+        try {
+            val imageRef = FirebaseConfig().imageRef
+            val metadata = FirebaseConfig().storageMetadata
+            val uploadTask = imageRef.putFile(commonRequestModel.image!!, metadata).await()
+            val downloadUrl = imageRef.downloadUrl.await()
+            val imageSetMap = hashMapOf(
+                "image" to downloadUrl.toString()
+            )
+            FirebaseConfig().db.collection("Users").document(
+                commonRequestModel.id!!
+            ).update(imageSetMap as Map<String, Any>).await()
+            return CommonResponseModel(success = true, message = "Picture changed successfully")
         } catch (ex: Exception) {
             throw ex
         }
