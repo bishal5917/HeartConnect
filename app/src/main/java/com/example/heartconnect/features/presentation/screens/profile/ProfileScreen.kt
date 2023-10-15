@@ -33,11 +33,10 @@ import com.example.heartconnect.ui.theme.VSizedBox2
 
 @Composable
 fun ProfileScreen(
-    navController: NavController
+    navController: NavController, profileViewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val loginViewModel = hiltViewModel<LoginViewModel>()
     val loginState by loginViewModel.loginState.collectAsState()
-    val profileViewModel = hiltViewModel<ProfileViewModel>()
     val profileState by profileViewModel.profileState.collectAsState()
     val splashViewModel = hiltViewModel<SplashViewModel>()
     val userId by splashViewModel.userIdFlow.collectAsState()

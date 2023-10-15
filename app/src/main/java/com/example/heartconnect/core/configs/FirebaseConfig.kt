@@ -13,6 +13,6 @@ class FirebaseConfig {
     private val storage = FirebaseStorage.getInstance()
     val storageRef = storage.reference
     val imageRef =
-        FirebaseConfig().storageRef.child("profiles/${System.currentTimeMillis()}")
+        storage.reference.child("profiles/${System.currentTimeMillis()}")
     val storageMetadata = StorageMetadata.Builder().setContentType("image/jpeg").build()
 }

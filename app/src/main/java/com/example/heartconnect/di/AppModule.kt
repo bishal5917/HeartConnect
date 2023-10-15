@@ -12,6 +12,8 @@ import com.example.heartconnect.features.data.datasources.UserRemoteDatasourceIm
 import com.example.heartconnect.features.data.repositories.UserRepositoryImpl
 import com.example.heartconnect.features.domain.repositories.UserRepository
 import com.example.heartconnect.features.domain.usecases.*
+import com.example.heartconnect.features.presentation.screens.profile.components.change_picture.viewmodel.ChangePictureViewModel
+import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileViewModel
 import com.example.heartconnect.services.local.LocalDatastore
 import com.example.heartconnect.services.local.LocalDatastoreImpl
 import dagger.Module
@@ -86,5 +88,22 @@ object AppModule {
     @Provides
     fun provideGetUserProfileUsecase(repo: UserRepository): GetUserProfileUsecase {
         return GetUserProfileUsecase(repo)
+    }
+
+    @Provides
+    fun provideChangePictureUsecase(repo: UserRepository): ChangePictureUsecase {
+        return ChangePictureUsecase(repo)
+    }
+
+    //registering viewmodels
+    @Provides
+    fun provideChangePictureViewModel(changePictureUsecase: ChangePictureUsecase): ChangePictureViewModel {
+        return ChangePictureViewModel(changePictureUsecase)
+    }
+
+    @Provides
+    fun provideProfileViewModel(getUserProfileUsecase: GetUserProfileUsecase):
+            ProfileViewModel {
+        return ProfileViewModel(getUserProfileUsecase)
     }
 }
