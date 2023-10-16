@@ -20,6 +20,8 @@
     <string name="logout">Logout</string>
     <string name="change_password">Change Password</string>
     <string name="change_picture">Change Picture</string>
+    <string name="add_post">Add Picture</string>
+    <string name="add">Add</string>
     <string name="submit">Submit</string>
     <string name="navigation_header">App Drawer</string>
 </resources>

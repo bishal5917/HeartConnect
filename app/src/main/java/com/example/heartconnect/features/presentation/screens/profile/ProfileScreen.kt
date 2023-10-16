@@ -108,6 +108,7 @@ fun ProfileScreen(
                     title = "Add Post", leadingIcon = Icons.Default.AddAPhoto,
                     onClick = {
                         //onclicked function
+                        Navigator().navigateTo(navController, AllScreen.AddPictureScreen.name)
                     },
                 )
                 CustomListTile(

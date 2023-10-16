@@ -84,4 +84,12 @@ class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : Use
             throw ex
         }
     }
+
+    override suspend fun addPicture(commonRequestModel: CommonRequestModel): CommonResponseModel {
+        try {
+            return userDataSource.addPicture(commonRequestModel)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
 }

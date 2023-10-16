@@ -243,4 +243,27 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             throw ex
         }
     }
+
+    override suspend fun addPicture(commonRequestModel: CommonRequestModel): CommonResponseModel {
+        try {
+            val imageRef = FirebaseConfig().imageRef
+            val metadata = FirebaseConfig().storageMetadata
+            val uploadTask = imageRef.putFile(commonRequestModel.image!!, metadata).await()
+            val downloadUrl = imageRef.downloadUrl.await()
+            val userDocRef = FirebaseConfig().db.collection("Users").document(
+                commonRequestModel
+                    .id ?: ""
+            ).get().await()
+            val images = userDocRef.get("pics") as List<String>?
+            val updatedImages = images?.toMutableList()
+            updatedImages?.add(downloadUrl.toString())
+            FirebaseConfig().db.collection("Users").document(
+                commonRequestModel
+                    .id ?: ""
+            ).update("pics", updatedImages).await()
+            return CommonResponseModel(success = true, message = "Picture changed successfully")
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
 }

@@ -29,4 +29,6 @@ interface UserRepository {
 
     suspend fun changePicture(commonRequestModel: CommonRequestModel): CommonResponseModel
 
+    suspend fun addPicture(commonRequestModel: CommonRequestModel): CommonResponseModel
+
 }

@@ -14,6 +14,7 @@ import com.example.heartconnect.features.presentation.screens.login.LoginScreen
 import com.example.heartconnect.features.presentation.screens.main.MainScreen
 import com.example.heartconnect.features.presentation.screens.message.MessageScreen
 import com.example.heartconnect.features.presentation.screens.profile.ProfileScreen
+import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.AddPictureScreen
 import com.example.heartconnect.features.presentation.screens.profile.components.change_password.ChangePasswordScreen
 import com.example.heartconnect.features.presentation.screens.profile.components.change_picture.ChangePictureScreen
 import com.example.heartconnect.features.presentation.screens.register.RegisterScreen
@@ -57,6 +58,10 @@ fun Navigation() {
 
         composable(AllScreen.ChangePictureScreen.name) {
             ChangePictureScreen(navController = navController)
+        }
+
+        composable(AllScreen.AddPictureScreen.name) {
+            AddPictureScreen(navController = navController)
         }
 
         composable(
