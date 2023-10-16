@@ -1,4 +1,4 @@
-package com.example.heartconnect.features.presentation.screens.home.viewmodel
+package com.example.heartconnect.features.presentation.screens.feed.viewmodel
 
 import com.example.heartconnect.features.data.models.feed.FeedModel
 

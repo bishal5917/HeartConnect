@@ -64,8 +64,6 @@ fun RegisterHobbyForm() {
         "Scuba Diving",
     )
 
-
-
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(), cells = GridCells.Fixed(3)
     ) {

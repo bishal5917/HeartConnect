@@ -31,14 +31,6 @@ fun SingleMessage(messageModel: MessageModel) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = if (userId.value == messageModel.senderId) Arrangement.End else Arrangement.Start
     ) {
-        if (userId.value != messageModel.senderId) {
-            CustomNetworkImage(
-                imageUrl = messageModel.friendImage ?: "",
-                modifier = Modifier.clip(CircleShape),
-                parentmodifier = Modifier.size(30.dp)
-            )
-            HSizedBox1()
-        }
         Box(
             modifier = Modifier.background(
                 if (userId.value == messageModel.senderId) Primary else Color.LightGray,

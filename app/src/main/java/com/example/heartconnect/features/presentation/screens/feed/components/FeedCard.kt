@@ -1,4 +1,4 @@
-package com.example.heartconnect.features.presentation.screens.home.components
+package com.example.heartconnect.features.presentation.screens.feed.components
 
 import androidx.compose.foundation.*
 import androidx.compose.runtime.Composable
@@ -17,7 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.heartconnect.composables.*
+import com.example.heartconnect.core.navigation.AllScreen
+import com.example.heartconnect.core.navigation.Navigator
 import com.example.heartconnect.features.data.models.chat.ChatRequestModel
 import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatEvent
@@ -29,7 +32,7 @@ import com.example.heartconnect.ui.theme.VSizedBox0
 import com.example.heartconnect.utils.ChatUtil
 
 @Composable
-fun HomeCard(cardItem: FeedModel) {
+fun FeedCard(navController: NavController, cardItem: FeedModel) {
     val createChatViewModel = hiltViewModel<CreateChatViewModel>()
     val chatViewModel = hiltViewModel<ChatViewModel>()
     val chatState by chatViewModel.chatState.collectAsState()
@@ -41,7 +44,14 @@ fun HomeCard(cardItem: FeedModel) {
         modifier = Modifier
             .padding(8.dp)
             .background(Color.White)
-            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(12.dp)),
+            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(12.dp))
+            .clickable {
+                //goto single feed screen
+                Navigator().navigateTo(
+                    navController,
+                    "${AllScreen.SingleFeedScreen.name}/${cardItem.uid}"
+                )
+            },
     ) {
         Column(
             modifier = Modifier.padding(8.dp)
@@ -71,11 +81,11 @@ fun HomeCard(cardItem: FeedModel) {
                     ) Icons.Default.FavoriteBorder else Icons.Default.Favorite, color = Primary
                 ) {
                     //create chat api
-                    createChatViewModel.onEvent(
-                        CreateChatEvent.CreateChat(
-                            ChatRequestModel(userId = userId, friendId = cardItem.uid ?: "")
-                        )
-                    )
+//                    createChatViewModel.onEvent(
+//                        CreateChatEvent.CreateChat(
+//                            ChatRequestModel(userId = userId, friendId = cardItem.uid ?: "")
+//                        )
+//                    )
                 }
             }
 

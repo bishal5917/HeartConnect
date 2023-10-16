@@ -2,20 +2,13 @@ package com.example.heartconnect.features.presentation.screens.register.viewmode
 
 import android.net.Uri
 import android.util.Log
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.heartconnect.features.data.models.register.UserRegisterModel
-import com.example.heartconnect.features.domain.usecases.GetMessagesUsecase
 import com.example.heartconnect.features.domain.usecases.RegisterUserUsecase
-import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
 import com.example.heartconnect.services.local.LocalDatastore
 import com.example.heartconnect.utils.Validator
-import com.example.heartconnect.utils.viewmodel.ImageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -147,6 +140,7 @@ class RegisterViewModel @Inject constructor(
                     password = _registerState.value.password,
                     hobbies = _registerState.value.hobbies ?: ArrayList(),
                     image = image,
+                    pics = ArrayList()
                 )
             )
             if (result.userId != null) {

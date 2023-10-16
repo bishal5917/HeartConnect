@@ -1,4 +1,4 @@
-package com.example.heartconnect.features.presentation.screens.home
+package com.example.heartconnect.features.presentation.screens.feed
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,39 +21,21 @@ import com.example.heartconnect.features.presentation.screens.chat.viewmodel.cre
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatViewModel
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatViewModel
-import com.example.heartconnect.features.presentation.screens.home.components.HomeCard
-import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeEvent
-import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
-import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
+import com.example.heartconnect.features.presentation.screens.feed.components.FeedCard
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeEvent
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeState
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.ui.theme.VSizedBox1
 
 @Composable
-fun HomeScreen(
+fun FeedScreen(
     navController: NavController,
     homeViewModel: HomeViewModel = hiltViewModel(),
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
-
     val homeState by homeViewModel.homeState.collectAsState()
     val userId by splashViewModel.userIdFlow.collectAsState()
-
-    val createChatViewModel = hiltViewModel<CreateChatViewModel>()
-    val createChatState by createChatViewModel.createChatState.collectAsState()
-
-    when (createChatState.status) {
-        CreateChatState.Status.LOADING -> {
-            CustomLoadingDialog(message = createChatState.message)
-        }
-        CreateChatState.Status.SUCCESS -> {
-            hiltViewModel<ChatViewModel>().onEvent(ChatEvent.GetChats(userId))
-            CustomToast(message = createChatState.message)
-            createChatViewModel.onEvent(CreateChatEvent.Reset)
-        }
-        CreateChatState.Status.FAILED -> {
-            CustomToast(message = createChatState.message)
-        }
-    }
 
     Box(
         modifier = Modifier
@@ -66,7 +48,7 @@ fun HomeScreen(
         if (homeState.status == HomeState.Status.SUCCESS && homeState.users != null) {
             LazyColumn {
                 items(homeState.users ?: listOf(FeedModel())) { feedItem ->
-                    HomeCard(feedItem)
+                    FeedCard(navController,feedItem)
                     VSizedBox1()
                 }
             }

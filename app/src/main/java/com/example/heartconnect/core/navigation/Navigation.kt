@@ -1,7 +1,6 @@
 package com.example.heartconnect.core.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,7 +8,8 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.heartconnect.features.presentation.screens.splash.SplashScreen
 import com.example.heartconnect.features.presentation.screens.chat.ChatScreen
-import com.example.heartconnect.features.presentation.screens.home.HomeScreen
+import com.example.heartconnect.features.presentation.screens.feed.FeedScreen
+import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.SingleFeedScreen
 import com.example.heartconnect.features.presentation.screens.login.LoginScreen
 import com.example.heartconnect.features.presentation.screens.main.MainScreen
 import com.example.heartconnect.features.presentation.screens.message.MessageScreen
@@ -37,7 +37,7 @@ fun Navigation() {
         }
 
         composable(AllScreen.HomeScreen.name) {
-            HomeScreen(navController = navController)
+            FeedScreen(navController = navController)
         }
 
         composable(AllScreen.ChatScreen.name) {
@@ -73,6 +73,15 @@ fun Navigation() {
             })
         ) {
             MessageScreen(navController = navController, it)
+        }
+
+        composable(
+            route = "${AllScreen.SingleFeedScreen.name}/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.StringType
+            })
+        ) {
+            SingleFeedScreen(navController = navController, it)
         }
     }
 }

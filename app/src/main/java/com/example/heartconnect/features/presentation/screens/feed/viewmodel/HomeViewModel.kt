@@ -1,4 +1,4 @@
-package com.example.heartconnect.features.presentation.screens.home.viewmodel
+package com.example.heartconnect.features.presentation.screens.feed.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

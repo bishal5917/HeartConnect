@@ -27,10 +27,10 @@ import com.example.heartconnect.features.presentation.screens.chat.ChatScreen
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatState
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatViewModel
-import com.example.heartconnect.features.presentation.screens.home.HomeScreen
-import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeEvent
-import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeState
-import com.example.heartconnect.features.presentation.screens.home.viewmodel.HomeViewModel
+import com.example.heartconnect.features.presentation.screens.feed.FeedScreen
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeEvent
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeState
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeViewModel
 import com.example.heartconnect.features.presentation.screens.profile.ProfileScreen
 import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileEvent
 import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileState
@@ -88,7 +88,7 @@ fun MainScreen(
 
             //EVERYTHING TO SHOW HERE
             if (stepState.step == 0) {
-                HomeScreen(navController = navController)
+                FeedScreen(navController = navController)
             }
             if (stepState.step == 1) {
                 ChatScreen(navController = navController)
@@ -98,13 +98,14 @@ fun MainScreen(
             }
         }
 
-        BottomNavigation(modifier = Modifier
-            .background(color = Color.White)
-            .constrainAs(bottomNavBar) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }) {
+        BottomNavigation(
+            modifier = Modifier
+                .background(color = Color.White)
+                .constrainAs(bottomNavBar) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }) {
             BottomNavigationItem(selected = stepState.step == 0, onClick = {
                 stepViewModel.onEvent(StepEvent.Change(0))
             }, icon = {
