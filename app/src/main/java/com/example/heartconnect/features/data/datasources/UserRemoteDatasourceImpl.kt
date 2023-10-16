@@ -103,6 +103,8 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                     friendName = friendName,
                     friendImage = friendImage,
                 )
+                //new code
+
             }
             return allMessages
         } catch (ex: Exception) {
@@ -173,6 +175,7 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             "birthYear" to userRegisterModel.birthYear,
             "password" to userRegisterModel.password,
             "hobbies" to userRegisterModel.hobbies,
+            "pics" to userRegisterModel.pics,
             "image" to "",
         )
         return try {
@@ -251,17 +254,15 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
             val uploadTask = imageRef.putFile(commonRequestModel.image!!, metadata).await()
             val downloadUrl = imageRef.downloadUrl.await()
             val userDocRef = FirebaseConfig().db.collection("Users").document(
-                commonRequestModel
-                    .id ?: ""
+                commonRequestModel.id ?: ""
             ).get().await()
             val images = userDocRef.get("pics") as List<String>?
             val updatedImages = images?.toMutableList()
             updatedImages?.add(downloadUrl.toString())
             FirebaseConfig().db.collection("Users").document(
-                commonRequestModel
-                    .id ?: ""
+                commonRequestModel.id ?: ""
             ).update("pics", updatedImages).await()
-            return CommonResponseModel(success = true, message = "Picture changed successfully")
+            return CommonResponseModel(success = true, message = "Imaged uploaded successfully")
         } catch (ex: Exception) {
             throw ex
         }

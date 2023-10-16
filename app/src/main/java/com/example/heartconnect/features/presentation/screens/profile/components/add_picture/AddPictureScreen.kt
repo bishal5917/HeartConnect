@@ -30,9 +30,16 @@ import com.example.heartconnect.R
 import com.example.heartconnect.composables.ButtonComponent
 import com.example.heartconnect.composables.CustomAppbar
 import com.example.heartconnect.composables.CustomCircularProgressIndicator
+import com.example.heartconnect.composables.CustomLoadingDialog
+import com.example.heartconnect.composables.CustomToast
 import com.example.heartconnect.composables.LocalBitImage
 import com.example.heartconnect.composables.NormalButton
+import com.example.heartconnect.core.navigation.Navigator
+import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.viewmodel.AddPictureEvent
+import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.viewmodel.AddPictureState
+import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.viewmodel.AddPictureViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
+import com.example.heartconnect.model.CommonRequestModel
 import com.example.heartconnect.ui.theme.VSizedBox1
 import com.example.heartconnect.ui.theme.VSizedBox2
 import com.example.heartconnect.ui.theme.kNeutral600Color
@@ -45,51 +52,52 @@ fun AddPictureScreen(
     navController: NavController,
 ) {
     //viewmodels
+    val addPictureViewModel = hiltViewModel<AddPictureViewModel>()
     val imageViewModel = viewModel<ImageViewModel>()
     val splashViewModel = hiltViewModel<SplashViewModel>()
 
     //flow collection
     val imageState by imageViewModel.imageState.collectAsState()
     val uId by splashViewModel.userIdFlow.collectAsState()
+    val addPictureState by addPictureViewModel.addPictureState.collectAsState()
 
-//    when (changePictureState.status) {
-//        ChangePictureState.Status.LOADING -> {
-//            CustomLoadingDialog(message = changePictureState.message)
-//        }
-//
-//        ChangePictureState.Status.SUCCESS -> {
-//            Navigator().back(navController)
-//            CustomToast(message = changePictureState.message)
-//            profileViewModel.onEvent(ProfileEvent.GetProfile(uId))
-//        }
-//
-//        ChangePictureState.Status.FAILED -> {
-//            CustomToast(message = changePictureState.message)
-//        }
-//
-//        else -> {}
-//    }
+    when (addPictureState.status) {
+        AddPictureState.Status.LOADING -> {
+            CustomLoadingDialog(message = addPictureState.message)
+        }
+
+        AddPictureState.Status.SUCCESS -> {
+            Navigator().back(navController)
+            CustomToast(message = addPictureState.message)
+        }
+
+        AddPictureState.Status.FAILED -> {
+            CustomToast(message = addPictureState.message)
+        }
+
+        else -> {}
+    }
     Scaffold(topBar = {
-        CustomAppbar(
-            navController,
+        CustomAppbar(navController,
             title = stringResource(id = R.string.add_post),
             actionButtonClicked = {})
     }) {
         //for image picking
         val context = LocalContext.current
-        val launcher =
-            rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent(),
-                onResult = {
-                    imageViewModel.onEvent(
-                        ImageEvent.SelectRegisterImage(
-                            context = context, imageUri = it
-                        )
+        val launcher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent(),
+            onResult = {
+                imageViewModel.onEvent(
+                    ImageEvent.SelectRegisterImage(
+                        context = context, imageUri = it
                     )
-                })
+                )
+            })
 
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(16.dp)
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(16.dp)
         ) {
             VSizedBox1()
             Box(
@@ -116,9 +124,7 @@ fun AddPictureScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(40.dp),
-                buttonText = if (imageState.status == ImageState.Status.RegisterImageSuccess &&
-                    imageState.registerImage != null
-                ) "Change Image" else "Choose Image"
+                buttonText = if (imageState.status == ImageState.Status.RegisterImageSuccess && imageState.registerImage != null) "Change Image" else "Choose Image"
             ) {
                 launcher.launch("image/*")
             }
@@ -126,6 +132,11 @@ fun AddPictureScreen(
             ButtonComponent(
                 value = stringResource(id = R.string.add),
                 onButtonClicked = {
+                    addPictureViewModel.onEvent(
+                        AddPictureEvent.AddPic(
+                            CommonRequestModel(id = uId, image = imageState.registerImageUri)
+                        )
+                    )
                 },
                 isEnabled = imageState.status == ImageState.Status.RegisterImageSuccess,
             )

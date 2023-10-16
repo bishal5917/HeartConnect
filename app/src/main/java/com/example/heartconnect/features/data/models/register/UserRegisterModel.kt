@@ -11,4 +11,5 @@ data class UserRegisterModel(
     val birthYear: String,
     val image: Uri,
     val hobbies: ArrayList<String>,
+    val pics: ArrayList<String>,
 )
