@@ -11,7 +11,7 @@ import com.example.heartconnect.model.CommonRequestModel
 import com.example.heartconnect.model.CommonResponseModel
 
 interface UserRemoteDatasource {
-    suspend fun getHomeUsers(id: String): List<FeedModel>
+    suspend fun getFeed(id: String): List<FeedModel>
 
     suspend fun getConversations(id: String): List<ConversationModel>
 
@@ -30,4 +30,6 @@ interface UserRemoteDatasource {
     suspend fun changePicture(commonRequestModel: CommonRequestModel): CommonResponseModel
 
     suspend fun addPicture(commonRequestModel: CommonRequestModel): CommonResponseModel
+
+    suspend fun getSingleFeed(commonRequestModel: CommonRequestModel): FeedModel
 }

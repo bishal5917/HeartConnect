@@ -62,11 +62,9 @@ fun SingleFeedScreen(
     navController: NavController, navBackStackEntry: NavBackStackEntry,
 ) {
     val feedId = navBackStackEntry.arguments?.getString("id")
-    val chatViewModel = hiltViewModel<ChatViewModel>()
     val splashViewModel = hiltViewModel<SplashViewModel>()
     val createChatViewModel = hiltViewModel<CreateChatViewModel>()
 
-    val chatState by chatViewModel.chatState.collectAsState()
     val userId by splashViewModel.userIdFlow.collectAsState()
     val createChatState by createChatViewModel.createChatState.collectAsState()
 
@@ -74,7 +72,6 @@ fun SingleFeedScreen(
         "Reading",
         "Cooking",
         "Hiking",
-        "Painting",
     )
 
     when (createChatState.status) {
@@ -102,10 +99,7 @@ fun SingleFeedScreen(
         floatingActionButton = {
             CustomIconButton(
                 contentDesc = "Create",
-                childIcon = if (!ChatUtil().isFriendAlready(
-                        chatState.chats ?: emptyList(), feedId ?: ""
-                    )
-                ) Icons.Default.FavoriteBorder else Icons.Default.Favorite,
+                childIcon = Icons.Default.FavoriteBorder,
                 color = Primary,
                 iconSize = 25,
             ) {

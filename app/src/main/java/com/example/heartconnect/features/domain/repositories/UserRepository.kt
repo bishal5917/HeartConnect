@@ -31,4 +31,6 @@ interface UserRepository {
 
     suspend fun addPicture(commonRequestModel: CommonRequestModel): CommonResponseModel
 
+    suspend fun getSingleFeed(commonRequestModel: CommonRequestModel): FeedModel
+
 }

@@ -15,7 +15,7 @@ import com.example.heartconnect.model.CommonResponseModel
 class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : UserRepository {
     override suspend fun getHomeUsers(id: String): List<FeedModel> {
         try {
-            return userDataSource.getHomeUsers(id)
+            return userDataSource.getFeed(id)
         } catch (ex: Exception) {
             throw ex
         }
@@ -88,6 +88,14 @@ class UserRepositoryImpl(private val userDataSource: UserRemoteDatasource) : Use
     override suspend fun addPicture(commonRequestModel: CommonRequestModel): CommonResponseModel {
         try {
             return userDataSource.addPicture(commonRequestModel)
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun getSingleFeed(commonRequestModel: CommonRequestModel): FeedModel {
+        try {
+            return userDataSource.getSingleFeed(commonRequestModel)
         } catch (ex: Exception) {
             throw ex
         }

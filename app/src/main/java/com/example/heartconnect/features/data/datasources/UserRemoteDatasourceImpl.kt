@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class UserRemoteDatasourceImpl : UserRemoteDatasource {
-    override suspend fun getHomeUsers(id: String): List<FeedModel> {
+    override suspend fun getFeed(id: String): List<FeedModel> {
         try {
             val querySnapshot =
                 FirebaseConfig().db.collection("Users").whereNotEqualTo(FieldPath.documentId(), id)
@@ -263,6 +263,27 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
                 commonRequestModel.id ?: ""
             ).update("pics", updatedImages).await()
             return CommonResponseModel(success = true, message = "Imaged uploaded successfully")
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
+
+    override suspend fun getSingleFeed(commonRequestModel: CommonRequestModel): FeedModel {
+        try {
+            val querySnapshot =
+                FirebaseConfig().db.collection("Users").document(commonRequestModel.id ?: "").get()
+                    .await()
+            val data = querySnapshot.data
+            return FeedModel(
+                name = data?.get("name") as String,
+                birthYear = data["birthYear"] as String,
+                hobbies = data["hobbies"] as List<String>,
+                profileImage = data["image"] as String,
+                pics = data["pics"] as List<String>,
+                email = data["email"] as String,
+                phone = data["phone"] as String,
+                gender = data["gender"] as String,
+            )
         } catch (ex: Exception) {
             throw ex
         }
