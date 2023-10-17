@@ -17,6 +17,7 @@ import com.example.heartconnect.features.presentation.screens.profile.ProfileScr
 import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.AddPictureScreen
 import com.example.heartconnect.features.presentation.screens.profile.components.change_password.ChangePasswordScreen
 import com.example.heartconnect.features.presentation.screens.profile.components.change_picture.ChangePictureScreen
+import com.example.heartconnect.features.presentation.screens.profile.components.my_pic.MyPicsScreen
 import com.example.heartconnect.features.presentation.screens.register.RegisterScreen
 
 @Composable
@@ -82,6 +83,15 @@ fun Navigation() {
             })
         ) {
             SingleFeedScreen(navController = navController, it)
+        }
+
+        composable(
+            route = "${AllScreen.MyPicsScreen.name}/{pics}",
+            arguments = listOf(navArgument("pics") {
+                type = NavType.StringArrayType
+            })
+        ) {
+            MyPicsScreen(navController = navController, it)
         }
     }
 }

@@ -57,6 +57,8 @@ fun ProfileScreen(
         LoginState.Status.LOGOUTFAILED -> {
             CustomToast(message = loginState.message)
         }
+
+        else -> {}
     }
 
     Box(
@@ -116,7 +118,10 @@ fun ProfileScreen(
                     title = "My Pics", leadingIcon = Icons.Default.Image,
                     onClick = {
                         //onclicked function
-
+//                        Navigator().navigateTo(
+//                            navController,
+//                            "${AllScreen.MyPicsScreen.name}/${profileState.user?.pics}"
+//                        )
                     },
                 )
                 CustomListTile(

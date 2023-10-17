@@ -1,10 +1,9 @@
 package com.example.heartconnect.core.navigation
 
-
 enum class AllScreen {
     SplashScreen, LoginScreen, RegisterScreen, MainScreen, HomeScreen, ChatScreen, ProfileScreen,
     ChangePasswordScreen, MessageScreen, ChangePictureScreen, AddPictureScreen,
-    SingleFeedScreen;
+    SingleFeedScreen, MyPicsScreen;
 
     companion object {
         fun fromRoute(route: String?): AllScreen = when (route?.substringBefore("/")) {
@@ -20,6 +19,7 @@ enum class AllScreen {
             AddPictureScreen.name -> AddPictureScreen
             "${MessageScreen.name}/{id}/{name}" -> MessageScreen
             "${SingleFeedScreen.name}/{id}" -> SingleFeedScreen
+            "${MyPicsScreen.name}/{pics}" -> MyPicsScreen
             null -> LoginScreen
             else -> throw IllegalArgumentException("Invalid Route")
         }
