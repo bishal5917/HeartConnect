@@ -2,8 +2,8 @@ package com.example.heartconnect.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Primary = Color(0xffED2F5B)
-val Secondary = Color(0xffFFB7CE)
+val Primary = Color(0xff5BAEB7)
+val Secondary = Color(0xff4ADEDE)
 val TextColor = Color(0xFF1D1617)
 val AccentColor = Color(0xFFC58BF2)
 val GrayColor = Color(0xFF7B6F72)

@@ -12,6 +12,7 @@ import com.example.heartconnect.features.data.datasources.UserRemoteDatasourceIm
 import com.example.heartconnect.features.data.repositories.UserRepositoryImpl
 import com.example.heartconnect.features.domain.repositories.UserRepository
 import com.example.heartconnect.features.domain.usecases.*
+import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.viewmodel.SingleFeedViewModel
 import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.viewmodel.AddPictureViewModel
 import com.example.heartconnect.features.presentation.screens.profile.components.change_picture.viewmodel.ChangePictureViewModel
 import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileViewModel
@@ -101,6 +102,11 @@ object AppModule {
         return AddPictureUsecase(repo)
     }
 
+    @Provides
+    fun provideSingleFeedUsecase(repo: UserRepository): GetSingleFeedUsecase {
+        return GetSingleFeedUsecase(repo)
+    }
+
     //registering viewmodels
     @Provides
     fun provideChangePictureViewModel(changePictureUsecase: ChangePictureUsecase): ChangePictureViewModel {
@@ -115,5 +121,11 @@ object AppModule {
     @Provides
     fun provideAddPictureViewModel(addPictureUsecase: AddPictureUsecase): AddPictureViewModel {
         return AddPictureViewModel(addPictureUsecase)
+    }
+
+    @Provides
+    fun provideSingleFeedViewModel(getSingleFeedUsecase: GetSingleFeedUsecase):
+            SingleFeedViewModel {
+        return SingleFeedViewModel(getSingleFeedUsecase)
     }
 }

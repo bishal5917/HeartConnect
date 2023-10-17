@@ -49,7 +49,7 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
             Navigator().navigateOffAll(
                 navController,
                 destination = AllScreen.MainScreen.name,
-                removeTillScreen = AllScreen.RegisterScreen.name
+                removeTillScreen = AllScreen.LoginScreen.name
             )
             CustomToast(message = registerState.message)
         }

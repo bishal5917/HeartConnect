@@ -38,7 +38,7 @@ class ProfileViewModel @Inject constructor(
             )
         } catch (ex: Exception) {
             _profileState.value = _profileState.value.copy(
-                status = ProfileState.Status.LOADING, message = "${ex.message}"
+                status = ProfileState.Status.FAILED, message = "${ex.message}"
             )
             Log.d("logs", "Exception: ${ex.message}")
         }

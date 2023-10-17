@@ -1,11 +1,10 @@
 package com.example.heartconnect.features.presentation.screens.profile
 
-import android.provider.ContactsContract.Profile
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
-import androidx.compose.material.icons.filled.LockClock
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -17,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.heartconnect.composables.*
 import com.example.heartconnect.features.presentation.screens.login.LoginEvent
@@ -29,7 +27,10 @@ import com.example.heartconnect.features.presentation.screens.profile.viewmodel.
 import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileState
 import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
+import com.example.heartconnect.ui.theme.VSizedBox1
 import com.example.heartconnect.ui.theme.VSizedBox2
+import com.example.heartconnect.ui.theme.kNeutral500Color
+import com.example.heartconnect.ui.theme.kNeutral800Color
 
 @Composable
 fun ProfileScreen(
@@ -85,9 +86,23 @@ fun ProfileScreen(
                 )
                 VSizedBox2()
                 CustomText(
-                    data = "${profileState.user!!.name} , ${profileState.user!!.birthYear}",
+                    data = "${profileState.user?.name} , ${profileState.user?.birthYear}",
+                    fontWeight = FontWeight.W500,
+                    fontSize = 16,
+                    color = kNeutral800Color
+                )
+                VSizedBox1()
+                CustomText(
+                    data = profileState.user?.phone ?: "",
                     fontWeight = FontWeight.W400,
-                    fontSize = 24
+                    fontSize = 14,
+                    color = kNeutral500Color,
+                )
+                CustomText(
+                    data = profileState.user?.email ?: "",
+                    fontWeight = FontWeight.W400,
+                    fontSize = 14,
+                    color = kNeutral500Color,
                 )
                 VSizedBox2()
                 CustomListTile(
@@ -97,15 +112,15 @@ fun ProfileScreen(
                         Navigator().navigateTo(navController, AllScreen.ChangePictureScreen.name)
                     },
                 )
-//                CustomListTile(
-//                    title = "Change Password", leadingIcon = Icons.Default.LockClock,
-//                    onClick = {
-//                        //onclicked function
-//                        Navigator().navigateTo(navController, AllScreen.ChangePasswordScreen.name)
-//                    },
-//                )
                 CustomListTile(
-                    title = "Add Post", leadingIcon = Icons.Default.AddAPhoto,
+                    title = "My Pics", leadingIcon = Icons.Default.Image,
+                    onClick = {
+                        //onclicked function
+
+                    },
+                )
+                CustomListTile(
+                    title = "Add Pic", leadingIcon = Icons.Default.AddAPhoto,
                     onClick = {
                         //onclicked function
                         Navigator().navigateTo(navController, AllScreen.AddPictureScreen.name)

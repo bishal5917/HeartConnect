@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -20,8 +21,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -32,19 +35,29 @@ import androidx.navigation.NavBackStackEntry
 
 import androidx.navigation.NavController
 import com.example.heartconnect.composables.CustomAppbar
+import com.example.heartconnect.composables.CustomCircularProgressIndicator
+import com.example.heartconnect.composables.CustomErrorComponent
 import com.example.heartconnect.composables.CustomIconButton
 import com.example.heartconnect.composables.CustomLoadingDialog
 import com.example.heartconnect.composables.CustomNetworkImage
 import com.example.heartconnect.composables.CustomText
 import com.example.heartconnect.composables.CustomToast
 import com.example.heartconnect.features.data.models.chat.ChatRequestModel
+import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatState
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatViewModel
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatViewModel
+import com.example.heartconnect.features.presentation.screens.feed.components.FeedCard
+import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.viewmodel.SingleFeedEvent
+import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.viewmodel.SingleFeedState
+import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.viewmodel.SingleFeedViewModel
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeEvent
+import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeState
 import com.example.heartconnect.features.presentation.screens.register.components.HobbyItem
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
+import com.example.heartconnect.model.CommonRequestModel
 import com.example.heartconnect.ui.theme.HSizedBox2
 import com.example.heartconnect.ui.theme.Primary
 import com.example.heartconnect.ui.theme.Secondary
@@ -64,15 +77,11 @@ fun SingleFeedScreen(
     val feedId = navBackStackEntry.arguments?.getString("id")
     val splashViewModel = hiltViewModel<SplashViewModel>()
     val createChatViewModel = hiltViewModel<CreateChatViewModel>()
+    val singleFeedViewModel = hiltViewModel<SingleFeedViewModel>()
 
     val userId by splashViewModel.userIdFlow.collectAsState()
     val createChatState by createChatViewModel.createChatState.collectAsState()
-
-    val pics = listOf(
-        "Reading",
-        "Cooking",
-        "Hiking",
-    )
+    val singleFeedState by singleFeedViewModel.singleFeedState.collectAsState()
 
     when (createChatState.status) {
         CreateChatState.Status.LOADING -> {
@@ -92,76 +101,102 @@ fun SingleFeedScreen(
         else -> {}
     }
 
-    Scaffold(
-        topBar = {
-            CustomAppbar(navController, title = "", actionButtonClicked = {})
-        },
-        floatingActionButton = {
-            CustomIconButton(
-                contentDesc = "Create",
-                childIcon = Icons.Default.FavoriteBorder,
-                color = Primary,
-                iconSize = 25,
-            ) {
-                //create chat api
-                createChatViewModel.onEvent(
-                    CreateChatEvent.CreateChat(
-                        ChatRequestModel(userId = userId, friendId = feedId ?: "")
-                    )
-                )
-            }
-        },
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            VSizedBox1()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                CustomNetworkImage(
-                    imageUrl = "",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(CircleShape),
-                    parentmodifier = Modifier.size(100.dp)
-                )
-                HSizedBox2()
-                Column {
-                    CustomText(
-                        data = "Bsal , 1880", fontWeight = FontWeight.W400, fontSize = 24
-                    )
-                    VSizedBox1()
-                    CustomText(
-                        data = "9865559434", fontWeight = FontWeight.W400, fontSize = 14,
-                        color = kNeutral500Color,
-                    )
-                    CustomText(
-                        data = "poudelb172@gmail.com",
-                        fontWeight = FontWeight.W400,
-                        fontSize = 14,
-                        color = kNeutral500Color,
+    LaunchedEffect(key1 = true) {
+        singleFeedViewModel.onEvent(SingleFeedEvent.GetSingleFeed(CommonRequestModel(id = feedId)))
+    }
+    if (singleFeedState.status == SingleFeedState.Status.LOADING) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CustomCircularProgressIndicator()
+        }
+    }
+    if (singleFeedState.status == SingleFeedState.Status.FAILED) {
+        CustomErrorComponent(message = singleFeedState.message ?: "") {
+            singleFeedViewModel.onEvent(SingleFeedEvent.GetSingleFeed(CommonRequestModel(id = feedId)))
+        }
+    }
+    if (singleFeedState.status == SingleFeedState.Status.SUCCESS) {
+        Scaffold(
+            topBar = {
+                CustomAppbar(navController, title = "", actionButtonClicked = {})
+            },
+            floatingActionButton = {
+                CustomIconButton(
+                    contentDesc = "Create",
+                    childIcon = Icons.Default.FavoriteBorder,
+                    color = Primary,
+                    iconSize = 25,
+                ) {
+                    //create chat api
+                    createChatViewModel.onEvent(
+                        CreateChatEvent.CreateChat(
+                            ChatRequestModel(userId = userId, friendId = feedId ?: "")
+                        )
                     )
                 }
-            }
-            //Hobbies (Map those hobbies)
-            VSizedBox2()
-            SingleHobby(hobby = "Dancing")
-            SingleHobby(hobby = "Eating")
-            SingleHobby(hobby = "Beer")
-            SingleHobby(hobby = "Foodie")
-            VSizedBox2()
-            //Show uploaded images grid
-            LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize(), cells = GridCells.Fixed(2)
-            ) {
-                items(pics) { hobby ->
+            },
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                VSizedBox1()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
                     CustomNetworkImage(
-                        imageUrl = "",
+                        imageUrl = singleFeedState.feedData?.profileImage ?: "",
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(2.dp)
-                            .clip(RoundedCornerShape(4.dp)),
-                        parentmodifier = Modifier.size(200.dp)
+                            .clip(CircleShape),
+                        parentmodifier = Modifier.size(100.dp)
                     )
+                    HSizedBox2()
+                    Column {
+                        CustomText(
+                            data = "${singleFeedState.feedData?.name} , ${
+                                singleFeedState
+                                    .feedData?.birthYear
+                            }", fontWeight =
+                            FontWeight
+                                .W500,
+                            fontSize = 16,
+                            color = kNeutral800Color
+                        )
+                        VSizedBox1()
+                        CustomText(
+                            data = singleFeedState.feedData?.phone ?: "",
+                            fontWeight = FontWeight
+                                .W400,
+                            fontSize = 14,
+                            color = kNeutral500Color,
+                        )
+                        CustomText(
+                            data = singleFeedState.feedData?.email ?: "",
+                            fontWeight = FontWeight.W400,
+                            fontSize = 14,
+                            color = kNeutral500Color,
+                        )
+                    }
+                }
+                //Hobbies (Map those hobbies)
+                VSizedBox2()
+                LazyColumn {
+                    items(singleFeedState.feedData?.hobbies ?: emptyList()) { hby ->
+                        SingleHobby(hobby = hby)
+                    }
+                }
+                VSizedBox2()
+                //Show uploaded images grid
+                LazyVerticalGrid(
+                    modifier = Modifier.fillMaxSize(), cells = GridCells.Fixed(2)
+                ) {
+                    items(singleFeedState.feedData?.pics ?: emptyList()) { pic ->
+                        CustomNetworkImage(
+                            imageUrl = pic,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(2.dp)
+                                .clip(RoundedCornerShape(4.dp)),
+                            parentmodifier = Modifier.size(200.dp)
+                        )
+                    }
                 }
             }
         }

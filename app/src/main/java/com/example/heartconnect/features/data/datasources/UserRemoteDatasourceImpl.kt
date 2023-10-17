@@ -219,11 +219,17 @@ class UserRemoteDatasourceImpl : UserRemoteDatasource {
     override suspend fun getUserProfile(id: String): UserModel {
         try {
             val userSnapshot = FirebaseConfig().db.collection("Users").document(id).get().await()
-            val userData = userSnapshot.data
-            val name = userData?.get("name") as? String ?: ""
-            val image = userData?.get("image") as? String ?: ""
-            val birthYear = userData?.get("birthYear") as? String ?: ""
-            return UserModel(name = name, image = image, birthYear = birthYear)
+            val data = userSnapshot.data
+            return UserModel(
+                name = data?.get("name") as String,
+                birthYear = data["birthYear"] as String,
+                hobbies = data["hobbies"] as List<String>,
+                image = data["image"] as String,
+                pics = data["pics"] as List<String>,
+                email = data["email"] as String,
+                phone = data["phone"] as String,
+                gender = data["gender"] as String,
+            )
         } catch (ex: Exception) {
             throw ex
         }

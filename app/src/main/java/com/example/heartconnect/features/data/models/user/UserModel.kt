@@ -6,4 +6,8 @@ data class UserModel(
     val email: String? = "",
     val birthYear: String? = "",
     val image: String? = "",
+    val hobbies: List<String>? = null,
+    val pics: List<String>? = null,
+    val phone: String? = "",
+    val gender: String? = ""
 )
