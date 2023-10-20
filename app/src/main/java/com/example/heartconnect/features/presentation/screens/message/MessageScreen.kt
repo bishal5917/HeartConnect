@@ -17,12 +17,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import com.example.heartconnect.R
 import com.example.heartconnect.composables.*
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.data.models.message.MessageRequestModel
@@ -74,7 +72,10 @@ fun MessageScreen(
     Scaffold(topBar = {
         CustomAppbar(navController, title = friendName ?: "", actionButtonClicked = {})
     }, bottomBar = {
-        SendMessageComponent(conversationId ?: "", lazyListState)
+        SendMessageComponent(
+            conversationId = conversationId ?: "", lazyListState =
+            lazyListState
+        )
     }) {
         Box(
             modifier = Modifier
@@ -89,28 +90,31 @@ fun MessageScreen(
                 }
             }
             if (messageState.status == MessageState.Status.SUCCESS) {
-                LazyColumn(modifier = Modifier.padding(10.dp), state = lazyListState) {
-                    items(messageState.messages ?: listOf(MessageModel())) { msgItem ->
-                        SingleMessage(messageModel = msgItem)
-                        VSizedBox1()
+                Column {
+                    LazyColumn(modifier = Modifier.padding(10.dp), state = lazyListState) {
+                        items(messageState.messages ?: listOf(MessageModel())) { msgItem ->
+                            SingleMessage(messageModel = msgItem)
+                            VSizedBox0()
+                        }
                     }
+                    VSizedBox2andHalf()
                 }
             }
-            if (messageState.status == MessageState.Status.FAILED) {
-                Box(
-                    modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                ) {
-                    CustomErrorComponent(message = messageState.message ?: "") {
-                        messageViewModel.onEvent(
-                            MessageEvent.GetMessages(
-                                MessageRequestModel(
-                                    userId = userId,
-                                    convoId = conversationId ?: "",
-                                )
-                            )
+        }
+    }
+    if (messageState.status == MessageState.Status.FAILED) {
+        Box(
+            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+        ) {
+            CustomErrorComponent(message = messageState.message ?: "") {
+                messageViewModel.onEvent(
+                    MessageEvent.GetMessages(
+                        MessageRequestModel(
+                            userId = userId,
+                            convoId = conversationId ?: "",
                         )
-                    }
-                }
+                    )
+                )
             }
         }
     }
@@ -134,16 +138,16 @@ fun SendMessageComponent(conversationId: String, lazyListState: LazyListState) {
         }
     }
 
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(10.dp)
-            .fillMaxWidth(),
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.End,
     ) {
         CustomTextField(
-            modifier = Modifier.clip(RoundedCornerShape(6.dp)),
-            labelValue = "Type a Message ...",
+            modifier = Modifier
+                .clip(RoundedCornerShape(6.dp))
+                .fillMaxWidth()
+                .padding(6.dp),
+            labelValue = "",
             leadingIcon = Icons.Default.ChatBubble,
             onTextChanged = {
                 sendMessageViewModel.onEvent(SendMessageEvent.MessageTyping(it))

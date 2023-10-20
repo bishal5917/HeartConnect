@@ -65,6 +65,10 @@ fun Navigation() {
             AddPictureScreen(navController = navController)
         }
 
+        composable(AllScreen.MyPicsScreen.name) {
+            MyPicsScreen(navController = navController)
+        }
+
         composable(
             route = "${AllScreen.MessageScreen.name}/{id}/{name}",
             arguments = listOf(navArgument("id") {
@@ -83,15 +87,6 @@ fun Navigation() {
             })
         ) {
             SingleFeedScreen(navController = navController, it)
-        }
-
-        composable(
-            route = "${AllScreen.MyPicsScreen.name}/{pics}",
-            arguments = listOf(navArgument("pics") {
-                type = NavType.StringArrayType
-            })
-        ) {
-            MyPicsScreen(navController = navController, it)
         }
     }
 }

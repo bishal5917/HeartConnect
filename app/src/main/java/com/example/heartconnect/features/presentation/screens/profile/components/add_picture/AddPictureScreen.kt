@@ -38,6 +38,8 @@ import com.example.heartconnect.core.navigation.Navigator
 import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.viewmodel.AddPictureEvent
 import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.viewmodel.AddPictureState
 import com.example.heartconnect.features.presentation.screens.profile.components.add_picture.viewmodel.AddPictureViewModel
+import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileEvent
+import com.example.heartconnect.features.presentation.screens.profile.viewmodel.ProfileViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.model.CommonRequestModel
 import com.example.heartconnect.ui.theme.VSizedBox1
@@ -49,7 +51,7 @@ import com.example.heartconnect.utils.viewmodel.ImageViewModel
 
 @Composable
 fun AddPictureScreen(
-    navController: NavController,
+    navController: NavController, profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
     //viewmodels
     val addPictureViewModel = hiltViewModel<AddPictureViewModel>()
@@ -68,6 +70,7 @@ fun AddPictureScreen(
 
         AddPictureState.Status.SUCCESS -> {
             Navigator().back(navController)
+            profileViewModel.onEvent(ProfileEvent.GetProfile(uId))
             CustomToast(message = addPictureState.message)
         }
 
@@ -78,21 +81,22 @@ fun AddPictureScreen(
         else -> {}
     }
     Scaffold(topBar = {
-        CustomAppbar(navController,
+        CustomAppbar(
+            navController,
             title = stringResource(id = R.string.add_post),
             actionButtonClicked = {})
     }) {
         //for image picking
         val context = LocalContext.current
-        val launcher = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.GetContent(),
-            onResult = {
-                imageViewModel.onEvent(
-                    ImageEvent.SelectRegisterImage(
-                        context = context, imageUri = it
+        val launcher =
+            rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent(),
+                onResult = {
+                    imageViewModel.onEvent(
+                        ImageEvent.SelectRegisterImage(
+                            context = context, imageUri = it
+                        )
                     )
-                )
-            })
+                })
 
         Column(
             verticalArrangement = Arrangement.Center,

@@ -15,14 +15,14 @@ import androidx.navigation.NavController
 import com.example.heartconnect.composables.LocalImage
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashEvent
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
-import com.example.heartconnect.core.navigation.AllScreen
 import kotlinx.coroutines.delay
 import com.example.heartconnect.R
 import com.example.heartconnect.composables.CustomCircularProgressIndicator
+import com.example.heartconnect.composables.NormalButton
+import com.example.heartconnect.core.navigation.AllScreen
 import com.example.heartconnect.core.navigation.Navigator
 import com.example.heartconnect.ui.theme.SplashBgColor
 import com.example.heartconnect.ui.theme.VSizedBox4
-
 
 @Composable
 fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel = hiltViewModel()) {
@@ -30,6 +30,7 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
     val scale = remember {
         Animatable(0f)
     }
+
     val userIdFlow by splashViewModel.userIdFlow.collectAsState()
 
     LaunchedEffect(key1 = true) {
@@ -44,7 +45,7 @@ fun SplashScreen(navController: NavController, splashViewModel: SplashViewModel 
             Navigator().navigateOffAll(
                 navController, AllScreen.LoginScreen.name, AllScreen.SplashScreen.name
             )
-        }else{
+        } else {
             Navigator().navigateOffAll(
                 navController, AllScreen.MainScreen.name, AllScreen.SplashScreen.name
             )
