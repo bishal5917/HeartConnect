@@ -21,14 +21,14 @@ import androidx.navigation.NavController
 import com.example.heartconnect.composables.*
 import com.example.heartconnect.core.navigation.AllScreen
 import com.example.heartconnect.core.navigation.Navigator
-import com.example.heartconnect.features.data.models.chat.ChatRequestModel
 import com.example.heartconnect.features.data.models.feed.FeedModel
-import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatViewModel
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatViewModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.ui.theme.Primary
 import com.example.heartconnect.ui.theme.VSizedBox0
+import com.example.heartconnect.ui.theme.kNeutral100Color
+import com.example.heartconnect.ui.theme.kNeutral300Color
 import com.example.heartconnect.utils.ChatUtil
 
 @Composable
@@ -43,8 +43,7 @@ fun FeedCard(navController: NavController, cardItem: FeedModel) {
     Box(
         modifier = Modifier
             .padding(8.dp)
-            .background(Color.White)
-            .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(12.dp))
+            .border(width = 1.dp, color = kNeutral300Color, shape = RoundedCornerShape(12.dp))
             .clickable {
                 //goto single feed screen
                 Navigator().navigateTo(
@@ -54,7 +53,7 @@ fun FeedCard(navController: NavController, cardItem: FeedModel) {
             },
     ) {
         Column(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             CustomNetworkImage(
                 imageUrl = cardItem.profileImage ?: "",
@@ -71,8 +70,9 @@ fun FeedCard(navController: NavController, cardItem: FeedModel) {
             ) {
                 CustomText(
                     data = "${cardItem.name} , ${cardItem.birthYear}",
-                    fontWeight = FontWeight.W500,
-                    fontSize = 14
+                    fontWeight = FontWeight.W600,
+                    fontSize = 16,
+                    color = Color.Gray
                 )
                 CustomIconButton(
                     contentDesc = "Create", childIcon = if (!ChatUtil().isFriendAlready(
@@ -96,8 +96,7 @@ fun FeedCard(navController: NavController, cardItem: FeedModel) {
                 items(cardItem.hobbies ?: listOf("")) { hobby ->
                     CustomText(
                         data = hobby,
-                        fontWeight = FontWeight.W400,
-                        fontSize = 12,
+                        fontWeight = FontWeight.W500, fontSize = 12, color = Color.Gray
                     )
                 }
             }

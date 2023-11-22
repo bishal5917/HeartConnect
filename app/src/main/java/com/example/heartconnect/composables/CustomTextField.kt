@@ -35,7 +35,6 @@ fun CustomTextField(
             focusedBorderColor = Primary,
             focusedLabelColor = Primary,
             cursorColor = Primary,
-            backgroundColor = BgColor
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         singleLine = true,

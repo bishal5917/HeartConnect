@@ -88,6 +88,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     fun provideGetUserProfileUsecase(repo: UserRepository): GetUserProfileUsecase {
         return GetUserProfileUsecase(repo)
     }
@@ -114,6 +115,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     fun provideProfileViewModel(getUserProfileUsecase: GetUserProfileUsecase): ProfileViewModel {
         return ProfileViewModel(getUserProfileUsecase)
     }

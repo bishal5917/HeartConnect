@@ -48,7 +48,6 @@ fun PasswordTextField(
             focusedBorderColor = Primary,
             focusedLabelColor = Primary,
             cursorColor = Primary,
-            backgroundColor = BgColor
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password, imeAction = ImeAction.Done

@@ -1,12 +1,12 @@
 package com.example.heartconnect.features.presentation.screens.register
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,9 +19,7 @@ import com.example.heartconnect.composables.NormalButton
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepEvent
 import com.example.heartconnect.features.presentation.screens.register.viewmodel.step_viewmodel.StepViewModel
 import com.example.heartconnect.core.navigation.AllScreen
-import com.example.heartconnect.core.navigation.Navigation
 import com.example.heartconnect.core.navigation.Navigator
-import com.example.heartconnect.features.presentation.screens.login.LoginState
 import com.example.heartconnect.features.presentation.screens.register.components.RegisterBasicDetailForm
 import com.example.heartconnect.features.presentation.screens.register.components.RegisterHobbyForm
 import com.example.heartconnect.features.presentation.screens.register.components.RegisterSecurityForm
@@ -65,7 +63,9 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
             .padding(16.dp)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            CustomText(data = "Register", fontSize = 20, fontWeight = FontWeight.W500)
+            CustomText(
+                data = "Register", fontWeight = FontWeight.W600, fontSize = 18, color = Color.Gray
+            )
             VSizedBox2()
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -80,7 +80,10 @@ fun RegisterScreen(navController: NavController, stepViewModel: StepViewModel = 
                     }
                 }
                 CustomText(
-                    data = "Step ${stepState.step + 1}", fontSize = 16, fontWeight = FontWeight.W400
+                    data = "Step ${stepState.step + 1}",
+                    fontWeight = FontWeight.W400,
+                    fontSize = 14,
+                    color = Color.Gray
                 )
                 NormalButton(
                     buttonText = if (stepState.step == 2 && registerState.passwordError && imageState.registerImageUri != null) "Submit" else "Next"

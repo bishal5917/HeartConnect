@@ -2,7 +2,6 @@ package com.example.heartconnect.features.presentation.screens.feed.components.s
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,31 +41,24 @@ import com.example.heartconnect.composables.CustomNetworkImage
 import com.example.heartconnect.composables.CustomText
 import com.example.heartconnect.composables.CustomToast
 import com.example.heartconnect.features.data.models.chat.ChatRequestModel
-import com.example.heartconnect.features.data.models.feed.FeedModel
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatState
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.create_chat_viewmodel.CreateChatViewModel
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatEvent
 import com.example.heartconnect.features.presentation.screens.chat.viewmodel.get_chat_viewmodel.ChatViewModel
-import com.example.heartconnect.features.presentation.screens.feed.components.FeedCard
 import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.viewmodel.SingleFeedEvent
 import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.viewmodel.SingleFeedState
 import com.example.heartconnect.features.presentation.screens.feed.components.single_feed.viewmodel.SingleFeedViewModel
-import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeEvent
-import com.example.heartconnect.features.presentation.screens.feed.viewmodel.HomeState
-import com.example.heartconnect.features.presentation.screens.register.components.HobbyItem
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
 import com.example.heartconnect.model.CommonRequestModel
 import com.example.heartconnect.ui.theme.HSizedBox2
 import com.example.heartconnect.ui.theme.Primary
 import com.example.heartconnect.ui.theme.Secondary
-import com.example.heartconnect.ui.theme.VSizedBox0
 import com.example.heartconnect.ui.theme.VSizedBox1
 import com.example.heartconnect.ui.theme.VSizedBox2
 import com.example.heartconnect.ui.theme.kNeutral500Color
 import com.example.heartconnect.ui.theme.kNeutral600Color
 import com.example.heartconnect.ui.theme.kNeutral800Color
-import com.example.heartconnect.utils.ChatUtil
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -153,11 +144,9 @@ fun SingleFeedScreen(
                             data = "${singleFeedState.feedData?.name} , ${
                                 singleFeedState
                                     .feedData?.birthYear
-                            }", fontWeight =
-                            FontWeight
-                                .W500,
+                            }", fontWeight = FontWeight.W600,
                             fontSize = 16,
-                            color = kNeutral800Color
+                            color = Color.Gray
                         )
                         VSizedBox1()
                         CustomText(

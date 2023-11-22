@@ -2,23 +2,19 @@ package com.example.heartconnect.features.presentation.screens.message.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.heartconnect.composables.CustomNetworkImage
 import com.example.heartconnect.composables.CustomText
 import com.example.heartconnect.features.data.models.message.MessageModel
 import com.example.heartconnect.features.presentation.screens.splash.viewmodel.SplashViewModel
-import com.example.heartconnect.ui.theme.HSizedBox1
 import com.example.heartconnect.ui.theme.Primary
 
 @Composable

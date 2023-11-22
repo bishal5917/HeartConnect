@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,7 @@ fun CustomListTile(
                     tint = Primary
                 )
                 HSizedBox1()
-                CustomText(data = title, fontWeight = FontWeight.W400, fontSize = 14)
+                CustomText(data = title, fontWeight = FontWeight.W500, fontSize = 14, color = Color.Gray)
             }
             Icon(
                 imageVector = Icons.Default.ArrowForwardIos,

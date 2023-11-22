@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.heartconnect.R
 import com.example.heartconnect.composables.CustomNetworkImage
 import com.example.heartconnect.composables.CustomText
 import com.example.heartconnect.features.data.models.conversation.ConversationModel
@@ -42,7 +43,8 @@ fun ConvoComponent(chatItem: ConversationModel, navController: NavController) {
             HSizedBox1()
             Column(verticalArrangement = Arrangement.SpaceBetween) {
                 CustomText(
-                    data = chatItem.friendName ?: "", fontWeight = FontWeight.W400, fontSize = 18
+                    data = chatItem.friendName ?: "", fontWeight = FontWeight.W600, fontSize =
+                    18, color = Color.Gray
                 )
                 VSizedBox0()
                 CustomText(

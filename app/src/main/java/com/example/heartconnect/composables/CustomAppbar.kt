@@ -10,6 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import com.example.heartconnect.core.navigation.Navigator
 import com.example.heartconnect.ui.theme.Primary
+import com.example.heartconnect.ui.theme.kNeutral300Color
 
 @Composable
 fun CustomAppbar(
@@ -19,8 +20,8 @@ fun CustomAppbar(
     showAction: Boolean = false,
 ) {
 
-    TopAppBar(backgroundColor = Color.White, title = {
-        CustomText(data = title, fontSize = 15, fontWeight = FontWeight.W400)
+    TopAppBar(title = {
+        CustomText(data = title, fontSize = 15, fontWeight = FontWeight.W400, color = Color.Gray)
     }, navigationIcon = {
         CustomIconButton(childIcon = Icons.Default.ArrowBack, contentDesc = "Back Icon") {
             Navigator().back(navController)
@@ -28,7 +29,7 @@ fun CustomAppbar(
     }, actions = {
         if (showAction)
             CustomIconButton(
-                childIcon = Icons.Default.Info, contentDesc = "Info Icon", color = Primary
+                childIcon = Icons.Default.Info, contentDesc = "Info Icon", color = kNeutral300Color
             ) {
                 actionButtonClicked()
             }

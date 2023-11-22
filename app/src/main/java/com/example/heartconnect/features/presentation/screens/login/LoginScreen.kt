@@ -1,13 +1,11 @@
 package com.example.heartconnect.features.presentation.screens.login
 
-import android.media.metrics.Event
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -27,6 +24,7 @@ import com.example.heartconnect.R
 import com.example.heartconnect.composables.*
 import com.example.heartconnect.core.navigation.AllScreen
 import com.example.heartconnect.core.navigation.Navigator
+import com.example.heartconnect.ui.theme.kNeutral300Color
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -72,7 +70,6 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
                 .padding(28.dp)
         ) {
 
@@ -81,7 +78,10 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                CustomText(data = "Login", fontWeight = FontWeight.W600, fontSize = 16)
+                CustomText(
+                    data = "Login", fontWeight = FontWeight.W600, fontSize = 18, color =
+                    Color.Gray
+                )
                 Spacer(modifier = Modifier.height(20.dp))
 
                 CustomTextField(
@@ -111,13 +111,15 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                    CustomText(data = "Forgot Password?",
+                    CustomText(
+                        data = "Forgot Password?",
                         fontWeight = FontWeight.W400,
                         fontSize = 12,
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable {
                             loginViewModel.onEvent(LoginEvent.SendResetMail)
-                        })
+                        }, color = Color.LightGray
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))
